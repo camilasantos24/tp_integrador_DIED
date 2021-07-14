@@ -18,14 +18,16 @@ public class MAIN {
 		//Conexion c = new Conexion();
 		//c.conectarBD(); 
 		
-		/*try {
-			List<Estacion> es = EstacionDAO.getInstance().get_all_estaciones();
-			System.out.println(es.get(0).getNombre() + ", hs_ap = " + es.get(0).getHs_apertura().getHour() + ":"+  es.get(0).getHs_apertura().getMinute());
-		} catch (Exception e) {
+		try {
+			List<Estacion> es = TrayectoDAO.getInstance().get_estaciones_by_trayecto(1);
+			for (int i=0; i<es.size(); i++) {
+			System.out.println(es.get(i).getNombre() + ", hs_ap = " + es.get(i).getHs_apertura().getHour() + ":"+  es.get(i).getHs_apertura().getMinute());
+			}
+			} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 		
-		String f1= "01/11/2020";
+		/*String f1= "01/11/2020";
 		
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		
@@ -34,7 +36,7 @@ public class MAIN {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 
 	}

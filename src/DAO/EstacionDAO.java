@@ -1,5 +1,6 @@
 package DAO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import Entidades.Mantenimiento;
 public class EstacionDAO {
 
 	private static EstacionDAO _INSTANCE;
+	
 	public static EstacionDAO getInstance() {
 		if(_INSTANCE == null) {
 			_INSTANCE= new EstacionDAO();
@@ -41,5 +43,17 @@ public class EstacionDAO {
 			throw ex;
 		}
 	}
+	
+	
+	/*public void alta_estacion (Estacion e) {
+		String query = "INSERT INTO \"tpDied\".\"Estacion\" ()" ;
+		
+		try {
+			Conexion.ejecutar(query);
+		} catch (SQLException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+	}*/
 
 }

@@ -1,6 +1,9 @@
 package Entidades;
 
 import java.time.LocalTime;
+import java.util.List;
+
+import DAO.EstacionDAO;
 
 public class Estacion {
 
@@ -9,7 +12,7 @@ public class Estacion {
 	private LocalTime hs_apertura;
 	private LocalTime hs_cierre;
 	private long estado; //1- Activa ; 0-Mantenimiento
-	
+	private List<Mantenimiento> mantenimientos;
 	
 	public Estacion() {
 	}
@@ -77,6 +80,26 @@ public class Estacion {
 	public void setEstado(long estado) {
 		this.estado = estado;
 	}
+
+
+
+	public List<Mantenimiento> getMantenimientos() throws Exception {
+		
+	if(this.mantenimientos == null) {
+		return EstacionDAO.getInstance().get_mantenimientos_by_estacion(this.id_estacion);
+	}else {
+		return this.mantenimientos;
+	}
+		
+	}
+
+
+
+	public void setMantenimientos(List<Mantenimiento> mantenimientos) {
+		this.mantenimientos = mantenimientos;
+	}
+	
+	
 	
 	
 }

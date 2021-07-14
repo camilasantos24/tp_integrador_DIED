@@ -1,19 +1,31 @@
 package Entidades;
 
+import java.util.List;
+
 public class Trayecto {
 	
-	private int id;
+	private long id;
 	private Estacion estacion_origen;
 	private Estacion estacion_destino;
+	private List<Estacion> estaciones; 
 	
-	public Trayecto(int id, Estacion estacion_origen, Estacion estacion_destino) {
+	public Trayecto(long id, Estacion estacion_origen, Estacion estacion_destino) {
 		super();
 		this.id = id;
 		this.estacion_origen = estacion_origen;
 		this.estacion_destino = estacion_destino;
 	}
+	
+	
+	public Trayecto (String obj) {
+		String[] atributos= obj.split("\t");
+		
+		this.id= Long.parseLong(atributos[0]);
+		
+		
+	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -36,6 +48,16 @@ public class Trayecto {
 	public void setEstacion_destino(Estacion estacion_destino) {
 		this.estacion_destino = estacion_destino;
 	}
+
+	public List<Estacion> getEstaciones() {
+		return estaciones;
+	}
+
+	public void setEstaciones(List<Estacion> estaciones) {
+		this.estaciones = estaciones;
+	}
+	
+	
 	
 	
 
