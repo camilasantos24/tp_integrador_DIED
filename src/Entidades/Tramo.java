@@ -1,5 +1,9 @@
 package Entidades;
 
+import java.util.List;
+
+import DAO.EstacionDAO;
+
 public class Tramo {
 	
 	private int id;
@@ -23,6 +27,29 @@ public class Tramo {
 		this.estado = estado;
 		this.costo = costo;
 	}
+	
+	public Tramo (String obj) {
+	
+		String[] atributos= obj.split("\t");
+		this.id= Integer.parseInt(atributos[0]);
+		this.distancia_km= Integer.parseInt(atributos[3]);
+		this.duracion=Integer.parseInt(atributos[4]);
+		this.cant_max_pasajeros= Integer.parseInt(atributos[5]);
+		this.estado=Integer.parseInt(atributos[6]);
+		this.costo= Float.parseFloat(atributos[7]);
+		
+		try {
+			List<Estacion> o_d = EstacionDAO.getInstance().get_estacion_origen_destino_by_tramo(id);
+			this.estacion_origen = o_d.get(0);
+			this.estacion_destino = o_d.get(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	
+	//Getters y Setters 
 
 	public int getId() {
 		return id;

@@ -36,5 +36,22 @@ private static TrayectoDAO _INSTANCE;
 			throw ex;
 		}
 	}
+	
+	public List<Tramo> get_tramos_by_trayecto(long id_trayecto) throws Exception{
+		//trae todas las estaciones de un trayecto MENOS la origen
+		try {
+			String query = "SELECT tmo.id_tramo, tmo.id_estacion_origen, tmo.id_estacion_destino, tmo.distancia_km, tmo.duracion, tmo.cantidad_max_pasajeros, tmo.estado, tmo.costo " + 
+					"FROM \"tpDied\".\"Tramo\" tmo, \"tpDied\". \"Tramo_Trayecto\" tt "+ 
+					"WHERE tt.id_trayecto = " + id_trayecto + 
+					" AND tt.id_tramo = tmo.id_tramo ORDER BY tt.id_tramo;";
+			
+			ArrayList<Tramo> tramos = (ArrayList<Tramo>)((Object)Conexion.consultar(query, Tramo.class));
+			return tramos;
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
 
 }
