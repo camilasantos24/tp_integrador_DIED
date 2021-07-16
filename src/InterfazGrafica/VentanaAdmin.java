@@ -33,6 +33,10 @@ public class VentanaAdmin extends JFrame {
 	private static Dimension sizePnt;
 	private static CardLayout cl= new CardLayout();
 	
+	public static PntBuscarEstacion pntBuscarEstacion= new PntBuscarEstacion();
+	
+	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
+	
 	
 	/**
 	 * Launch the application.
@@ -64,6 +68,10 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
+		
+		contentPane.add(n_pntBuscarEstacion, pntBuscarEstacion);
+		
+		cambiarPantalla(pntBuscarEstacion, n_pntBuscarEstacion);
 	
 	}
 	
@@ -74,5 +82,12 @@ public class VentanaAdmin extends JFrame {
 		contentPane.repaint(); // "repintar el contenedor"		
 	}
 	
+	//Ventana emergente de error
+		public static void mensajeError(String error, String titulo) {
+			// TODO Auto-generated method stub
+			if (JOptionPane.showConfirmDialog(null, error, titulo, 
+				JOptionPane.PLAIN_MESSAGE, 
+				JOptionPane.ERROR_MESSAGE)==0);
+		}
 	
 }

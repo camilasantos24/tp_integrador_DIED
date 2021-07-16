@@ -71,6 +71,16 @@ public class EstacionDAO {
 		}
 	}
 	
+	public List<Estacion> get_estacion_by_filtros(String query) throws Exception{
+		try {
+		ArrayList<Estacion> estaciones= (ArrayList<Estacion>)((Object)Conexion.consultar(query, Estacion.class));
+			return estaciones;
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
 	/*public void alta_estacion (Estacion e) {
 		String query = "INSERT INTO \"tpDied\".\"Estacion\" ()" ;
 		

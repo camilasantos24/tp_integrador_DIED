@@ -7,11 +7,12 @@ import DAO.EstacionDAO;
 
 public class Estacion {
 
-	private long id_estacion;
+	private int id_estacion;
 	private String nombre;
 	private LocalTime hs_apertura;
 	private LocalTime hs_cierre;
-	private long estado; //1- Activa ; 0-Mantenimiento
+	private int estado; //1- Activa ; 0-Mantenimiento
+	private int alta_baja; // 1-Dada de alta ; 0-Dada de baja
 	private List<Mantenimiento> mantenimientos;
 	
 	public Estacion() {
@@ -19,33 +20,35 @@ public class Estacion {
 	
 	
 
-	public Estacion(long id_estacion, String nombre, LocalTime hs_apertura, LocalTime hs_cierre, long estado) {
+	public Estacion(int id_estacion, String nombre, LocalTime hs_apertura, LocalTime hs_cierre, int estado, int alta_baja) {
 		super();
 		this.id_estacion = id_estacion;
 		this.nombre = nombre;
 		this.hs_apertura = hs_apertura;
 		this.hs_cierre = hs_cierre;
 		this.estado = estado;
+		this.alta_baja=alta_baja;
 	}
 
 
 	public Estacion(String obj) {
 		String[] atributos= obj.split("\t");
 		
-		this.id_estacion= Long.parseLong(atributos[0]);
+		this.id_estacion= Integer.parseInt(atributos[0]);
 		this.nombre= atributos[1];
 		this.hs_apertura= LocalTime.parse(atributos[2]);
 		this.hs_cierre=LocalTime.parse(atributos[3]);
-		this.estado=Long.parseLong(atributos[4]);
+		this.estado=Integer.parseInt(atributos[4]);
+		this.alta_baja=Integer.parseInt(atributos[5]);
 	}
 	
 	//getters and setters 
 
-	public long getId_estacion() {
+	public int getId_estacion() {
 		return id_estacion;
 	}
 
-	public void setId_estacion(long id_estacion) {
+	public void setId_estacion(int id_estacion) {
 		this.id_estacion = id_estacion;
 	}
 
@@ -73,12 +76,21 @@ public class Estacion {
 		this.hs_cierre = hs_cierre;
 	}
 
-	public long getEstado() {
+	public int getEstado() {
 		return estado;
 	}
 
-	public void setEstado(long estado) {
+	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+
+
+	public int getAlta_baja() {
+		return alta_baja;
+	}
+
+	public void setAlta_baja(int alta_baja) {
+		this.alta_baja = alta_baja;
 	}
 
 
