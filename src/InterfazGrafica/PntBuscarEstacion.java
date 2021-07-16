@@ -199,6 +199,31 @@ public class PntBuscarEstacion extends JPanel {
 		add(cb_estado);
 		
 		JButton btn_baja_est = new JButton("Dar de baja estaci\u00F3n");
+		btn_baja_est.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() != -1) {
+					
+					EstacionesDTO estDTO= new EstacionesDTO();
+					
+					estDTO.setAlta_baja(0);
+					estDTO.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 4).toString()));
+					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
+					estDTO.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					estDTO.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					
+					GestorEstacion.actualizarEstacion(estDTO);
+					
+					VentanaAdmin.mensajeExito("Estacion dada de baja correctamente", "EXITO");
+					
+					restaurarTabla();
+					
+				}
+				else {
+					VentanaAdmin.mensajeError("Seleccione una Competencia de la Tabla", "ERROR");
+				}
+			}
+		});
 		btn_baja_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_baja_est.setBounds(275, 355, 181, 46);
 		add(btn_baja_est);

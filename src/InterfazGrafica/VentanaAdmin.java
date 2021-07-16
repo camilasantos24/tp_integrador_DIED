@@ -89,5 +89,10 @@ public class VentanaAdmin extends JFrame {
 				JOptionPane.PLAIN_MESSAGE, 
 				JOptionPane.ERROR_MESSAGE)==0);
 		}
+		
+	//Ventana emergente de exito
+		public static void mensajeExito(String texto, String titulo) {
+			if (JOptionPane.showConfirmDialog(null, texto, titulo, JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE)==0);
+		}
 	
 }

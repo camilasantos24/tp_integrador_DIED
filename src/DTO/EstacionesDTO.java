@@ -9,6 +9,7 @@ public class EstacionesDTO {
 	private LocalTime hs_apertura;
 	private LocalTime hs_cierre;
 	private int estado;
+	private int alta_baja;
 	
 	public int getId() {
 		return id;
@@ -39,6 +40,12 @@ public class EstacionesDTO {
 	}
 	public void setEstado(int estado) {
 		this.estado = estado;
+	}
+	public int getAlta_baja() {
+		return alta_baja;
+	}
+	public void setAlta_baja(int alta_baja) {
+		this.alta_baja = alta_baja;
 	}
 	
 	

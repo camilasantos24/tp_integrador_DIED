@@ -9,6 +9,21 @@ import Entidades.Estacion;
 
 public class GestorEstacion {
 	
+	public static void actualizarEstacion(EstacionesDTO estDTO) {
+		int id= estDTO.getId();
+		String nombre= estDTO.getNombre();
+		LocalTime hs_apertura= estDTO.getHs_apertura();
+		LocalTime hs_cierre= estDTO.getHs_cierre();
+		int estado= estDTO.getEstado();
+		int alta_baja=estDTO.getAlta_baja();
+		
+		String query= null;
+		
+		query= "UPDATE \"tpDied\".\"Estacion\" SET id_estacion="+id+", nombre='"+nombre+"', hs_apertura='"+hs_apertura+"', hs_cierre='"+hs_cierre+"', estado="+estado+", alta_baja="+alta_baja+" WHERE id_estacion="+id+";";
+		
+		EstacionDAO.getInstance().updateEstacion(query);
+	}
+	
 	public static List<Estacion> obtenerEstaciones (EstacionesDTO obtEst) throws Exception {
 		
 		int id= obtEst.getId();

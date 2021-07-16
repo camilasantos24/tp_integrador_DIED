@@ -80,16 +80,19 @@ public class EstacionDAO {
 			throw ex;
 		}
 	}
-	
-	/*public void alta_estacion (Estacion e) {
-		String query = "INSERT INTO \"tpDied\".\"Estacion\" ()" ;
-		
-		try {
-			Conexion.ejecutar(query);
-		} catch (SQLException ex) {
-			// TODO Auto-generated catch block
-			ex.printStackTrace();
-		}
-	}*/
 
+	public void updateEstacion(String query) {
+		String query2= query;
+	//	String query3="SELECT est.* FROM  \"tpDied\".\"Estacion\" est ORDER BY id_estacion;";
+		try {
+			Conexion.ejecutar(query2);
+			/*Conexion.ejecutar(query3);		NO PUEDO REORDENAR LA TABLA */
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 }
