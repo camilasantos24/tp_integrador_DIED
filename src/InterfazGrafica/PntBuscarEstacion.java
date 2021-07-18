@@ -235,6 +235,35 @@ public class PntBuscarEstacion extends JPanel {
 		add(btn_baja_est);
 		
 		JButton btn_editar_est = new JButton("Editar estaci\u00F3n");
+		btn_editar_est.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(table.getSelectedRow() != -1) {
+					
+					EstacionesDTO estDTO = new EstacionesDTO();
+					
+					estDTO.setAlta_baja(1);
+					estDTO.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 4).toString()));
+					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
+					estDTO.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					estDTO.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					
+					try {
+						VentanaAdmin.pntEditarEstacion.cargarDatos(estDTO);
+						VentanaAdmin.cambiarPantalla(VentanaAdmin.pntEditarEstacion, VentanaAdmin.n_pntEditarEstacion);
+						
+					} catch (Exception e1) {
+						
+						e1.printStackTrace();
+					}
+				}
+				else {
+					VentanaAdmin.mensajeError("Seleccione una estación de la tabla", "ERROR");
+				}
+				
+			}
+		});
 		btn_editar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_editar_est.setBounds(503, 355, 181, 46);
 		add(btn_editar_est);

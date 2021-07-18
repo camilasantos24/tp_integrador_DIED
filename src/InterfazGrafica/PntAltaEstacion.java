@@ -158,13 +158,7 @@ public class PntAltaEstacion extends JPanel {
 				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
 				if(respuesta==JOptionPane.YES_OPTION) {
 					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-					tf_hs_apertura.setText(null);
-					tf_hs_cierre.setText(null);
-					tf_id.setText(null);
-					tf_min_apertura.setText(null);
-					tf_min_cierre.setText(null);
-					tf_nombre.setText(null);
-					cb_estado.setSelectedIndex(0);		
+					limpiarPantalla();		
 				}
 			}
 		});
@@ -328,5 +322,15 @@ public class PntAltaEstacion extends JPanel {
 		VentanaAdmin.mensajeError("Ingrese hora y minutos en el horario de CIERRE","ERROR");
 		return false;
 	}
+	}
+	
+	public void limpiarPantalla() {
+		tf_hs_apertura.setText(null);
+		tf_hs_cierre.setText(null);
+		tf_id.setText(null);
+		tf_min_apertura.setText(null);
+		tf_min_cierre.setText(null);
+		tf_nombre.setText(null);
+		cb_estado.setSelectedIndex(0);
 	}
 }
