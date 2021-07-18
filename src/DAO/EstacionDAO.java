@@ -1,5 +1,6 @@
 package DAO;
 
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,13 +87,11 @@ public class EstacionDAO {
 	//	String query3="SELECT est.* FROM  \"tpDied\".\"Estacion\" est ORDER BY id_estacion;";
 		try {
 			Conexion.ejecutar(query2);
-			/*Conexion.ejecutar(query3);		NO PUEDO REORDENAR LA TABLA */
+			/*Conexion.ejecutar(query3);		TODO NO PUEDO REORDENAR LA TABLA */ 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
+	
 	
 }

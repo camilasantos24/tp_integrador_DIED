@@ -183,6 +183,12 @@ public class PntBuscarEstacion extends JPanel {
 		add(sp_listar_est);
 		
 		JButton btn_alta_est = new JButton("Dar de alta una estaci\u00F3n");
+		btn_alta_est.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaEstacion, VentanaAdmin.n_pntAltaEstacion);
+			}
+		});
 		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_alta_est.setBounds(47, 355, 181, 46);
 		add(btn_alta_est);

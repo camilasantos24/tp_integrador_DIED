@@ -34,8 +34,12 @@ public class VentanaAdmin extends JFrame {
 	private static CardLayout cl= new CardLayout();
 	
 	public static PntBuscarEstacion pntBuscarEstacion= new PntBuscarEstacion();
+	public static PntAltaEstacion pntAltaEstacion = new PntAltaEstacion();
+	public static PntEditarEstacion pntEditarEstacion = new PntEditarEstacion();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
+	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
+	public static String n_pntEditarEstacion = "n_pntEditarEstacion";
 	
 	
 	/**
@@ -70,6 +74,8 @@ public class VentanaAdmin extends JFrame {
 		sizePnt = contentPane.getSize() ;
 		
 		contentPane.add(n_pntBuscarEstacion, pntBuscarEstacion);
+		contentPane.add(n_pntAltaEstacion, pntAltaEstacion);
+		contentPane.add(n_pntEditarEstacion, pntEditarEstacion);
 		
 		cambiarPantalla(pntBuscarEstacion, n_pntBuscarEstacion);
 	
@@ -94,5 +100,14 @@ public class VentanaAdmin extends JFrame {
 		public static void mensajeExito(String texto, String titulo) {
 			if (JOptionPane.showConfirmDialog(null, texto, titulo, JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE)==0);
 		}
+		
+	//Ventana emergente de consulta
+		public static int mensajeConsulta(String[] args, String titulo, String mensaje) {
+	        int seleccion = JOptionPane.showConfirmDialog(null,
+	                mensaje, titulo,JOptionPane.YES_NO_OPTION);
+		// 0=yes, 1=no
+		System.out.println(seleccion);
+		return seleccion;
+	    }
 	
 }
