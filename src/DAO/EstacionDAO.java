@@ -105,6 +105,14 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
+		finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 	
@@ -139,6 +147,14 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
+		finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void createMantenimiento(Mantenimiento mant) {
@@ -169,6 +185,14 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
+		finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void finalizeMantenimiento(String query) {
