@@ -9,7 +9,7 @@ public class Mantenimiento {
 	private LocalDate fecha_inicio;
 	private LocalDate fecha_fin;
 	private String observacion;
-	//private Estacion estacion;
+	private Estacion estacion;
 	
 	
  // ------------------Constructores------------------------
@@ -69,5 +69,15 @@ public class Mantenimiento {
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
 	}
+
+	public Estacion getEstacion() {
+		return estacion;
+	}
+
+	public void setEstacion(Estacion estacion) {
+		this.estacion = estacion;
+	}
+	
+	
 	
 }

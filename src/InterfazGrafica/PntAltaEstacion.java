@@ -112,7 +112,7 @@ public class PntAltaEstacion extends JPanel {
 								estDTO.setAlta_baja(1);
 								estDTO.setEstado(cb_estado.getSelectedIndex());
 								
-								GestorEstacion.agregarEstacion(estDTO);
+								GestorEstacion.crearEstacion(estDTO);
 								
 								VentanaAdmin.mensajeExito("Estacion agregada correctamente.", "EXITO");
 								

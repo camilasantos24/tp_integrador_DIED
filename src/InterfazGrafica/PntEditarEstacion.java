@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 
 import DTO.EstacionesDTO;
+import DTO.MantenimientoDTO;
 import Entidades.Estacion;
 import Gestores.GestorEstacion;
 
@@ -26,7 +27,9 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class PntEditarEstacion extends JPanel {
 	private JTextField tf_id;
@@ -79,7 +82,7 @@ public class PntEditarEstacion extends JPanel {
 		btn_guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-EstacionesDTO estDTO= new EstacionesDTO();
+				EstacionesDTO estDTO= new EstacionesDTO();
 				
 				LocalTime hsApertura=null;
 				LocalTime hsCierre=null;
@@ -99,20 +102,24 @@ EstacionesDTO estDTO= new EstacionesDTO();
 								estDTO.setAlta_baja(1);
 								estDTO.setEstado(cb_estado.getSelectedIndex());
 								
-								GestorEstacion.actualizarEstacion(estDTO);
+								if(cambioEstado(estDTO.getEstado())) {
+									
+									PntMantenimiento.estDTO=estDTO;
+									VentanaAdmin.pntMantenimiento.cargarDatos();
+									VentanaAdmin.cambiarPantalla(VentanaAdmin.pntMantenimiento, VentanaAdmin.n_pntMantenimiento);
+																	
+								}else {
+									
+									GestorEstacion.actualizarEstacion(estDTO);
+									
+									VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
+									
+									VentanaAdmin.pntBuscarEstacion.restaurarTabla();
+									
+									VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
+								}
 								
-								VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
-								
-								VentanaAdmin.pntBuscarEstacion.restaurarTabla();
-								
-								VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-								tf_hs_apertura.setText(null);
-								tf_hs_cierre.setText(null);
-								tf_id.setText(null);
-								tf_min_apertura.setText(null);
-								tf_min_cierre.setText(null);
-								tf_nombre.setText(null);
-								cb_estado.setSelectedIndex(0);	
+								limpiarPantalla();
 							}
 						}
 					}
@@ -309,5 +316,16 @@ EstacionesDTO estDTO= new EstacionesDTO();
 		tf_min_cierre.setText(Integer.toString(estDTO.getHs_cierre().getMinute()));
 		cb_estado.setSelectedIndex(estDTO.getEstado());
 		
+	}
+	
+	public boolean cambioEstado(int estadoDTO) {
+		int estadoTabla=(Integer.parseInt(PntBuscarEstacion.table.getValueAt(PntBuscarEstacion.table.getSelectedRow(), 4).toString()));
+		int estadoNuevoSeleccionado=cb_estado.getSelectedIndex();
+		
+		if(estadoTabla!=estadoNuevoSeleccionado) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }

@@ -36,10 +36,12 @@ public class VentanaAdmin extends JFrame {
 	public static PntBuscarEstacion pntBuscarEstacion= new PntBuscarEstacion();
 	public static PntAltaEstacion pntAltaEstacion = new PntAltaEstacion();
 	public static PntEditarEstacion pntEditarEstacion = new PntEditarEstacion();
+	public static PntMantenimiento pntMantenimiento = new PntMantenimiento();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
 	public static String n_pntEditarEstacion = "n_pntEditarEstacion";
+	public static String n_pntMantenimiento = "n_pntMantenimiento";
 	
 	
 	/**
@@ -76,6 +78,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntBuscarEstacion, pntBuscarEstacion);
 		contentPane.add(n_pntAltaEstacion, pntAltaEstacion);
 		contentPane.add(n_pntEditarEstacion, pntEditarEstacion);
+		contentPane.add(n_pntMantenimiento, pntMantenimiento);
 		
 		cambiarPantalla(pntBuscarEstacion, n_pntBuscarEstacion);
 	

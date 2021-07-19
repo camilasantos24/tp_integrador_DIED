@@ -1,11 +1,14 @@
 package Gestores;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import DAO.EstacionDAO;
 import DTO.EstacionesDTO;
+import DTO.MantenimientoDTO;
 import Entidades.Estacion;
+import Entidades.Mantenimiento;
 
 public class GestorEstacion {
 	
@@ -112,19 +115,38 @@ public class GestorEstacion {
 		}
 	}
 	
-	public static void agregarEstacion(EstacionesDTO estDTO) {
-		int id= estDTO.getId();
-		String nombre= estDTO.getNombre();
-		LocalTime hs_apertura= estDTO.getHs_apertura();
-		LocalTime hs_cierre= estDTO.getHs_cierre();
-		int estado= estDTO.getEstado();
-		int alta_baja=estDTO.getAlta_baja();
+	public static void crearEstacion(EstacionesDTO estDTO) {
 		
+		Estacion estacion= new Estacion();
+		List<Mantenimiento> mantenimientos = new ArrayList();
+		
+		estacion.setAlta_baja(estDTO.getAlta_baja());
+		estacion.setEstado(estDTO.getEstado());
+		estacion.setHs_apertura(estDTO.getHs_apertura());
+		estacion.setHs_cierre(estDTO.getHs_cierre());
+		estacion.setId_estacion(estDTO.getId());
+		estacion.setNombre(estDTO.getNombre());
+		estacion.setMantenimientos(mantenimientos);
+		
+		EstacionDAO.getInstance().createEstacion(estacion);
+	}
+	
+	public static void crearMantenimiento(MantenimientoDTO mantDTO) throws Exception {
+		Mantenimiento mantenimiento = new Mantenimiento();
+		
+		mantenimiento.setFecha_fin(mantDTO.getFecha_fin());
+		mantenimiento.setFecha_inicio(mantDTO.getFecha_inicio());
+		mantenimiento.setObservacion(mantDTO.getObserv());
+		mantenimiento.setEstacion(obtenerEstacionPorID(mantDTO.getId_estacion()));
+		
+		EstacionDAO.getInstance().createMantenimiento(mantenimiento);
+	}
+	
+	public static void finalizarMantenimiento(MantenimientoDTO mantDTO) {
 		String query= null;
 		
-		query="INSERT INTO \"tpDied\".\"Estacion\" (id_estacion, nombre, hs_apertura, hs_cierre, estado, alta_baja) VALUES ("+id+", '"+nombre+"', '"+hs_apertura+"', '"+hs_cierre+"', "+estado+", "+alta_baja+");";
-		
-		EstacionDAO.getInstance().updateEstacion(query);
+		query= "UPDATE \"tpDied\".\"Mantenimiento\" SET fecha_fin='"+mantDTO.getFecha_fin()+"', observaciones='"+mantDTO.getObserv()+"' WHERE id_estacion="+mantDTO.getId_estacion()+" AND fecha_fin is null;";
+		EstacionDAO.getInstance().finalizeMantenimiento(query);
 	}
 
 }

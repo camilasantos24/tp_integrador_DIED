@@ -187,6 +187,7 @@ public class PntBuscarEstacion extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaEstacion, VentanaAdmin.n_pntAltaEstacion);
+				limpiarPantalla();
 			}
 		});
 		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -223,6 +224,7 @@ public class PntBuscarEstacion extends JPanel {
 					VentanaAdmin.mensajeExito("Estacion dada de baja correctamente", "EXITO");
 					
 					restaurarTabla();
+					limpiarPantalla();
 					
 				}
 				else {
@@ -261,6 +263,8 @@ public class PntBuscarEstacion extends JPanel {
 				else {
 					VentanaAdmin.mensajeError("Seleccione una estación de la tabla", "ERROR");
 				}
+				
+				limpiarPantalla();
 				
 			}
 		});
@@ -367,4 +371,14 @@ public class PntBuscarEstacion extends JPanel {
 	          dm.removeRow(i);
 	      }
 		}
+	
+	public void limpiarPantalla() {
+		tf_hs_apertura.setText(null);
+		tf_hs_cierre.setText(null);
+		tf_id.setText(null);
+		tf_min_apertura.setText(null);
+		tf_min_cierre.setText(null);
+		tf_nombre.setText(null);
+		cb_estado.setSelectedIndex(0);
+	}
 }

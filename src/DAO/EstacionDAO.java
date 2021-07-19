@@ -1,7 +1,10 @@
 package DAO;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,12 +86,96 @@ public class EstacionDAO {
 	}
 
 	public void updateEstacion(String query) {
-		String query2= query;
-	//	String query3="SELECT est.* FROM  \"tpDied\".\"Estacion\" est ORDER BY id_estacion;";
+		//	String query3="SELECT est.* FROM  \"tpDied\".\"Estacion\" est ORDER BY id_estacion;";	ORDENA LA TABLA PERO NO LO PUEDO INCLUIR
+		Connection con = Conexion.conectarBD();
+
 		try {
-			Conexion.ejecutar(query2);
-			/*Conexion.ejecutar(query3);		TODO NO PUEDO REORDENAR LA TABLA */ 
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			
+			con.commit();
+			
+			} 
+		catch (Exception e) {
+			try {
+				//deshace todos los cambios realizados en los datos
+				con.rollback();
+				} catch (SQLException ex1) {
+					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+					}
+			} 
+
+	}
+	
+	public void createEstacion(Estacion est) {
+		int id= est.getId_estacion();
+		String nombre= est.getNombre();
+		LocalTime hs_apertura= est.getHs_apertura();
+		LocalTime hs_cierre= est.getHs_cierre();
+		int estado= est.getEstado();
+		int alta_baja=est.getAlta_baja();
+		
+		String query= null;
+		
+		query="INSERT INTO \"tpDied\".\"Estacion\" (id_estacion, nombre, hs_apertura, hs_cierre, estado, alta_baja) VALUES ("+id+", '"+nombre+"', '"+hs_apertura+"', '"+hs_cierre+"', "+estado+", "+alta_baja+");";
+		
+		
+		Connection con = Conexion.conectarBD();
+
+		try {
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			
+			con.commit();
+			
+			} 
+		catch (Exception e) {
+			try {
+				//deshace todos los cambios realizados en los datos
+				con.rollback();
+				} catch (SQLException ex1) {
+					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+					}
+			} 
+	}
+	
+	public void createMantenimiento(Mantenimiento mant) {
+		int id_est= mant.getEstacion().getId_estacion();
+		LocalDate fecha_ini= mant.getFecha_inicio();
+		LocalDate fecha_fin= mant.getFecha_fin();
+		String obs= mant.getObservacion();
+		
+		String query= null;
+		
+		query = "INSERT INTO \"tpDied\".\"Mantenimiento\" (id_estacion, fecha_inicio, fecha_fin, observaciones) VALUES ("+id_est+", '"+fecha_ini+"', "+fecha_fin+", '"+obs+"');";
+		
+		Connection con = Conexion.conectarBD();
+
+		try {
+			con.setAutoCommit(false);
+			
+			con.createStatement().executeUpdate(query);
+			
+			con.commit();
+			
+			} 
+		catch (Exception e) {
+			try {
+				//deshace todos los cambios realizados en los datos
+				con.rollback();
+				} catch (SQLException ex1) {
+					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
+					}
+			} 
+	}
+	
+	public void finalizeMantenimiento(String query) {
+		try {
+			Conexion.ejecutar(query);
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
