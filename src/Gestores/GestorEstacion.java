@@ -1,5 +1,6 @@
 package Gestores;
 
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +143,7 @@ public class GestorEstacion {
 		EstacionDAO.getInstance().createMantenimiento(mantenimiento);
 	}
 	
-	public static void finalizarMantenimiento(MantenimientoDTO mantDTO) {
+	public static void finalizarMantenimiento(MantenimientoDTO mantDTO) throws SQLException {
 		String query= null;
 		
 		query= "UPDATE \"tpDied\".\"Mantenimiento\" SET fecha_fin='"+mantDTO.getFecha_fin()+"', observaciones='"+mantDTO.getObserv()+"' WHERE id_estacion="+mantDTO.getId_estacion()+" AND fecha_fin is null;";

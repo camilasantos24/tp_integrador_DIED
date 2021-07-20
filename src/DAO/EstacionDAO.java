@@ -97,6 +97,7 @@ public class EstacionDAO {
 			con.commit();
 			
 			} 
+		
 		catch (Exception e) {
 			try {
 				//deshace todos los cambios realizados en los datos
@@ -105,6 +106,7 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
+		
 		finally {
 			try {
 				con.close();
@@ -195,13 +197,8 @@ public class EstacionDAO {
 		}
 	}
 	
-	public void finalizeMantenimiento(String query) {
-		try {
+	public void finalizeMantenimiento(String query) throws SQLException {
 			Conexion.ejecutar(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	

@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -88,8 +89,12 @@ public class PntMantenimiento extends JPanel {
 						e.printStackTrace();
 					}
 				}else {
-					GestorEstacion.finalizarMantenimiento(mantDTO);
-					GestorEstacion.actualizarEstacion(estDTO);
+					try {
+						GestorEstacion.finalizarMantenimiento(mantDTO);
+						GestorEstacion.actualizarEstacion(estDTO);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 				
 				VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");

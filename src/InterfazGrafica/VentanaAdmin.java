@@ -37,11 +37,18 @@ public class VentanaAdmin extends JFrame {
 	public static PntAltaEstacion pntAltaEstacion = new PntAltaEstacion();
 	public static PntEditarEstacion pntEditarEstacion = new PntEditarEstacion();
 	public static PntMantenimiento pntMantenimiento = new PntMantenimiento();
+	public static PntBuscarLineaTransporte pntBuscarLineaTransporte = new PntBuscarLineaTransporte();
+	public static PntAltaLineaTransporte pntAltaLineaTransporte = new PntAltaLineaTransporte();
+	public static PntEditarLineaTransporte pntEditarLineaTransporte = new PntEditarLineaTransporte();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
 	public static String n_pntEditarEstacion = "n_pntEditarEstacion";
 	public static String n_pntMantenimiento = "n_pntMantenimiento";
+	public static String n_pntBuscarLineaTransporte = "n_pntBuscarLineaTransporte";
+	public static String n_pntAltaLineaTransporte = "n_pntAltaLineaTransporte";
+	public static String n_pntEditarLineaTransporte = "n_pntEditarLineaTransporte";
+	
 	
 	
 	/**
@@ -79,8 +86,12 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntAltaEstacion, pntAltaEstacion);
 		contentPane.add(n_pntEditarEstacion, pntEditarEstacion);
 		contentPane.add(n_pntMantenimiento, pntMantenimiento);
+		contentPane.add(n_pntBuscarLineaTransporte, pntBuscarLineaTransporte);
+		contentPane.add(n_pntAltaLineaTransporte, pntAltaLineaTransporte);
+		contentPane.add(n_pntEditarLineaTransporte, pntEditarLineaTransporte);
 		
-		cambiarPantalla(pntBuscarEstacion, n_pntBuscarEstacion);
+		
+		cambiarPantalla(pntBuscarLineaTransporte, n_pntBuscarLineaTransporte);
 	
 	}
 	

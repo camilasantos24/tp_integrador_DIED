@@ -117,13 +117,7 @@ public class PntAltaEstacion extends JPanel {
 								VentanaAdmin.mensajeExito("Estacion agregada correctamente.", "EXITO");
 								
 								VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-								tf_hs_apertura.setText(null);
-								tf_hs_cierre.setText(null);
-								tf_id.setText(null);
-								tf_min_apertura.setText(null);
-								tf_min_cierre.setText(null);
-								tf_nombre.setText(null);
-								cb_estado.setSelectedIndex(0);	
+								limpiarPantalla();
 							}
 						}
 					}
