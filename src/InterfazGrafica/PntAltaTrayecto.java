@@ -24,7 +24,7 @@ public class PntAltaTrayecto extends JPanel {
 	private JTextField tf_distancia;
 	private JTextField tf_costo;
 	private JTextField tf_codigoOrigen;
-	
+	//commit
 	private  DefaultTableModel dm = new DefaultTableModel();
 	private  JTable table = new JTable();
 	
