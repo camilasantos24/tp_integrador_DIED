@@ -34,12 +34,10 @@ public class LineaTransporte {
 		this.estado = Integer.parseInt(atributos[3]);
 		
 		if(atributos[4].compareTo("null")!=0) {
-		try {
-			this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(atributos[4]));	//SE ABREN 2 TRANSACCIONES AL MISMO TIEMPO Y SE ROMPE TODO
-		} catch (Exception e) {
-			e.printStackTrace();
+		Trayecto trayecto= new Trayecto(Integer.parseInt(atributos[4]));
+		this.trayecto=trayecto;
 		}
-		}
+		
 		this.alta_baja = Integer.parseInt(atributos[5]);
 	}
 
@@ -76,6 +74,13 @@ public class LineaTransporte {
 	}
 
 	public Trayecto getTrayecto() {
+		
+		try {
+			this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(this.trayecto.getId()));	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return trayecto;
 	}
 
