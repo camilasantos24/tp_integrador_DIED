@@ -40,7 +40,7 @@ public class PntAltaLineaTransporte extends JPanel {
 	JComboBox cb_estado = new JComboBox();
 
 	public PntAltaLineaTransporte() {
-		setBounds(100, 100, 733, 434);
+		setBounds(100, 100, 733, 435);
 		setLayout(null);
 		
 		JTextPane txtpnEstaciones = new JTextPane();

@@ -37,6 +37,17 @@ public class EstacionDAO {
 		}
 	}
 	
+	public List<Estacion> get_estaciones_de_alta() throws Exception{
+		try {
+			String query = "SELECT * FROM \"tpDied\".\"Estacion\" WHERE alta_baja = 1;";
+			ArrayList<Estacion> estaciones = (ArrayList<Estacion>)((Object)Conexion.consultar(query, Estacion.class));
+			return estaciones;
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
 	public Estacion get_estacion_by_id(long id_estacion) throws Exception{
 		try {
 			String query = "SELECT * FROM \"tpDied\".\"Estacion\" WHERE id_estacion = " + id_estacion + " ;";

@@ -13,6 +13,10 @@ import Entidades.Mantenimiento;
 
 public class GestorEstacion {
 	
+	public static List<Estacion> get_estaciones_de_alta() throws Exception{
+		return EstacionDAO.getInstance().get_estaciones_de_alta();
+	}
+	
 	public static List<Estacion> obtenerEstaciones (EstacionesDTO obtEst) throws Exception {
 		
 		int id= obtEst.getId();

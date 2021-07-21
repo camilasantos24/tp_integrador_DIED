@@ -40,6 +40,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntBuscarLineaTransporte pntBuscarLineaTransporte = new PntBuscarLineaTransporte();
 	public static PntAltaLineaTransporte pntAltaLineaTransporte = new PntAltaLineaTransporte();
 	public static PntEditarLineaTransporte pntEditarLineaTransporte = new PntEditarLineaTransporte();
+	public static PntAltaTrayecto pntAltaTrayecto = new PntAltaTrayecto();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
@@ -48,6 +49,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntBuscarLineaTransporte = "n_pntBuscarLineaTransporte";
 	public static String n_pntAltaLineaTransporte = "n_pntAltaLineaTransporte";
 	public static String n_pntEditarLineaTransporte = "n_pntEditarLineaTransporte";
+	public static String n_pntAltaTrayecto = "n_AltaTrayecto";
 	
 	
 	
@@ -89,9 +91,11 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntBuscarLineaTransporte, pntBuscarLineaTransporte);
 		contentPane.add(n_pntAltaLineaTransporte, pntAltaLineaTransporte);
 		contentPane.add(n_pntEditarLineaTransporte, pntEditarLineaTransporte);
+		contentPane.add(n_pntAltaTrayecto, pntAltaTrayecto);
 		
 		
-		cambiarPantalla(pntBuscarLineaTransporte, n_pntBuscarLineaTransporte);
+		//cambiarPantalla(pntBuscarLineaTransporte, n_pntBuscarLineaTransporte);
+		cambiarPantalla(pntAltaTrayecto, n_pntAltaTrayecto);
 	
 	}
 	
