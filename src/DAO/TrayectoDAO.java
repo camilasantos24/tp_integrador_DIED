@@ -5,6 +5,7 @@ import java.util.List;
 
 import Entidades.Estacion;
 import Entidades.Tramo;
+import Entidades.Trayecto;
 
 public class TrayectoDAO {
 
@@ -51,6 +52,20 @@ private static TrayectoDAO _INSTANCE;
 		catch(Exception ex) {
 			throw ex;
 		}
+	}
+	
+	public Trayecto get_trayecto_by_id(int id) throws Exception{
+		try {
+		String query="SELECT * FROM \"tpDied\".\"Trayecto\" WHERE id_trayecto="+id+";";
+		ArrayList<Trayecto> trayecto = (ArrayList<Trayecto>)((Object)Conexion.consultar(query, Trayecto.class));
+		if(trayecto.size() !=0) {
+			return trayecto.get(0);
+			} else {return null;}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
 	}
 	
 

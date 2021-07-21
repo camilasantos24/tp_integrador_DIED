@@ -5,6 +5,7 @@ import java.util.List;
 import DAO.LineaTransporteDAO;
 import DTO.LineaTransporteDTO;
 import Entidades.LineaTransporte;
+import Entidades.Trayecto;
 
 public class GestorLineaTransporte {
 	
@@ -54,6 +55,7 @@ public class GestorLineaTransporte {
 	}
 	
 	public static void actualizarLineaTransp(LineaTransporteDTO lTransp) {
+		int id=lTransp.getId();
 		String nombre=lTransp.getNombre();
 		String color=lTransp.getColor();
 		int estado=lTransp.getEstado();
@@ -61,7 +63,7 @@ public class GestorLineaTransporte {
 		
 		String query=null;
 		
-		query="UPDATE \"tpDied\".\"Linea_Transporte\" SET nombre='"+nombre+"', color='"+color+"', estado="+estado+", alta_baja="+alta_baja+" WHERE id_estacion=\"+id+\";";
+		query="UPDATE \"tpDied\".\"Linea_Transporte\" SET nombre='"+nombre+"', color='"+color+"', estado="+estado+", alta_baja="+alta_baja+" WHERE id_linea="+id+";";
 		
 		LineaTransporteDAO.getInstance().updateLineaTransp(query);
 	}
@@ -76,5 +78,54 @@ public class GestorLineaTransporte {
 		}
 		
 	}
-
+	
+	public static String obtenerTrayectoTxt(Trayecto trayecto) {
+		String nombreTrayecto;
+		
+		if(trayecto == null) {
+			nombreTrayecto="Sin trayectos";
+		}else {
+			nombreTrayecto=Long.toString(trayecto.getId());
+		}
+		
+		return nombreTrayecto;
+	}
+	
+	public static long obtenerTrayectoLong(String trayecto) {
+		long trayectoLong=0;
+		
+		if(trayecto=="Sin trayectos") {
+			trayectoLong=-1;
+		}
+		if(trayecto.startsWith("Trayecto")) {
+			trayectoLong=Long.parseLong(trayecto);
+		}
+		
+		return trayectoLong;
+	}
+	
+	public static String obtenerEstadoTxt(int estado) {
+		String estadoTxt;
+		
+		if(estado == 0) {
+			estadoTxt="No activa";
+		}else {
+			estadoTxt="Activa";
+		}
+		
+		return estadoTxt;
+	}
+	
+	public static int obtenerEstadoInt(String estado) {
+		int estadoInt=0;
+		
+		if(estado=="No activa") {
+			estadoInt=0;
+		}
+		if(estado=="Activa") {
+			estadoInt=1;
+		}
+		
+		return estadoInt;
+	}
 }

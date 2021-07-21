@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 
 import DTO.LineaTransporteDTO;
 import Entidades.LineaTransporte;
+import Entidades.Trayecto;
 import Gestores.GestorLineaTransporte;
 
 import javax.swing.JTextField;
@@ -84,16 +85,20 @@ public class PntBuscarLineaTransporte extends JPanel {
 					
 					List<LineaTransporte> lineasT=GestorLineaTransporte.obtenerLineas(lTransp);
 					
+					int id;
 					String nombre;
 					String color;
-					int estado;
+					String estado;
+					String trayecto;
 					
 					for (int i = 0; i < lineasT.size(); i++) {
+						id=lineasT.get(i).getId();
 						nombre=lineasT.get(i).getNombre();
 						color=lineasT.get(i).getColor();
-						estado=lineasT.get(i).getEstado();
-						
-						Object[] rowData= {nombre, color, estado};
+						estado=GestorLineaTransporte.obtenerEstadoTxt(lineasT.get(i).getEstado());
+						trayecto=GestorLineaTransporte.obtenerTrayectoTxt(lineasT.get(i).getTrayecto());
+												
+						Object[] rowData= {id, nombre, color, estado,trayecto};
 						dm.addRow(rowData);
 					}
 					
@@ -106,27 +111,35 @@ public class PntBuscarLineaTransporte extends JPanel {
 		btn_buscar.setBounds(58, 256, 77, 23);
 		add(btn_buscar);
 		
+		dm.addColumn("Id");
 		dm.addColumn("Nombre");
 		dm.addColumn("Color");
 		dm.addColumn("Estado");
+		dm.addColumn("Trayecto");
 		
 		table.setModel(dm); //table tendra las columnas de dm que agregamos aqui arriba
+		
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
+        table.doLayout();
 		
 		JScrollPane sp_listar_lt = new JScrollPane(table);
 		sp_listar_lt.setBounds(214, 83, 492, 212);
 		add(sp_listar_lt);
 		
-		JButton btn_alta_est = new JButton("Dar de alta una l\u00EDnea");
-		btn_alta_est.addActionListener(new ActionListener() {
+		JButton btn_alta_linea = new JButton("Dar de alta una l\u00EDnea");
+		btn_alta_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaLineaTransporte, VentanaAdmin.n_pntAltaLineaTransporte);
 				limpiarPantalla();
+				restaurarTabla();
 			}
 		});
-		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_alta_est.setBounds(47, 355, 181, 46);
-		add(btn_alta_est);
+		btn_alta_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_alta_linea.setBounds(22, 349, 158, 46);
+		add(btn_alta_linea);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
 		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
@@ -139,17 +152,18 @@ public class PntBuscarLineaTransporte extends JPanel {
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"No activa", "Activa"}));
 		add(cb_estado);
 		
-		JButton btn_baja_est = new JButton("Dar de baja l\u00EDnea");
-		btn_baja_est.addActionListener(new ActionListener() {
+		JButton btn_baja_linea = new JButton("Dar de baja l\u00EDnea");
+		btn_baja_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1) {
 					
 					LineaTransporteDTO lTransp= new LineaTransporteDTO();
 					
+					lTransp.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					lTransp.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					lTransp.setColor((table.getValueAt(table.getSelectedRow(), 2).toString()));
+					lTransp.setEstado(GestorLineaTransporte.obtenerEstadoInt(table.getValueAt(table.getSelectedRow(), 3).toString()));
 					lTransp.setAlta_baja(0);
-					lTransp.setColor((table.getValueAt(table.getSelectedRow(), 1).toString()));
-					lTransp.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString()));
-					lTransp.setNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
 					
 					GestorLineaTransporte.actualizarLineaTransp(lTransp);
 					
@@ -160,26 +174,27 @@ public class PntBuscarLineaTransporte extends JPanel {
 					
 				}
 				else {
-					VentanaAdmin.mensajeError("Seleccione una Competencia de la Tabla", "ERROR");
+					VentanaAdmin.mensajeError("Seleccione una línea de transporte de la tabla", "ERROR");
 				}
 			}
 		});
-		btn_baja_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_baja_est.setBounds(275, 355, 181, 46);
-		add(btn_baja_est);
+		btn_baja_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_baja_linea.setBounds(190, 349, 158, 46);
+		add(btn_baja_linea);
 		
-		JButton btn_editar_est = new JButton("Editar l\u00EDnea");
-		btn_editar_est.addActionListener(new ActionListener() {
+		JButton btn_editar_linea = new JButton("Editar l\u00EDnea");
+		btn_editar_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				if(table.getSelectedRow() != -1) {
 					
 					LineaTransporteDTO lTransp= new LineaTransporteDTO();
 					
+					lTransp.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					lTransp.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					lTransp.setColor((table.getValueAt(table.getSelectedRow(), 2).toString()));
+					lTransp.setEstado(GestorLineaTransporte.obtenerEstadoInt(table.getValueAt(table.getSelectedRow(), 3).toString()));
 					lTransp.setAlta_baja(1);
-					lTransp.setColor((table.getValueAt(table.getSelectedRow(), 1).toString()));
-					lTransp.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString()));
-					lTransp.setNombre(table.getValueAt(table.getSelectedRow(), 0).toString());
 					
 					try {
 						VentanaAdmin.pntEditarLineaTransporte.cargarDatos(lTransp);
@@ -191,16 +206,16 @@ public class PntBuscarLineaTransporte extends JPanel {
 					}
 				}
 				else {
-					VentanaAdmin.mensajeError("Seleccione una estación de la tabla", "ERROR");
+					VentanaAdmin.mensajeError("Seleccione una línea de transporte de la tabla", "ERROR");
 				}
 				
 				limpiarPantalla();
 				
 			}
 		});
-		btn_editar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_editar_est.setBounds(503, 355, 181, 46);
-		add(btn_editar_est);
+		btn_editar_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_editar_linea.setBounds(358, 349, 158, 46);
+		add(btn_editar_linea);
 		
 		tf_color = new JTextField();
 		tf_color.setColumns(10);
@@ -211,6 +226,15 @@ public class PntBuscarLineaTransporte extends JPanel {
 		tf_nombre.setColumns(10);
 		tf_nombre.setBounds(22, 123, 168, 20);
 		add(tf_nombre);
+		
+		JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
+		btn_agregar_trayecto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_agregar_trayecto.setBounds(526, 349, 158, 46);
+		add(btn_agregar_trayecto);
 		
 	}
 	

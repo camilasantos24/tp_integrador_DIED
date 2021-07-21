@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import DTO.EstacionesDTO;
 import Entidades.Estacion;
 import Gestores.GestorEstacion;
+import Gestores.GestorLineaTransporte;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -148,14 +149,14 @@ public class PntBuscarEstacion extends JPanel {
 					String nombre;
 					LocalTime hsApert;
 					LocalTime hsCie;
-					int estado;
+					String estado;
 					
 					for (int i = 0; i < estaciones.size(); i++) {
 						idEst=estaciones.get(i).getId_estacion();
 						nombre=estaciones.get(i).getNombre();
 						hsApert=estaciones.get(i).getHs_apertura();
 						hsCie=estaciones.get(i).getHs_cierre();
-						estado=estaciones.get(i).getEstado();
+						estado=GestorEstacion.obtenerEstadoTxt(estaciones.get(i).getEstado());
 						
 						Object[] rowData= {idEst, nombre, hsApert, hsCie, estado};
 						dm.addRow(rowData);
@@ -188,6 +189,7 @@ public class PntBuscarEstacion extends JPanel {
 				
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaEstacion, VentanaAdmin.n_pntAltaEstacion);
 				limpiarPantalla();
+				restaurarTabla();
 			}
 		});
 		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -212,12 +214,12 @@ public class PntBuscarEstacion extends JPanel {
 					
 					EstacionesDTO estDTO= new EstacionesDTO();
 					
-					estDTO.setAlta_baja(0);
-					estDTO.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 4).toString()));
-					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
-					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
 					estDTO.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
 					estDTO.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
+					estDTO.setEstado(GestorEstacion.obtenerEstadoInt((table.getValueAt(table.getSelectedRow(), 4).toString())));
+					estDTO.setAlta_baja(0);
 					
 					GestorEstacion.actualizarEstacion(estDTO);
 					
@@ -228,7 +230,7 @@ public class PntBuscarEstacion extends JPanel {
 					
 				}
 				else {
-					VentanaAdmin.mensajeError("Seleccione una Competencia de la Tabla", "ERROR");
+					VentanaAdmin.mensajeError("Seleccione una estacion de la tabla", "ERROR");
 				}
 			}
 		});
@@ -242,14 +244,14 @@ public class PntBuscarEstacion extends JPanel {
 				
 				if(table.getSelectedRow() != -1) {
 					
-					EstacionesDTO estDTO = new EstacionesDTO();
+					EstacionesDTO estDTO= new EstacionesDTO();
 					
-					estDTO.setAlta_baja(1);
-					estDTO.setEstado(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 4).toString()));
-					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
-					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
 					estDTO.setId(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
 					estDTO.setNombre(table.getValueAt(table.getSelectedRow(), 1).toString());
+					estDTO.setHs_apertura(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					estDTO.setHs_cierre(LocalTime.parse(table.getValueAt(table.getSelectedRow(), 3).toString()));
+					estDTO.setEstado(GestorEstacion.obtenerEstadoInt((table.getValueAt(table.getSelectedRow(), 4).toString())));
+					estDTO.setAlta_baja(1);
 					
 					try {
 						VentanaAdmin.pntEditarEstacion.cargarDatos(estDTO);
