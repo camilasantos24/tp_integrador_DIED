@@ -319,7 +319,7 @@ public class PntEditarEstacion extends JPanel {
 	}
 	
 	public boolean cambioEstado(int estadoDTO) {
-		int estadoTabla=(Integer.parseInt(PntBuscarEstacion.table.getValueAt(PntBuscarEstacion.table.getSelectedRow(), 4).toString()));
+		int estadoTabla=(GestorEstacion.obtenerEstadoInt(PntBuscarEstacion.table.getValueAt(PntBuscarEstacion.table.getSelectedRow(), 4).toString()));
 		int estadoNuevoSeleccionado=cb_estado.getSelectedIndex();
 		
 		if(estadoTabla!=estadoNuevoSeleccionado) {

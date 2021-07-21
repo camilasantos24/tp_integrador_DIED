@@ -1,5 +1,7 @@
 package Entidades;
 
+import DAO.TrayectoDAO;
+
 public class LineaTransporte {
 	
 	private int id;
@@ -13,13 +15,32 @@ public class LineaTransporte {
 	
 	}
 	
-	public LineaTransporte(int id, String nombre, String color, int estado, Trayecto trayecto) {
+	public LineaTransporte(int id, String nombre, String color, int estado, Trayecto trayecto, int alta_baja) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.color = color;
 		this.estado = estado;
 		this.trayecto = trayecto;
+		this.alta_baja = alta_baja;
+	}
+	
+	public LineaTransporte(String obj) {
+		String[] atributos= obj.split("\t");
+		
+		this.id = Integer.parseInt(atributos[0]);
+		this.nombre = atributos[1];
+		this.color = atributos[2];
+		this.estado = Integer.parseInt(atributos[3]);
+		
+		if(atributos[4].compareTo("null")!=0) {
+		try {
+			this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(atributos[4]));	//SE ABREN 2 TRANSACCIONES AL MISMO TIEMPO Y SE ROMPE TODO
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		}
+		this.alta_baja = Integer.parseInt(atributos[5]);
 	}
 
 	public int getId() {

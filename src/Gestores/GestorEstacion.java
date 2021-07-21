@@ -153,5 +153,30 @@ public class GestorEstacion {
 		query= "UPDATE \"tpDied\".\"Mantenimiento\" SET fecha_fin='"+mantDTO.getFecha_fin()+"', observaciones='"+mantDTO.getObserv()+"' WHERE id_estacion="+mantDTO.getId_estacion()+" AND fecha_fin is null;";
 		EstacionDAO.getInstance().finalizeMantenimiento(query);
 	}
+	
+	public static String obtenerEstadoTxt(int estado) {
+		String estadoTxt;
+		
+		if(estado==0) {
+			estadoTxt="En mantenimiento";
+		}else {
+			estadoTxt="Operativa";
+		}
+		
+		return estadoTxt;
+	}
+	
+	public static int obtenerEstadoInt(String estado) {
+		int estadoInt=0;
+		
+		if(estado=="En mantenimiento") {
+			estadoInt=0;
+		}
+		if(estado=="Operativa") {
+			estadoInt=1;
+		}
+		
+		return estadoInt;
+	}
 
 }

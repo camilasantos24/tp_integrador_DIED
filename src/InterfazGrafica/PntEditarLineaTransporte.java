@@ -38,6 +38,7 @@ public class PntEditarLineaTransporte extends JPanel {
 	private JTextField tf_nombre;
 
 	JComboBox cb_estado = new JComboBox();
+	private JTextField tf_id;
 	
 	public PntEditarLineaTransporte() {
 		setBounds(100, 100, 733, 434);
@@ -57,8 +58,8 @@ public class PntEditarLineaTransporte extends JPanel {
 		add(lblIdDeLa);
 		
 		tf_color = new JTextField();
-		tf_color.setEnabled(false);
-		tf_color.setEditable(false);
+		tf_color.setEnabled(true);
+		tf_color.setEditable(true);
 		tf_color.setColumns(10);
 		tf_color.setBounds(55, 207, 353, 20);
 		add(tf_color);
@@ -82,6 +83,8 @@ public class PntEditarLineaTransporte extends JPanel {
 								
 							lTranspDTO.setAlta_baja(1);
 							lTranspDTO.setEstado(cb_estado.getSelectedIndex());
+							lTranspDTO.setId(Integer.parseInt(tf_id.getText()));
+							
 									
 							GestorLineaTransporte.actualizarLineaTransp(lTranspDTO);
 									
@@ -130,6 +133,18 @@ public class PntEditarLineaTransporte extends JPanel {
 		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
+		
+		tf_id = new JTextField();
+		tf_id.setEnabled(false);
+		tf_id.setEditable(false);
+		tf_id.setBounds(55, 118, 46, 20);
+		add(tf_id);
+		tf_id.setColumns(10);
+		
+		JLabel lblId = new JLabel("ID ");
+		lblId.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblId.setBounds(55, 103, 176, 14);
+		add(lblId);
 	}
 	
 	// Valida que se haya ingresado un nombre
@@ -164,6 +179,7 @@ public class PntEditarLineaTransporte extends JPanel {
 		tf_color.setText(lTranspDTO.getColor());
 		tf_nombre.setText(lTranspDTO.getNombre());
 		cb_estado.setSelectedIndex(lTranspDTO.getEstado());
+		tf_id.setText(Integer.toString(lTranspDTO.getId()));
 		
 	}
 	
