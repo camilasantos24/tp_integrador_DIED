@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import Entidades.ConsultaGenerica;
 import Entidades.Estacion;
 import Entidades.Mantenimiento;
 
@@ -223,6 +223,12 @@ public class EstacionDAO {
 	public void finalizeMantenimiento(String query) throws SQLException {
 			Conexion.ejecutar(query);
 	}
+	
+	/*public int get_page_rank_by_idEstacion (int id_estacion) {
+		List<ConsultaGenerica> ls1 = (List<ConsultaGenerica>)(Object)Conexion.consultar("SELECT ;", ConsultaGenerica.class);
+		return 0;
+		//
+	}*/
 	
 	
 }

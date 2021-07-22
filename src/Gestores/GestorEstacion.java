@@ -178,5 +178,10 @@ public class GestorEstacion {
 		
 		return estadoInt;
 	}
+	
+	/*public static List<Estacion> obtener_page_rank () throws Exception{
+		List<Estacion> estaciones = EstacionDAO.getInstance().get_estaciones_de_alta();
+		
+	}*/
 
 }

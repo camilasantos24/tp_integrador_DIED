@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.EstacionDAO;
+import DTO.EstacionesDTO;
 import Entidades.Estacion;
 import Gestores.GestorEstacion;
 
@@ -36,6 +37,8 @@ public class FrameSeleccionarEstacion extends JFrame {
 	private  JTable table = new JTable();
 	
 	private List<Estacion> estaciones;
+	
+	public int modo; // 1- busqueda origen 2- busqueda destino
 
 	private static FrameSeleccionarEstacion _INSTANCE;	
 	
@@ -88,6 +91,16 @@ public class FrameSeleccionarEstacion extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnNewButton_1 = new JButton("Seleccionar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow() != -1) {
+					seleccionar_estacion();
+					FrameSeleccionarEstacion.getInstance().setVisible(false);
+				}else {
+					VentanaAdmin.mensajeError("Seleccione una estación", "Error");
+				}
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_1.setBounds(272, 326, 132, 36);
 		contentPane.add(btnNewButton_1);
@@ -155,6 +168,28 @@ public class FrameSeleccionarEstacion extends JFrame {
 		
 		
 		}
+	}
+	
+	
+	public void seleccionar_estacion () {
+		
+		int codigo;
+		
+		codigo = Integer.parseInt( table.getValueAt(table.getSelectedRow(), 0).toString());
+		
+		if(modo == 1) {
+			//se está buscando un origen
+			VentanaAdmin.pntAltaTrayecto.insertar_origen_seleccionado(codigo);
+			
+		}else {
+			//Se está buscando un destino
+			VentanaAdmin.pntAltaTrayecto.insertar_destino_seleccionado(codigo);
+
+		}
+		
+		
+		
+		
 	}
 
 }
