@@ -41,6 +41,8 @@ public class VentanaAdmin extends JFrame {
 	public static PntAltaLineaTransporte pntAltaLineaTransporte = new PntAltaLineaTransporte();
 	public static PntEditarLineaTransporte pntEditarLineaTransporte = new PntEditarLineaTransporte();
 	public static PntAltaTrayecto pntAltaTrayecto = new PntAltaTrayecto();
+	public static PntVentaBoleto pntVentaBoleto = new PntVentaBoleto();
+	public static PntInicio pntInicio = new PntInicio();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
@@ -50,7 +52,10 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntAltaLineaTransporte = "n_pntAltaLineaTransporte";
 	public static String n_pntEditarLineaTransporte = "n_pntEditarLineaTransporte";
 	public static String n_pntAltaTrayecto = "n_AltaTrayecto";
-	
+	public static String n_pntVentaBoleto = "n_pntVentaBoleto";
+	public static String n_pntInicio = "n_pntInicio";
+
+
 	
 	
 	/**
@@ -79,7 +84,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		setResizable(false);
-		setTitle("Estación");
+		setTitle("TP INTEGRADOR");
 		contentPane.setLayout(cl); // pasa al contentPane el CardLayout que creamos
 	
 		sizePnt = contentPane.getSize() ;
@@ -92,10 +97,12 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntAltaLineaTransporte, pntAltaLineaTransporte);
 		contentPane.add(n_pntEditarLineaTransporte, pntEditarLineaTransporte);
 		contentPane.add(n_pntAltaTrayecto, pntAltaTrayecto);
+		contentPane.add(n_pntVentaBoleto, pntVentaBoleto);
+		contentPane.add(n_pntInicio, pntInicio);
 		
 		
-		//cambiarPantalla(pntBuscarLineaTransporte, n_pntBuscarLineaTransporte);
-		cambiarPantalla(pntAltaTrayecto, n_pntAltaTrayecto);
+		cambiarPantalla(pntInicio, n_pntInicio);
+		//cambiarPantalla(pntAltaTrayecto, n_pntAltaTrayecto);
 	
 	}
 	

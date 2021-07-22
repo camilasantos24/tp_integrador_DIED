@@ -151,5 +151,21 @@ private static TrayectoDAO _INSTANCE;
 
 	}
 	
+	public List<Tramo> get_tramos_by_origen_destino(int id_o, int id_d) throws Exception{
+		try {
+			String query=	"SELECT tram.*" + 
+							"FROM \"tpDied\".\"Trayecto\" tray" + 
+							"	JOIN \"tpDied\".\"Tramo_Trayecto\" trtr ON (tray.id_trayecto=trtr.id_trayecto)" + 
+							"	JOIN \"tpDied\".\"Tramo\" tram ON (trtr.id_tramo=tram.id_tramo)" + 
+							"WHERE tray.id_estacion_origen="+id_o+" AND tray.id_estacion_destino="+id_d+";";
+			ArrayList<Tramo> tramos = (ArrayList<Tramo>)((Object)Conexion.consultar(query, Tramo.class));
+				return tramos;
+				
+			}
+			catch(Exception ex) {
+				throw ex;
+			}
+	}
+	
 
 }

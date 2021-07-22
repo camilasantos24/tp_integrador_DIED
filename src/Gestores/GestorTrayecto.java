@@ -34,6 +34,10 @@ public class GestorTrayecto {
 	public static List<Tramo> get_tramos_by_origen(int id_o) throws Exception{
 		return TrayectoDAO.getInstance().get_tramos_by_origen(id_o);
 	}
+	
+	public static List<Tramo> obtener_tramos_origen_destino(int id_o, int id_d) throws Exception{
+		return TrayectoDAO.getInstance().get_tramos_by_origen_destino(id_o, id_d);
+	}
 
 
 

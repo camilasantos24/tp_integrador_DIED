@@ -178,5 +178,19 @@ public class GestorEstacion {
 		
 		return estadoInt;
 	}
+	
+	public static List<Estacion> obtenerEstacionesBoleto() throws Exception{
+		LocalTime hs_actual=LocalTime.now();
+		int estado= 1;
+		int alta_baja=1;
+		
+		String query= null;
+
+		query= "SELECT est.* FROM \"tpDied\".\"Estacion\" est WHERE est.estado="+estado+" AND est.alta_baja="+alta_baja+" AND est.hs_apertura<'"+hs_actual+"' AND est.hs_cierre>'"+hs_actual+"' ;";
+				
+		List<Estacion> estaciones=EstacionDAO.getInstance().get_estacion_by_filtros(query);
+				
+		return estaciones;
+	}
 
 }
