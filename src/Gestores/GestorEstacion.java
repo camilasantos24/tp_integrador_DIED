@@ -193,4 +193,10 @@ public class GestorEstacion {
 		return estaciones;
 	}
 
+	/*public static List<Estacion> obtener_page_rank () throws Exception{
+		List<Estacion> estaciones = EstacionDAO.getInstance().get_estaciones_de_alta();
+		
+	}*/
+
+
 }

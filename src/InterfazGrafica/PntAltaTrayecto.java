@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import DTO.EstacionesDTO;
 import DTO.TramoDTO;
 import Entidades.Tramo;
 import Entidades.Trayecto;
@@ -43,8 +44,7 @@ public class PntAltaTrayecto extends JPanel {
 	private JSpinner sp_cantPasajeros = new JSpinner();
 	private JSpinner sp_duracion = new JSpinner();
 	private	JButton btn_buscarOrigen = new JButton("");
-
-
+	
 
 	
 	
@@ -266,6 +266,7 @@ public class PntAltaTrayecto extends JPanel {
 		btn_buscarOrigen.setBackground(new Color(255, 255, 255));
 		btn_buscarOrigen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				FrameSeleccionarEstacion.getInstance().modo = 1;
 				FrameSeleccionarEstacion.getInstance().setVisible(true);
 			}
 		});
@@ -279,6 +280,7 @@ public class PntAltaTrayecto extends JPanel {
 		btn_buscarDestino.setBackground(new Color(255, 255, 255));
 		btn_buscarDestino.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				FrameSeleccionarEstacion.getInstance().modo = 2;
 				FrameSeleccionarEstacion.getInstance().setVisible(true);
 
 			}
@@ -422,15 +424,6 @@ public class PntAltaTrayecto extends JPanel {
 	
 	public void agregar_tramo () throws Exception {
 		
-		/*
-		 * dm.addColumn("id_Origen");
-		dm.addColumn("id_Destino");
-		dm.addColumn("Origen");
-		dm.addColumn("Destino");
-		dm.addColumn("Distancia");
-		dm.addColumn("Duracion");
-		dm.addColumn("CantidadPasajeros");
-		dm.addColumn("Costo");*/
 		
 		int cod_origen;
 		int cod_destino;
@@ -460,6 +453,7 @@ public class PntAltaTrayecto extends JPanel {
 			dm.addRow(rowData);
 			tf_codigoOrigen.setText(cod_destino + "");
 			tf_codigoOrigen.setEditable(false);
+			btn_buscarOrigen.setEnabled(false);
 			restaurar_ingreso_tramo();
 		}else {
 			VentanaAdmin.mensajeError("Origen y/o Destino incorrectos", "Error");
@@ -499,6 +493,14 @@ public class PntAltaTrayecto extends JPanel {
 			restaurar_pantalla_completa();
 		}
 		
+	}
+	
+	public void insertar_origen_seleccionado(int id) {
+		tf_codigoOrigen.setText(id + "");
+	}
+	
+	public void insertar_destino_seleccionado(int id) {
+		tf_codigoDestino.setText(id + "");
 	}
 	
 }
