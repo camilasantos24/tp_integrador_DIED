@@ -76,7 +76,7 @@ public class LineaTransporte {
 	public Trayecto getTrayecto() {
 		
 		try {
-			this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(this.trayecto.getId()));	
+			//this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(this.trayecto.getId()));	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

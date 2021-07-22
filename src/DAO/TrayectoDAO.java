@@ -1,8 +1,14 @@
 package DAO;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import DTO.TramoDTO;
 import Entidades.Estacion;
 import Entidades.Tramo;
 import Entidades.Trayecto;
@@ -66,6 +72,83 @@ private static TrayectoDAO _INSTANCE;
 			throw ex;
 		}
 		
+	}
+	
+	
+	public List<Tramo> get_all_tramos() throws Exception{
+		try {
+		String query="SELECT * FROM \"tpDied\".\"Tramo\" ;";
+		ArrayList<Tramo> tramos = (ArrayList<Tramo>)((Object)Conexion.consultar(query, Tramo.class));
+			return tramos;
+			
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
+	}
+	
+	public List<Tramo> get_tramos_by_origen(int id_o) throws Exception{
+		try {
+		String query="SELECT * FROM \"tpDied\".\"Tramo\" WHERE id_estacion_origen = " + id_o + " ;";
+		ArrayList<Tramo> tramos = (ArrayList<Tramo>)((Object)Conexion.consultar(query, Tramo.class));
+			return tramos;
+			
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
+	}
+	
+	
+	public boolean alta_trayecto (List<TramoDTO> tramos) throws SQLException {
+		PreparedStatement query1=null ;
+		PreparedStatement query2=null ;
+		PreparedStatement query3=null ;
+		
+		Connection con= Conexion.conectarBD();
+		try {
+			con.setAutoCommit(false);
+			
+			int id_origen = tramos.get(0).getCod_origen();
+			int id_destino = tramos.get(tramos.size()-1).getCod_destino();
+			
+			query1 = con.prepareStatement("INSERT INTO \"tpDied\".\"Trayecto\" (id_estacion_origen, id_estacion_destino) VALUES (" + id_origen + ", " + id_destino + ");", Statement.RETURN_GENERATED_KEYS);
+			query1.execute();
+			
+			Long trayectoID=null;
+			ResultSet rs=null;
+			rs= query1.getGeneratedKeys();
+			if(rs.next()) {
+				trayectoID=rs.getLong(1);
+			}
+			
+			for (int i=0; i<tramos.size(); i++) {
+				TramoDTO t = tramos.get(i);
+				query2= con.prepareStatement("INSERT INTO \"tpDied\".\"Tramo\" (id_estacion_origen, id_estacion_destino, distancia_km, duracion, cantidad_max_pasajeros, estado, costo) VALUES (" + t.getCod_origen() + ", " + t.getCod_destino() + ", " + t.getDistancia() + ", " + t.getDuracion() + ", " + t.getCant_pas() + ", 1," + t.getCosto() + " );", Statement.RETURN_GENERATED_KEYS);
+				query2.execute();
+				
+				Long tramoID=null;
+				ResultSet rs2=null;
+				rs2= query2.getGeneratedKeys();
+				if(rs2.next()) {
+					tramoID=rs2.getLong(1);
+				}
+				
+				query3 = con.prepareStatement("INSERT INTO \"tpDied\".\"Tramo_Trayecto\" (id_tramo, id_trayecto) VALUES (" + tramoID + ", " + trayectoID + " );", Statement.RETURN_GENERATED_KEYS);
+				query3.execute();
+			}
+			
+			con.commit();
+			return true;	
+			
+		} catch (SQLException e) {
+			con.rollback();
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 	
 

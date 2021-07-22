@@ -37,14 +37,13 @@ public class Tramo {
 		this.cant_max_pasajeros= Integer.parseInt(atributos[5]);
 		this.estado=Integer.parseInt(atributos[6]);
 		this.costo= Float.parseFloat(atributos[7]);
-		
 		try {
-			List<Estacion> o_d = EstacionDAO.getInstance().get_estacion_origen_destino_by_tramo(id);
-			this.estacion_origen = o_d.get(0);
-			this.estacion_destino = o_d.get(1);
+			this.estacion_origen = EstacionDAO.getInstance().get_estacion_origen_by_tramo(id);
+			this.estacion_destino= EstacionDAO.getInstance().get_estacion_destino_by_tramo(id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 
 	}
 	

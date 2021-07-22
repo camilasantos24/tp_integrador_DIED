@@ -72,14 +72,26 @@ public class EstacionDAO {
 		}
 	}
 	
-	public List<Estacion> get_estacion_origen_destino_by_tramo(int id_tramo) throws Exception{
+	public Estacion get_estacion_origen_by_tramo(int id_tramo) throws Exception{
 		try {
-			String query = "SELECT e.id_estacion, e.nombre, e.hs_apertura, e.hs_cierre, e.estado FROM \"tpDied\".\"Estacion\" e, \"tpDied\".\"Tramo\" tmo " +
+			String query = "SELECT e.* FROM \"tpDied\".\"Estacion\" e, \"tpDied\".\"Tramo\" tmo " +
 		                    "WHERE tmo.id_tramo = " + id_tramo + 
-		                    " AND tmo.id_estacion_origen = e.id_estacion " +
-		                    "AND tmo.id_estacion_destino = e.id_estacion ;";
+		                    " AND tmo.id_estacion_origen = e.id_estacion ;";
 			ArrayList<Estacion> estaciones = (ArrayList<Estacion>)((Object)Conexion.consultar(query, Estacion.class));
-			return estaciones;
+			return estaciones.get(0);
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
+	
+	public Estacion get_estacion_destino_by_tramo(int id_tramo) throws Exception{
+		try {
+			String query = "SELECT e.* FROM \"tpDied\".\"Estacion\" e, \"tpDied\".\"Tramo\" tmo " +
+		                    "WHERE tmo.id_tramo = " + id_tramo + 
+		                    " AND tmo.id_estacion_destino = e.id_estacion ;";
+			ArrayList<Estacion> estaciones = (ArrayList<Estacion>)((Object)Conexion.consultar(query, Estacion.class));
+			return estaciones.get(0);
 		}
 		catch(Exception ex) {
 			throw ex;
