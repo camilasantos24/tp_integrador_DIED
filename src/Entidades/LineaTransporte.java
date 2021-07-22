@@ -76,7 +76,8 @@ public class LineaTransporte {
 	public Trayecto getTrayecto() {
 		
 		try {
-			//this.trayecto = TrayectoDAO.getInstance().get_trayecto_by_id(Integer.parseInt(this.trayecto.getId()));	
+			this.trayecto.setId_estacion_destino(TrayectoDAO.getInstance().get_trayecto_by_id(this.trayecto.getId()).getId_estacion_destino());	
+			this.trayecto.setId_estacion_origen(TrayectoDAO.getInstance().get_trayecto_by_id(this.trayecto.getId()).getId_estacion_origen());	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

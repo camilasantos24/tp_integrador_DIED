@@ -8,15 +8,14 @@ import DAO.TrayectoDAO;
 
 public class Trayecto {
 	
-	private long id;
+	private int id;
 	private List<Estacion> estaciones; 
-	
-	
 	private int id_estacion_origen;
+	private int id_estacion_destino;
 	
 	//Contructores
 	
-	public Trayecto(long id) {
+	public Trayecto(int id) {
 		super();
 		this.id = id;
 		
@@ -26,7 +25,7 @@ public class Trayecto {
 	public Trayecto (String obj) {
 		String[] atributos= obj.split("\t");
 		
-		this.id= Long.parseLong(atributos[0]);
+		this.id= Integer.parseInt(atributos[0]);
 		this.id_estacion_origen= Integer.parseInt(atributos[1]);
 		/*try {
 			this.estaciones = getEstaciones(EstacionDAO.getInstance().get_estacion_by_id(Long.parseLong(atributos[1])));
@@ -41,7 +40,7 @@ public class Trayecto {
 	
 	//Getters y Setters
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -77,6 +76,16 @@ public class Trayecto {
 
 	public void setEstaciones(List<Estacion> estaciones) {
 		this.estaciones = estaciones;
+	}
+
+
+	public int getId_estacion_destino() {
+		return id_estacion_destino;
+	}
+
+
+	public void setId_estacion_destino(int id_estacion_destino) {
+		this.id_estacion_destino = id_estacion_destino;
 	}
 	
 	
