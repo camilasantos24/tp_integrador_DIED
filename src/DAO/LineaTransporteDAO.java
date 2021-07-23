@@ -114,5 +114,16 @@ public class LineaTransporteDAO {
 			throw ex;
 		}
 		}
+	
+	public List<LineaTransporte> get_linea_by_trayecto(int id) throws Exception{
+		try {
+		String query= "SELECT * FROM \"tpDied\".\"Linea_Transporte\" WHERE id_trayecto = "+id+" AND alta_baja=1 AND estado=1;";
+		ArrayList<LineaTransporte> lineaTransporte = (ArrayList<LineaTransporte>)((Object)Conexion.consultar(query, LineaTransporte.class));
+		return lineaTransporte;
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+	}
 
 }

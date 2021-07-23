@@ -151,7 +151,7 @@ private static TrayectoDAO _INSTANCE;
 
 	}
 	
-	public List<Tramo> get_tramos_by_origen_destino(int id_o, int id_d) throws Exception{
+	/*public List<Tramo> get_tramos_by_origen_destino(int id_o, int id_d) throws Exception{
 		try {
 			String query=	"SELECT tram.*" + 
 							"FROM \"tpDied\".\"Trayecto\" tray" + 
@@ -161,6 +161,17 @@ private static TrayectoDAO _INSTANCE;
 			ArrayList<Tramo> tramos = (ArrayList<Tramo>)((Object)Conexion.consultar(query, Tramo.class));
 				return tramos;
 				
+			}
+			catch(Exception ex) {
+				throw ex;
+			}
+	}*/
+	
+	public List<Trayecto> get_trayecto_by_origen_destino(int id_o, int id_d) throws Exception {
+		try {
+			String query=	"SELECT * FROM \"tpDied\".\"Trayecto\" WHERE id_estacion_origen="+id_o+" AND id_estacion_destino="+id_d+";";
+			ArrayList<Trayecto> trayecto = (ArrayList<Trayecto>)((Object)Conexion.consultar(query, Trayecto.class));
+			return trayecto;
 			}
 			catch(Exception ex) {
 				throw ex;

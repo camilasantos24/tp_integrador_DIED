@@ -128,4 +128,8 @@ public class GestorLineaTransporte {
 		
 		return estadoInt;
 	}
+	
+	public static List<LineaTransporte> obtenerLineasPorTrayecto(int id) throws Exception{
+		return LineaTransporteDAO.getInstance().get_linea_by_trayecto(id);
+	}
 }

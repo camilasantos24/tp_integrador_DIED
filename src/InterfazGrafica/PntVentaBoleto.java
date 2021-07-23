@@ -9,8 +9,11 @@ import javax.swing.border.EtchedBorder;
 
 import DTO.EstacionesDTO;
 import Entidades.Estacion;
+import Entidades.LineaTransporte;
 import Entidades.Tramo;
+import Entidades.Trayecto;
 import Gestores.GestorEstacion;
+import Gestores.GestorLineaTransporte;
 import Gestores.GestorTrayecto;
 
 import javax.swing.JTextField;
@@ -59,22 +62,39 @@ public class PntVentaBoleto extends JPanel {
 				
 				int id_o;
 				int id_d;
+				int filtro=cb_filtro.getSelectedIndex();
+				List<Trayecto> trayecto;
 				List<Tramo> listaTramos= new ArrayList();
+				List<Estacion> listaEstaciones= new ArrayList();
+				List<LineaTransporte> listaLineas= new ArrayList();
 				
 				id_o= idEstacion.get(cb_est_origen.getSelectedIndex());
 				id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
 				
 				try {
-					listaTramos=GestorTrayecto.obtener_tramos_origen_destino(id_o, id_d);
+					trayecto=GestorTrayecto.obtener_trayecto_origen_destino(id_o, id_d);
+					
+						if(filtro==0) {	//NINGUNO
+							for (int i = 0; i < trayecto.size(); i++) {
+								listaTramos=trayecto.get(i).getTramos();
+								listaEstaciones=trayecto.get(i).getEstaciones();
+								listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayecto.get(i).getId());
+							}
+						}
+						if(filtro==1) {	//MAS RAPIDO
+							
+						}
+						if(filtro==2) {	//MENOR DISTANCIA
+							
+						}
+						if(filtro==3) {	//MAS BARATO
+							
+						}
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
-				
-				for (int j = 0; j < listaTramos.size(); j++) {
-					System.out.println(listaTramos.get(j).getId());		//CONTROLAR
-				}
-				
-								
+				}				
 			}
 		});
 		

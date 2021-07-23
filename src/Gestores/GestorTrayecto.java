@@ -7,6 +7,7 @@ import DAO.TrayectoDAO;
 import DTO.TramoDTO;
 import Entidades.Estacion;
 import Entidades.Tramo;
+import Entidades.Trayecto;
 
 public class GestorTrayecto {
 
@@ -35,8 +36,12 @@ public class GestorTrayecto {
 		return TrayectoDAO.getInstance().get_tramos_by_origen(id_o);
 	}
 	
-	public static List<Tramo> obtener_tramos_origen_destino(int id_o, int id_d) throws Exception{
+	/*public static List<Tramo> obtener_tramos_origen_destino(int id_o, int id_d) throws Exception{
 		return TrayectoDAO.getInstance().get_tramos_by_origen_destino(id_o, id_d);
+	}*/
+	
+	public static List<Trayecto> obtener_trayecto_origen_destino(int id_o, int id_d) throws Exception{
+		return TrayectoDAO.getInstance().get_trayecto_by_origen_destino(id_o, id_d);
 	}
 
 
