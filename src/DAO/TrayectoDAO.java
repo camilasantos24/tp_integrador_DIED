@@ -29,7 +29,7 @@ private static TrayectoDAO _INSTANCE;
 	public List<Estacion> get_estaciones_by_trayecto(long id_trayecto) throws Exception{
 		//trae todas las estaciones de un trayecto MENOS la origen
 		try {
-			String query = "SELECT e.id_estacion, e.nombre, e.hs_apertura, e.hs_cierre, e.estado FROM \"tpDied\". \"Estacion\" e, \"tpDied\".\"Tramo\" tmo " +   
+			String query = "SELECT e.* FROM \"tpDied\". \"Estacion\" e, \"tpDied\".\"Tramo\" tmo " +   
 					"WHERE e.id_estacion = ANY(SELECT tmo.id_estacion_destino "+
 							  "FROM \"tpDied\".\"Tramo_Trayecto\" tt "+ 
 							  "WHERE tmo.id_tramo = tt.id_tramo "+

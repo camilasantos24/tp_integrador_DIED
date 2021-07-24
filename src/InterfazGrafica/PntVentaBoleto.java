@@ -15,6 +15,7 @@ import Entidades.Trayecto;
 import Gestores.GestorEstacion;
 import Gestores.GestorLineaTransporte;
 import Gestores.GestorTrayecto;
+import Grafo.Grafo;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -72,12 +73,16 @@ public class PntVentaBoleto extends JPanel {
 				id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
 				
 				try {
-					trayecto=GestorTrayecto.obtener_trayecto_origen_destino(id_o, id_d);
+					trayecto=GestorTrayecto.obtener_trayecto_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
 
-						for (int i = 0; i < trayecto.size(); i++) {
+						for (int i = 0; i < trayecto.size(); i++) {							// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
 							listaTramos=trayecto.get(i).getTramos();
 							listaEstaciones=trayecto.get(i).getEstaciones();
 							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayecto.get(i).getId());
+							
+							Grafo grafo=generarGrafo(listaTramos, listaEstaciones);
+							
+							System.out.println(grafo.paths("C", "G"));
 						}
 						
 				} catch (Exception e) {
@@ -165,6 +170,21 @@ public class PntVentaBoleto extends JPanel {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones) {
+		
+		Grafo<String> grafo1 = new Grafo<String>();
+		
+		for (int i = 0; i < estaciones.size(); i++) {
+			grafo1.addNodo(estaciones.get(i).getNombre());
+		}
+		
+		for (int i = 0; i < tramos.size(); i++) {
+			grafo1.conectar(tramos.get(i).getEstacion_origen().getNombre(), tramos.get(i).getEstacion_destino().getNombre(),tramos.get(i).getDistancia_km(), tramos.get(i).getDuracion(), tramos.get(i).getCosto());
+		}
+		
+		return grafo1;
 	}
 	
 }
