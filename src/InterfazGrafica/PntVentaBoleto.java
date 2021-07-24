@@ -73,25 +73,13 @@ public class PntVentaBoleto extends JPanel {
 				
 				try {
 					trayecto=GestorTrayecto.obtener_trayecto_origen_destino(id_o, id_d);
-					
-						if(filtro==0) {	//NINGUNO
-							for (int i = 0; i < trayecto.size(); i++) {
-								listaTramos=trayecto.get(i).getTramos();
-								listaEstaciones=trayecto.get(i).getEstaciones();
-								listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayecto.get(i).getId());
-							}
+
+						for (int i = 0; i < trayecto.size(); i++) {
+							listaTramos=trayecto.get(i).getTramos();
+							listaEstaciones=trayecto.get(i).getEstaciones();
+							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayecto.get(i).getId());
 						}
-						if(filtro==1) {	//MAS RAPIDO
-							
-						}
-						if(filtro==2) {	//MENOR DISTANCIA
-							
-						}
-						if(filtro==3) {	//MAS BARATO
-							
-						}
-					
-					
+						
 				} catch (Exception e) {
 					e.printStackTrace();
 				}				
