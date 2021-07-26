@@ -167,11 +167,11 @@ private static TrayectoDAO _INSTANCE;
 			}
 	}*/
 	
-	public List<Trayecto> get_trayecto_by_origen_destino(int id_o, int id_d) throws Exception {
+	public List<Trayecto> get_trayectos_by_origen_destino(int id_o, int id_d) throws Exception {
 		try {
 			String query=	"SELECT * FROM \"tpDied\".\"Trayecto\" WHERE id_estacion_origen="+id_o+" AND id_estacion_destino="+id_d+";";
-			ArrayList<Trayecto> trayecto = (ArrayList<Trayecto>)((Object)Conexion.consultar(query, Trayecto.class));
-			return trayecto;
+			ArrayList<Trayecto> trayectos = (ArrayList<Trayecto>)((Object)Conexion.consultar(query, Trayecto.class));
+			return trayectos;
 			}
 			catch(Exception ex) {
 				throw ex;

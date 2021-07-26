@@ -9,7 +9,7 @@ import DAO.TrayectoDAO;
 public class Trayecto {
 	
 	private int id;
-	private List<Estacion> estaciones; 
+	private List<Estacion> estaciones=null; 
 	private int id_estacion_origen;
 	private int id_estacion_destino;
 	
@@ -66,11 +66,16 @@ public class Trayecto {
 
 	public List<Estacion> getEstaciones() throws Exception {
 		if (this.estaciones == null) {
+			
+				this.estaciones= new ArrayList<Estacion>();
+			
 				this.estaciones.add(EstacionDAO.getInstance().get_estacion_by_id(id_estacion_origen));
 				this.estaciones.addAll(TrayectoDAO.getInstance().get_estaciones_by_trayecto(id));
+				
 				return estaciones;
 			
 		}else {
+			
 		return estaciones;
 		}
 	}

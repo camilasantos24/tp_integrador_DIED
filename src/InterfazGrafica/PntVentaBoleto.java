@@ -64,25 +64,55 @@ public class PntVentaBoleto extends JPanel {
 				int id_o;
 				int id_d;
 				int filtro=cb_filtro.getSelectedIndex();
-				List<Trayecto> trayecto;
+				List<Trayecto> trayectos;
 				List<Tramo> listaTramos= new ArrayList();
 				List<Estacion> listaEstaciones= new ArrayList();
 				List<LineaTransporte> listaLineas= new ArrayList();
+				Grafo grafo=null;
 				
 				id_o= idEstacion.get(cb_est_origen.getSelectedIndex());
 				id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
 				
 				try {
-					trayecto=GestorTrayecto.obtener_trayecto_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
+					trayectos=GestorTrayecto.obtener_trayectos_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
 
-						for (int i = 0; i < trayecto.size(); i++) {							// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
-							listaTramos=trayecto.get(i).getTramos();
-							listaEstaciones=trayecto.get(i).getEstaciones();
-							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayecto.get(i).getId());
+						for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
 							
-							Grafo grafo=generarGrafo(listaTramos, listaEstaciones);
+							listaTramos=trayectos.get(i).getTramos();
+							listaEstaciones=trayectos.get(i).getEstaciones();
+							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
+							
+							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
+							grafo=generarGrafo(listaTramos, listaEstaciones);
+							
+							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
+							}else {
+								for(int j=0; j<listaTramos.size(); j++) {
+									
+									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen().getNombre())) {	
+										grafo.addNodo(listaTramos.get(j).getEstacion_origen().getNombre());
+									}
+									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
+										grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
+									}
+									grafo.conectar(listaTramos.get(j).getEstacion_origen(), listaTramos.get(j).getEstacion_destino(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
+								}
+							}
 							
 							System.out.println(grafo.paths("C", "G"));
+						}
+						
+						if(cb_filtro.getSelectedIndex()==0) {	//Ninguno
+							
+						}
+						if(cb_filtro.getSelectedIndex()==1) {	//Mas rapido
+							
+						}
+						if(cb_filtro.getSelectedIndex()==2) {	//Menor distancia
+							
+						}
+						if(cb_filtro.getSelectedIndex()==3) {	//Mas barato
+							
 						}
 						
 				} catch (Exception e) {
@@ -185,6 +215,14 @@ public class PntVentaBoleto extends JPanel {
 		}
 		
 		return grafo1;
+	}
+	
+	public boolean existeNodo(Grafo grafo, String nombEst) {
+		if((grafo.getNodo(nombEst).getValue()).equals(nombEst)) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 }

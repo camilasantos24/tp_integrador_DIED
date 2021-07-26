@@ -40,8 +40,8 @@ public class GestorTrayecto {
 		return TrayectoDAO.getInstance().get_tramos_by_origen_destino(id_o, id_d);
 	}*/
 	
-	public static List<Trayecto> obtener_trayecto_origen_destino(int id_o, int id_d) throws Exception{
-		return TrayectoDAO.getInstance().get_trayecto_by_origen_destino(id_o, id_d);
+	public static List<Trayecto> obtener_trayectos_origen_destino(int id_o, int id_d) throws Exception{
+		return TrayectoDAO.getInstance().get_trayectos_by_origen_destino(id_o, id_d);
 	}
 
 
