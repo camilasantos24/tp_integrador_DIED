@@ -9,10 +9,36 @@ public class Grafo<T> {
 	private List<Arista<T>> aristas;
 	private List<Vertice<T>> vertices;
 	
+	
+	
 	public Grafo(){
 		this.aristas = new ArrayList<Arista<T>>();
 		this.vertices = new ArrayList<Vertice<T>>();
 	}
+	
+	
+	
+
+	public List<Arista<T>> getAristas() {
+		return aristas;
+	}
+
+
+	public void setAristas(List<Arista<T>> aristas) {
+		this.aristas = aristas;
+	}
+
+
+	public List<Vertice<T>> getVertices() {
+		return vertices;
+	}
+
+	public void setVertices(List<Vertice<T>> vertices) {
+		this.vertices = vertices;
+	}
+
+
+
 
 	public Grafo<T> addNodo(T nodo){
 		 this.addNodo(new Vertice<T>(nodo));
