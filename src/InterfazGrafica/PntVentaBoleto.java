@@ -7,6 +7,7 @@ import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
 
+import DAO.EstacionDAO;
 import DTO.EstacionesDTO;
 import Entidades.Estacion;
 import Entidades.LineaTransporte;
@@ -15,6 +16,7 @@ import Entidades.Trayecto;
 import Gestores.GestorEstacion;
 import Gestores.GestorLineaTransporte;
 import Gestores.GestorTrayecto;
+import Gestores.GestorVenta;
 import Grafo.Grafo;
 
 import javax.swing.JTextField;
@@ -98,24 +100,25 @@ public class PntVentaBoleto extends JPanel {
 									if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
 									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
 									}
+									
 								}
 							}
 							
+							
+							
+						}
+						
+						if(cb_filtro.getSelectedIndex()!=0) {	//Ninguno
+							GestorVenta.menor_peso(grafo, EstacionDAO.getInstance().get_estacion_by_id(id_o), cb_filtro.getSelectedIndex());	
+						}else {
 							System.out.println(grafo.paths("C", "G"));
 						}
 						
-						if(cb_filtro.getSelectedIndex()==0) {	//Ninguno
-							
-						}
-						if(cb_filtro.getSelectedIndex()==1) {	//Mas rapido
-							
-						}
-						if(cb_filtro.getSelectedIndex()==2) {	//Menor distancia
-							
-						}
-						if(cb_filtro.getSelectedIndex()==3) {	//Mas barato
-							
-						}
+						
+						
+						
+
+						
 						
 				} catch (Exception e) {
 					e.printStackTrace();

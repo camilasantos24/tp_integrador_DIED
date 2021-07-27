@@ -2,6 +2,7 @@ package DAO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,29 +16,25 @@ public class MAIN {
 
 	public static void main(String[] args) {
 		
-		//Conexion c = new Conexion();
-		//c.conectarBD(); 
-		
-		try {
-			List<Estacion> es = TrayectoDAO.getInstance().get_estaciones_by_trayecto(1);
-			for (int i=0; i<es.size(); i++) {
-			System.out.println(es.get(i).getNombre() + ", hs_ap = " + es.get(i).getHs_apertura().getHour() + ":"+  es.get(i).getHs_apertura().getMinute());
-			}
-			} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		/*String f1= "01/11/2020";
-		
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		
-		try {
-			Date fecha= formato.parse(f1);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+	List<Integer> i = new ArrayList();
+	i.add(1);
+	i.add(2);
+	i.add(4);
+	i.add(7);
+	
+	for (int j =0; j<i.size(); j++) {
+		System.out.println(i.get(j));
+	}
+	System.out.println("---------------------------");
+	i.remove(2);
+	
+	for (int j =0; j<i.size(); j++) {
+		System.out.println(i.get(j));
+	}
+	
+	System.out.println("---------------------------");
+	System.out.println(i.get(2));
+
 
 	}
 
