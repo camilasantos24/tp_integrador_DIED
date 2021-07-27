@@ -142,5 +142,12 @@ public class Grafo<T> {
 	}
 
 
+	public boolean validar_conexion_vertices(T nodo_origen, T nodo_destino) {
+		
+		if(this.findAristas(nodo_origen, nodo_destino) != null) {
+			return true;
+		}else {return false;}
+			
+	}
 
 }

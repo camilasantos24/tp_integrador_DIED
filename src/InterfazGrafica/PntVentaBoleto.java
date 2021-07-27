@@ -94,7 +94,10 @@ public class PntVentaBoleto extends JPanel {
 									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
 										grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
 									}
+									
+									if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
 									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
+									}
 								}
 							}
 							
