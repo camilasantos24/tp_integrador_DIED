@@ -65,11 +65,12 @@ public class GestorVenta {
 			
 				float peso_arista_fin = peso_arista + Float.parseFloat(visitar.get(0)[1].toString());
 				
-				if(existe_en_visitar(visitar, ady.get(i))== false) {
+				
+				if(existe_en_visitar(visitar, g.getNodo(ady.get(i)).getValue().toString())== false) {
 					Object[] nuevo_ady = {ady.get(i), peso_arista_fin};
 					visitar.add(nuevo_ady);
 				}else {
-					int indice1 =buscar_indice(visitar, ady.get(i).toString());
+					int indice1 =buscar_indice(visitar, g.getNodo(ady.get(i)).getValue().toString());
 					if((float)visitar.get(indice1)[1] > peso_arista_fin) {
 					visitar.get(indice1)[1] = peso_arista_fin;
 					}
@@ -111,12 +112,12 @@ public class GestorVenta {
 		return index;
 	}
 	
-	public static boolean existe_en_visitar (List<Object[]> v, Vertice estacion) {
+	public static boolean existe_en_visitar (List<Object[]> v, String estacion) {
 		boolean existe = false; 
 		int i =0; 
 		
 		while (i<v.size() && existe == false) {
-			if(v.get(i)[0].equals(estacion.toString())) {
+			if(v.get(i)[0].equals(estacion)) {
 				existe=true;
 			}
 			i++;
