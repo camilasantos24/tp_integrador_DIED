@@ -64,14 +64,21 @@ public class Grafo<T> {
 	}
 	
 	public Vertice<T> getNodo(T valor){
-		return this.vertices.get(this.vertices.indexOf(new Vertice<T>(valor)));
+		
+		if(this.vertices.indexOf(new Vertice<T>(valor)) != -1) {
+		Vertice<T> v = this.vertices.get(this.vertices.indexOf(new Vertice<T>(valor)));
+		return v;
+		}else {
+			return null;
+		}
+		
 	}
 	
 	public void printAristas(){
 		System.out.println(this.aristas.toString());
 	}
 	
-    protected Arista<T> findAristas(T v1, T v2){
+    public Arista<T> findAristas(T v1, T v2){
     	return this.findAristas(new Vertice<T>(v1), new Vertice<T>(v2));
     }
     

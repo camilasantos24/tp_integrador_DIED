@@ -84,7 +84,6 @@ public class PntVentaBoleto extends JPanel {
 							
 							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
 							grafo=generarGrafo(listaTramos, listaEstaciones);
-							
 							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
 							}else {
 								for(int j=0; j<listaTramos.size(); j++) {
@@ -95,7 +94,7 @@ public class PntVentaBoleto extends JPanel {
 									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
 										grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
 									}
-									grafo.conectar(listaTramos.get(j).getEstacion_origen(), listaTramos.get(j).getEstacion_destino(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
+									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
 								}
 							}
 							
@@ -218,11 +217,13 @@ public class PntVentaBoleto extends JPanel {
 	}
 	
 	public boolean existeNodo(Grafo grafo, String nombEst) {
+		if(grafo.getNodo(nombEst) != null) {
 		if((grafo.getNodo(nombEst).getValue()).equals(nombEst)) {
 			return true;
-		}else {
-			return false;
-		}
+			}else {
+				return false;
+			}
+		}else {return false;}
 	}
 	
 }
