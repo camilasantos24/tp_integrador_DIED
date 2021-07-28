@@ -66,7 +66,11 @@ public class GestorVenta {
 			
 				float peso_arista_fin = peso_arista + Float.parseFloat(visitar.get(0)[1].toString());
 				
-				if(existe_en_visitar(visitar, g.getNodo(ady.get(i)).getValue().toString()) == false) {
+
+				
+
+				
+				if(existe_en_visitar(visitar, g.getNodo(ady.get(i)).getValue().toString())== false) {
 					Object[] nuevo_ady = {ady.get(i), peso_arista_fin};
 					visitar.add(nuevo_ady);
 				}else {
