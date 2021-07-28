@@ -108,10 +108,13 @@ public class PntVentaBoleto extends JPanel {
 							
 						}
 						
+						Estacion origen = EstacionDAO.getInstance().get_estacion_by_id(id_o);
+						Estacion destino =EstacionDAO.getInstance().get_estacion_by_id(id_d);
 						if(cb_filtro.getSelectedIndex()!=0) {	//Ninguno
-							GestorVenta.menor_peso(grafo, EstacionDAO.getInstance().get_estacion_by_id(id_o), cb_filtro.getSelectedIndex());	
+							//GestorVenta.menor_peso(grafo,origen , destino, cb_filtro.getSelectedIndex());	
+							System.out.println(GestorVenta.get_camino_de_menor_peso(grafo, cb_filtro.getSelectedIndex(), origen, destino));
 						}else {
-							System.out.println(grafo.paths("C", "G"));
+							System.out.println(grafo.paths(origen.getNombre(), destino.getNombre()));
 						}
 						
 						

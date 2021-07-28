@@ -5,12 +5,13 @@ import java.util.Hashtable;
 import java.util.List;
 
 import Entidades.Estacion;
+import Grafo.Arista;
 import Grafo.Grafo;
 import Grafo.Vertice;
 
 public class GestorVenta {
 
-	public static float menor_peso (Grafo g, Estacion origen, int index) {
+	public static float menor_peso (Grafo g, Estacion origen, Estacion destino,  int index) {
 			
 		List<Object[]> visitar = new ArrayList();
 		List<Object[]> pesoMin = new ArrayList();
@@ -65,11 +66,11 @@ public class GestorVenta {
 			
 				float peso_arista_fin = peso_arista + Float.parseFloat(visitar.get(0)[1].toString());
 				
-				if(existe_en_visitar(visitar, ady.get(i))== false) {
+				if(existe_en_visitar(visitar, g.getNodo(ady.get(i)).getValue().toString()) == false) {
 					Object[] nuevo_ady = {ady.get(i), peso_arista_fin};
 					visitar.add(nuevo_ady);
 				}else {
-					int indice1 =buscar_indice(visitar, ady.get(i).toString());
+					int indice1 =buscar_indice(visitar, g.getNodo(ady.get(i)).getValue().toString());
 					if((float)visitar.get(indice1)[1] > peso_arista_fin) {
 					visitar.get(indice1)[1] = peso_arista_fin;
 					}
@@ -92,11 +93,12 @@ public class GestorVenta {
 			System.out.println("Estacion:" + pesoMin.get(i)[0] + " Peso: " + pesoMin.get(i)[1]  + "\n");
 		}
 		
-		return 0;
+		int indice3= buscar_indice(pesoMin, destino.getNombre());
+		return Float.parseFloat(pesoMin.get(indice3)[1].toString());
 	} 
 	
 		
-	public static int buscar_indice (List<Object[]> v, String ady) {
+	public static int buscar_indice (List<Object[]> v, Object ady) {
 		boolean encontrado = false;
 		int i =0;
 		int index =0 ;
@@ -111,18 +113,66 @@ public class GestorVenta {
 		return index;
 	}
 	
-	public static boolean existe_en_visitar (List<Object[]> v, Vertice estacion) {
+	public static boolean existe_en_visitar (List<Object[]> v, String estacion) {
 		boolean existe = false; 
 		int i =0; 
 		
 		while (i<v.size() && existe == false) {
-			if(v.get(i)[0].equals(estacion.toString())) {
+			if(v.get(i)[0].equals(estacion)) {
 				existe=true;
 			}
 			i++;
 		}
 		
 		return existe;
+	}
+	
+	
+	public static List<Vertice> get_camino_de_menor_peso (Grafo g, int index, Estacion o, Estacion d){
+		float peso_min = menor_peso(g, o, d, index);
+		List<Vertice> camino_result = new ArrayList();
+
+		List<List<Vertice>> caminos = g.paths(o.getNombre(), d.getNombre());
+		boolean encontrado= false;
+		int i =0;
+		
+		while (i<caminos.size() && encontrado ==false) {
+			if(get_peso_camino(g, caminos.get(i), index) == peso_min) {
+				encontrado= true;
+				camino_result = caminos.get(i);
+			}
+			i++;
+		}
+		
+		return camino_result;
+		
+	}
+	
+	public static float get_peso_camino (Grafo g, List<Vertice> camino, int index) {
+		float peso =0;
+		switch(index) {
+		case 1: 
+			for(int i=1; i<camino.size(); i++) {
+				peso += g.findAristas(camino.get(i-1), camino.get(i)).getDuracion();
+			}
+		break;
+		case 2:
+			for(int i=1; i<camino.size(); i++) {
+				System.out.println(camino.get(i-1) + " " + camino.get(i));
+				Arista a = g.findAristas(g.getNodo(camino.get(i-1)).getValue().toString(), g.getNodo(camino.get(i)).getValue().toString());
+				float dis =a.getDistancia();
+				peso += dis ;
+				//TODO: ARREGLAR !!
+			}
+		break;
+		case 3:
+			for(int i=1; i<camino.size(); i++) {
+				peso += g.findAristas(camino.get(i-1), camino.get(i)).getCosto();
+			}
+		break;
+		}
+		
+		return peso;
 	}
 
 }
