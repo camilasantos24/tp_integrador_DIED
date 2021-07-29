@@ -85,7 +85,7 @@ public class PntVentaBoleto extends JPanel {
 							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
 							
 							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
-							grafo=generarGrafo(listaTramos, listaEstaciones);
+							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas);
 							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
 							}else {
 								for(int j=0; j<listaTramos.size(); j++) {
@@ -98,7 +98,7 @@ public class PntVentaBoleto extends JPanel {
 									}
 									
 									if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
-									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto());
+									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas);
 									}
 									
 								}
@@ -210,7 +210,7 @@ public class PntVentaBoleto extends JPanel {
 		
 	}
 	
-	public Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones) {
+	public Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones, List<LineaTransporte> lineas) {
 		
 		Grafo<String> grafo1 = new Grafo<String>();
 		
@@ -219,7 +219,7 @@ public class PntVentaBoleto extends JPanel {
 		}
 		
 		for (int i = 0; i < tramos.size(); i++) {
-			grafo1.conectar(tramos.get(i).getEstacion_origen().getNombre(), tramos.get(i).getEstacion_destino().getNombre(),tramos.get(i).getDistancia_km(), tramos.get(i).getDuracion(), tramos.get(i).getCosto());
+			grafo1.conectar(tramos.get(i).getEstacion_origen().getNombre(), tramos.get(i).getEstacion_destino().getNombre(),tramos.get(i).getDistancia_km(), tramos.get(i).getDuracion(), tramos.get(i).getCosto(), lineas);
 		}
 		
 		return grafo1;

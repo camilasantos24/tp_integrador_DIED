@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import Entidades.LineaTransporte;
+
 public class Grafo<T> {
 	
 	private List<Arista<T>> aristas;
@@ -49,18 +51,13 @@ public class Grafo<T> {
 		this.vertices.add(nodo);
 	}
 	
-	public Grafo<T> conectar(T n1,T n2){
-		this.conectar(getNodo(n1), getNodo(n2), -1, -1, -1);
+	public Grafo<T> conectar(T n1,T n2, int distancia, int duracion, float costo, List<LineaTransporte> lineaTransp){
+		this.conectar(getNodo(n1), getNodo(n2), distancia, duracion, costo, lineaTransp);
 		return this;
 	}
-
-	public Grafo<T> conectar(T n1,T n2, int distancia, int duracion, float costo){
-		this.conectar(getNodo(n1), getNodo(n2), distancia, duracion, costo);
-		return this;
-	}
-
-	private void conectar(Vertice<T> nodo1,Vertice<T> nodo2,int distancia, int duracion, float costo){
-		this.aristas.add(new Arista<T>(nodo1,nodo2, distancia, duracion, costo));
+	
+	private void conectar(Vertice<T> nodo1,Vertice<T> nodo2,int distancia, int duracion, float costo, List<LineaTransporte> lineaTransp){
+		this.aristas.add(new Arista<T>(nodo1,nodo2, distancia, duracion, costo, lineaTransp));
 	}
 	
 	public Vertice<T> getNodo(T valor){

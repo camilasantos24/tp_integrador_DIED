@@ -1,5 +1,10 @@
 package Grafo;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import Entidades.LineaTransporte;
+
 public class Arista<T> {
 	
 	private Vertice<T> origin;
@@ -7,18 +12,22 @@ public class Arista<T> {
 	private int distancia;
 	private int duracion;
 	private float costo;
+	private List<LineaTransporte> lineaTransp = new ArrayList();
 	
 	public Arista() {
 		
 	}
 	
-	public Arista(Vertice<T> origin, Vertice<T> end, int distancia, int duracion, float costo) {
+	public Arista(Vertice<T> origin, Vertice<T> end, int distancia, int duracion, float costo, List<LineaTransporte> lineaTransp) {
 		super();
 		this.origin = origin;
 		this.end = end;
 		this.distancia = distancia;
 		this.duracion = duracion;
 		this.costo = costo;
+		for(int i=0; i<lineaTransp.size(); i++) {
+			this.lineaTransp.add(lineaTransp.get(i));
+		}
 	}
 
 	public Vertice<T> getOrigin() {
@@ -61,6 +70,14 @@ public class Arista<T> {
 		this.costo = costo;
 	}
 
+	public List<LineaTransporte> getLineaTransp() {
+		return lineaTransp;
+	}
+
+	public void setLineaTransp(List<LineaTransporte> lineaTransp) {
+		this.lineaTransp = lineaTransp;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -69,6 +86,7 @@ public class Arista<T> {
 		result = prime * result + distancia;
 		result = prime * result + duracion;
 		result = prime * result + ((end == null) ? 0 : end.hashCode());
+		result = prime * result + ((lineaTransp == null) ? 0 : lineaTransp.hashCode());
 		result = prime * result + ((origin == null) ? 0 : origin.hashCode());
 		return result;
 	}
@@ -93,6 +111,11 @@ public class Arista<T> {
 				return false;
 		} else if (!end.equals(other.end))
 			return false;
+		if (lineaTransp == null) {
+			if (other.lineaTransp != null)
+				return false;
+		} else if (!lineaTransp.equals(other.lineaTransp))
+			return false;
 		if (origin == null) {
 			if (other.origin != null)
 				return false;
@@ -102,4 +125,6 @@ public class Arista<T> {
 	}
 
 	
+
+		
 }
