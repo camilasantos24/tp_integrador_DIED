@@ -96,8 +96,10 @@ public class GestorVenta {
 		for (int i = 0; i < pesoMin.size(); i++) {
 			System.out.println("Estacion:" + pesoMin.get(i)[0] + " Peso: " + pesoMin.get(i)[1]  + "\n");
 		}
-		
+		//System.out.println("Nombre: "+destino.getNombre());
 		int indice3= buscar_indice(pesoMin, destino.getNombre());
+		//System.out.println("Indice Peso minimo: "+indice3);
+		//System.out.println(Float.parseFloat(pesoMin.get(indice3)[1].toString()));
 		return Float.parseFloat(pesoMin.get(indice3)[1].toString());
 	} 
 	
@@ -107,13 +109,12 @@ public class GestorVenta {
 		int i =0;
 		int index =0 ;
 		while(i<v.size() && encontrado==false) {
-			if(v.get(i)[0] == ady) {
+			if(v.get(i)[0].equals(ady)) {
 				index = i;
 				encontrado = true;
 			}
 			i++;
 		}
-		
 		return index;
 	}
 	
@@ -139,7 +140,7 @@ public class GestorVenta {
 		List<List<Vertice>> caminos = g.paths(o.getNombre(), d.getNombre());
 		boolean encontrado= false;
 		int i =0;
-		
+
 		while (i<caminos.size() && encontrado ==false) {
 			if(get_peso_camino(g, caminos.get(i), index) == peso_min) {
 				encontrado= true;
@@ -157,25 +158,23 @@ public class GestorVenta {
 		switch(index) {
 		case 1: 
 			for(int i=1; i<camino.size(); i++) {
-				peso += g.findAristas(camino.get(i-1), camino.get(i)).getDuracion();
+				peso += g.findAristas(camino.get(i-1).toString(), camino.get(i).toString()).getDuracion();
 			}
 		break;
 		case 2:
 			for(int i=1; i<camino.size(); i++) {
-				System.out.println(camino.get(i-1) + " " + camino.get(i));
-				Arista a = g.findAristas(g.getNodo(camino.get(i-1)).getValue().toString(), g.getNodo(camino.get(i)).getValue().toString());
+				Arista a = g.findAristas(camino.get(i-1).toString(), camino.get(i).toString());
 				float dis =a.getDistancia();
 				peso += dis ;
-				//TODO: ARREGLAR !!
 			}
 		break;
 		case 3:
 			for(int i=1; i<camino.size(); i++) {
-				peso += g.findAristas(camino.get(i-1), camino.get(i)).getCosto();
+				peso += g.findAristas(camino.get(i-1).toString(), camino.get(i).toString()).getCosto();
 			}
 		break;
 		}
-		
+
 		return peso;
 	}
 
