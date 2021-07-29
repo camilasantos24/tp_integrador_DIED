@@ -156,25 +156,26 @@ public class GestorVenta {
 	public static float get_peso_camino (Grafo g, List<Vertice> camino, int index) {
 		float peso =0;
 		switch(index) {
-		case 1: 
+		case 1: 	//MAS RAPIDO
 			for(int i=1; i<camino.size(); i++) {
 				peso += g.findAristas(camino.get(i-1).toString(), camino.get(i).toString()).getDuracion();
 			}
 		break;
-		case 2:
+		case 2:		//MENOR DISTANCIA
 			for(int i=1; i<camino.size(); i++) {
 				Arista a = g.findAristas(camino.get(i-1).toString(), camino.get(i).toString());
 				float dis =a.getDistancia();
 				peso += dis ;
 			}
 		break;
-		case 3:
+		case 3:		//MAS BARATO
 			for(int i=1; i<camino.size(); i++) {
 				peso += g.findAristas(camino.get(i-1).toString(), camino.get(i).toString()).getCosto();
 			}
 		break;
 		}
 
+		
 		return peso;
 	}
 
