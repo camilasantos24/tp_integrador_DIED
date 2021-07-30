@@ -6,6 +6,7 @@ import javax.swing.JTextPane;
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
+import javax.swing.table.DefaultTableModel;
 
 import DAO.EstacionDAO;
 import DTO.EstacionesDTO;
@@ -18,6 +19,7 @@ import Gestores.GestorLineaTransporte;
 import Gestores.GestorTrayecto;
 import Gestores.GestorVenta;
 import Grafo.Grafo;
+import Grafo.Vertice;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -31,9 +33,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +51,13 @@ public class PntVentaBoleto extends JPanel {
 	
 	public static List<Integer> idEstacion= new ArrayList();
 	
+	public static JTable table = new JTable();
+	public static DefaultTableModel dm = new DefaultTableModel(){
+		public boolean isCellEditable(int rowIndex, int columnIndex ) {
+			return false;
+		}
+	};
+	
 
 	public PntVentaBoleto() {
 		setBounds(100, 100, 733, 434);
@@ -56,12 +68,13 @@ public class PntVentaBoleto extends JPanel {
 		txtpnBoletos.setText("VENTA DE BOLETOS");
 		txtpnBoletos.setEditable(false);
 		txtpnBoletos.setBackground(SystemColor.menu);
-		txtpnBoletos.setBounds(292, 25, 190, 28);
+		txtpnBoletos.setBounds(253, 25, 242, 28);
 		add(txtpnBoletos);
 		
 		JButton btn_ver_caminos = new JButton("Ver caminos");
 		btn_ver_caminos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				restaurarTabla();
 				
 				int id_o;
 				int id_d;
@@ -103,24 +116,21 @@ public class PntVentaBoleto extends JPanel {
 									
 								}
 							}
-							
-							
-							
 						}
 						
 						Estacion origen = EstacionDAO.getInstance().get_estacion_by_id(id_o);
 						Estacion destino =EstacionDAO.getInstance().get_estacion_by_id(id_d);
-						if(cb_filtro.getSelectedIndex()!=0) {	//Ninguno
-							//GestorVenta.menor_peso(grafo,origen , destino, cb_filtro.getSelectedIndex());	
-							System.out.println(GestorVenta.get_camino_de_menor_peso(grafo, cb_filtro.getSelectedIndex(), origen, destino));
+						
+						
+						if(cb_filtro.getSelectedIndex()!=0) {	
+							List<Vertice> caminosMenorPeso=GestorVenta.get_camino_de_menor_peso(grafo, cb_filtro.getSelectedIndex(), origen, destino);
+							cargarTablaFiltro(grafo,caminosMenorPeso);
+							System.out.println(caminosMenorPeso);
 						}else {
-							System.out.println(grafo.paths(origen.getNombre(), destino.getNombre()));
+							List<List<Vertice>> caminos=grafo.paths(origen.getNombre(), destino.getNombre());
+							cargarTablaTodos(grafo, caminos);
+							System.out.println(caminos);
 						}
-						
-						
-						
-						
-
 						
 						
 				} catch (Exception e) {
@@ -129,18 +139,25 @@ public class PntVentaBoleto extends JPanel {
 			}
 		});
 		
+		dm.addColumn("Caminos");
+		dm.addColumn("Costo (en pesos)");
+		dm.addColumn("Distancia (en km)");
+		dm.addColumn("Duracion (en minutos)");
+		
+		table.setModel(dm);
+		
 		btn_ver_caminos.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_ver_caminos.setBounds(505, 91, 181, 46);
+		btn_ver_caminos.setBounds(501, 120, 181, 46);
 		add(btn_ver_caminos);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estaci\u00F3n origen");
 		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(82, 64, 120, 14);
+		lblNewLabel_3_1.setBounds(78, 93, 120, 14);
 		add(lblNewLabel_3_1);
 		
 		
 		cb_est_origen.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_est_origen.setBounds(82, 80, 353, 20);
+		cb_est_origen.setBounds(78, 109, 353, 20);
 		add(cb_est_origen);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
@@ -155,27 +172,31 @@ public class PntVentaBoleto extends JPanel {
 			}
 		});*/
 		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_cancelar.setBounds(505, 156, 181, 46);
+		btn_cancelar.setBounds(501, 185, 181, 46);
 		add(btn_cancelar);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Estaci\u00F3n destino");
 		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1_1.setBounds(82, 124, 120, 14);
+		lblNewLabel_3_1_1.setBounds(78, 153, 120, 14);
 		add(lblNewLabel_3_1_1);
 		
 		cb_est_destino.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_est_destino.setBounds(82, 140, 353, 20);
+		cb_est_destino.setBounds(78, 169, 353, 20);
 		add(cb_est_destino);
 		
 		JLabel lblNewLabel_3_1_2 = new JLabel("Filtrar por:");
 		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1_2.setBounds(82, 182, 120, 14);
+		lblNewLabel_3_1_2.setBounds(78, 211, 120, 14);
 		add(lblNewLabel_3_1_2);
 		
 		cb_filtro.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_filtro.setBounds(82, 200, 353, 20);
+		cb_filtro.setBounds(78, 229, 353, 20);
 		cb_filtro.setModel(new DefaultComboBoxModel(new String[] {"Ninguno", "Camino más rápido", "Camino de menor distancia", "Camino más barato"}));
 		add(cb_filtro);
+		
+		JScrollPane sp_caminos = new JScrollPane(table);
+		sp_caminos.setBounds(78, 271, 604, 152);
+		add(sp_caminos);
 		
 	}
 	
@@ -234,5 +255,47 @@ public class PntVentaBoleto extends JPanel {
 			}
 		}else {return false;}
 	}
+	
+	public void cargarTablaFiltro(Grafo grafo, List<Vertice> camino) {
+		DecimalFormat df = new DecimalFormat("###.##");
+		
+		List<Vertice> caminos= camino;
+		double costo;
+		double distancia;
+		double duracion;
+		
+		costo= GestorVenta.get_peso_camino(grafo, caminos, 3);
+		distancia= GestorVenta.get_peso_camino(grafo, caminos, 2);
+		duracion= GestorVenta.get_peso_camino(grafo, caminos, 1);
+		
+		Object[] rowData= {caminos, df.format(costo), df.format(distancia), df.format(duracion)};
+		dm.addRow(rowData);
+		
+		
+		}
+	
+	public void cargarTablaTodos(Grafo grafo, List<List<Vertice>> caminos) {
+		DecimalFormat df = new DecimalFormat("###.##");
+		
+		double costo;
+		double distancia;
+		double duracion;
+		
+		for (int i = 0; i < caminos.size(); i++) {
+			
+			costo= GestorVenta.get_peso_camino(grafo, caminos.get(i), 3);
+			distancia= GestorVenta.get_peso_camino(grafo, caminos.get(i), 2);
+			duracion= GestorVenta.get_peso_camino(grafo, caminos.get(i), 1);
+			
+			Object[] rowData= {caminos.get(i), df.format(costo), df.format(distancia), df.format(duracion)};
+			dm.addRow(rowData);
+		}
+	}
+	
+	public static void restaurarTabla() {
+		 for( int i = dm.getRowCount() - 1; i >= 0; i-- ) {
+	          dm.removeRow(i);
+	      }
+		}
 	
 }
