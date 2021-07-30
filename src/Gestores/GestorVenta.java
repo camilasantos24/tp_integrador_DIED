@@ -175,7 +175,6 @@ public class GestorVenta {
 		break;
 		}
 
-		
 		return peso;
 	}
 
