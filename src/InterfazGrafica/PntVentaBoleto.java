@@ -9,6 +9,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.EstacionDAO;
+import DTO.BoletoDTO;
 import DTO.EstacionesDTO;
 import Entidades.Estacion;
 import Entidades.LineaTransporte;
@@ -83,6 +84,7 @@ public class PntVentaBoleto extends JPanel {
 				List<Tramo> listaTramos= new ArrayList();
 				List<Estacion> listaEstaciones= new ArrayList();
 				List<LineaTransporte> listaLineas= new ArrayList();
+				List<String>listaLineas_nombres= new ArrayList();
 				Grafo grafo=null;
 				
 				id_o= idEstacion.get(cb_est_origen.getSelectedIndex());
@@ -96,9 +98,10 @@ public class PntVentaBoleto extends JPanel {
 							listaTramos=trayectos.get(i).getTramos();
 							listaEstaciones=trayectos.get(i).getEstaciones();
 							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
+							listaLineas_nombres= obtenerNombres(listaLineas);
 							
 							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
-							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas);
+							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
 							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
 							}else {
 								for(int j=0; j<listaTramos.size(); j++) {
@@ -111,7 +114,7 @@ public class PntVentaBoleto extends JPanel {
 									}
 									
 									if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
-									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas);
+									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
 									}
 									
 								}
@@ -139,64 +142,102 @@ public class PntVentaBoleto extends JPanel {
 			}
 		});
 		
+		dm.addColumn("Grafo");
 		dm.addColumn("Caminos");
-		dm.addColumn("Costo (en pesos)");
-		dm.addColumn("Distancia (en km)");
-		dm.addColumn("Duracion (en minutos)");
+		dm.addColumn("Costo (pesos)");
+		dm.addColumn("Distancia (km)");
+		dm.addColumn("Duracion (min)");
 		
 		table.setModel(dm);
+		table.getColumnModel().getColumn(0).setMaxWidth(0);
+		table.getColumnModel().getColumn(0).setMinWidth(0);
+		table.getColumnModel().getColumn(0).setPreferredWidth(0);
+		
+	
+		table.getColumnModel().getColumn(1).setPreferredWidth(160);
+        table.doLayout();
 		
 		btn_ver_caminos.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_ver_caminos.setBounds(501, 120, 181, 46);
+		btn_ver_caminos.setBounds(501, 103, 181, 46);
 		add(btn_ver_caminos);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estaci\u00F3n origen");
 		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(78, 93, 120, 14);
+		lblNewLabel_3_1.setBounds(78, 76, 120, 14);
 		add(lblNewLabel_3_1);
 		
 		
 		cb_est_origen.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_est_origen.setBounds(78, 109, 353, 20);
+		cb_est_origen.setBounds(78, 92, 353, 20);
 		add(cb_est_origen);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
-		/*btn_cancelar.addActionListener(new ActionListener() {
+		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
 				if(respuesta==JOptionPane.YES_OPTION) {
-					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-					limpiarPantalla();		
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio,VentanaAdmin.n_pntInicio);
+					limpiarPantalla();	
+					restaurarTabla();
 				}
 			}
-		});*/
+		});
 		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_cancelar.setBounds(501, 185, 181, 46);
+		btn_cancelar.setBounds(501, 168, 181, 46);
 		add(btn_cancelar);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Estaci\u00F3n destino");
 		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1_1.setBounds(78, 153, 120, 14);
+		lblNewLabel_3_1_1.setBounds(78, 136, 120, 14);
 		add(lblNewLabel_3_1_1);
 		
 		cb_est_destino.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_est_destino.setBounds(78, 169, 353, 20);
+		cb_est_destino.setBounds(78, 152, 353, 20);
 		add(cb_est_destino);
 		
 		JLabel lblNewLabel_3_1_2 = new JLabel("Filtrar por:");
 		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1_2.setBounds(78, 211, 120, 14);
+		lblNewLabel_3_1_2.setBounds(78, 194, 120, 14);
 		add(lblNewLabel_3_1_2);
 		
 		cb_filtro.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_filtro.setBounds(78, 229, 353, 20);
+		cb_filtro.setBounds(78, 212, 353, 20);
 		cb_filtro.setModel(new DefaultComboBoxModel(new String[] {"Ninguno", "Camino más rápido", "Camino de menor distancia", "Camino más barato"}));
 		add(cb_filtro);
 		
 		JScrollPane sp_caminos = new JScrollPane(table);
-		sp_caminos.setBounds(78, 271, 604, 152);
+		sp_caminos.setBounds(41, 271, 564, 152);
 		add(sp_caminos);
+		
+		JButton btn_mas_detalles = new JButton("M\u00E1s detalles");
+		btn_mas_detalles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+					if(table.getSelectedRow() != -1) {
+					
+					BoletoDTO boletoDTO= new BoletoDTO();
+					
+					boletoDTO.setGrafo((Grafo)table.getValueAt(table.getSelectedRow(), 0));
+					boletoDTO.setCaminos((List<Vertice>) table.getValueAt(table.getSelectedRow(), 1));
+					
+					VentanaAdmin.pntVentaBoleto2.cargarDatos(boletoDTO);
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto2, VentanaAdmin.n_pntVentaBoleto2);
+					
+				}
+				else {
+					VentanaAdmin.mensajeError("Seleccione un trayecto de la tabla", "ERROR");
+				}
+				
+			}
+		});
+		btn_mas_detalles.setBounds(615, 305, 108, 54);
+		add(btn_mas_detalles);
+		
+		JLabel lblNewLabel_3_1_2_1 = new JLabel("Seleccione un trayecto:");
+		lblNewLabel_3_1_2_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_2_1.setBounds(41, 254, 181, 14);
+		add(lblNewLabel_3_1_2_1);
 		
 	}
 	
@@ -231,7 +272,7 @@ public class PntVentaBoleto extends JPanel {
 		
 	}
 	
-	public Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones, List<LineaTransporte> lineas) {
+	public Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones, List<String> lineas) {
 		
 		Grafo<String> grafo1 = new Grafo<String>();
 		
@@ -268,7 +309,7 @@ public class PntVentaBoleto extends JPanel {
 		distancia= GestorVenta.get_peso_camino(grafo, caminos, 2);
 		duracion= GestorVenta.get_peso_camino(grafo, caminos, 1);
 		
-		Object[] rowData= {caminos, df.format(costo), df.format(distancia), df.format(duracion)};
+		Object[] rowData= {grafo, caminos, df.format(costo), df.format(distancia), df.format(duracion)};
 		dm.addRow(rowData);
 		
 		
@@ -287,7 +328,7 @@ public class PntVentaBoleto extends JPanel {
 			distancia= GestorVenta.get_peso_camino(grafo, caminos.get(i), 2);
 			duracion= GestorVenta.get_peso_camino(grafo, caminos.get(i), 1);
 			
-			Object[] rowData= {caminos.get(i), df.format(costo), df.format(distancia), df.format(duracion)};
+			Object[] rowData= {grafo, caminos.get(i), df.format(costo), df.format(distancia), df.format(duracion)};
 			dm.addRow(rowData);
 		}
 	}
@@ -298,4 +339,13 @@ public class PntVentaBoleto extends JPanel {
 	      }
 		}
 	
+	public List<String> obtenerNombres(List<LineaTransporte> lineas){
+		List<String> nombresLineas= new ArrayList();;
+		
+		for (int i=0; i<lineas.size(); i++) {
+			nombresLineas.add(lineas.get(i).getNombre());
+		}
+		
+		return nombresLineas;
+	}
 }

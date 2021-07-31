@@ -12,13 +12,13 @@ public class Arista<T> {
 	private int distancia;
 	private int duracion;
 	private float costo;
-	private List<LineaTransporte> lineaTransp = new ArrayList();
+	private List<String> lineaTransp = new ArrayList();
 	
 	public Arista() {
 		
 	}
 	
-	public Arista(Vertice<T> origin, Vertice<T> end, int distancia, int duracion, float costo, List<LineaTransporte> lineaTransp) {
+	public Arista(Vertice<T> origin, Vertice<T> end, int distancia, int duracion, float costo, List<String> lineaTransp) {
 		super();
 		this.origin = origin;
 		this.end = end;
@@ -70,11 +70,11 @@ public class Arista<T> {
 		this.costo = costo;
 	}
 
-	public List<LineaTransporte> getLineaTransp() {
+	public List<String> getLineaTransp() {
 		return lineaTransp;
 	}
 
-	public void setLineaTransp(List<LineaTransporte> lineaTransp) {
+	public void setLineaTransp(List<String> lineaTransp) {
 		this.lineaTransp = lineaTransp;
 	}
 

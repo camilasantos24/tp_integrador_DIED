@@ -9,6 +9,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.EstacionDAO;
+import DTO.BoletoDTO;
 import DTO.EstacionesDTO;
 import Entidades.Estacion;
 import Entidades.LineaTransporte;
@@ -19,6 +20,7 @@ import Gestores.GestorLineaTransporte;
 import Gestores.GestorTrayecto;
 import Gestores.GestorVenta;
 import Grafo.Grafo;
+import Grafo.Vertice;
 
 import javax.swing.JTextField;
 import java.awt.Color;
@@ -51,6 +53,7 @@ public class PntVentaBoleto2 extends JPanel {
 			return false;
 		}
 	};
+	private JTextField tf_trayecto;
 	
 
 	public PntVentaBoleto2() {
@@ -73,28 +76,77 @@ public class PntVentaBoleto2 extends JPanel {
 			}
 		});
 		
+		dm.addColumn("Origen");
+		dm.addColumn("Destino");
+		dm.addColumn("Costo (pesos)");
+		dm.addColumn("Distancia (km)");
+		dm.addColumn("Duración (min)");
+		dm.addColumn("Línea");
+		
+		table.setModel(dm);
+		
 		btn_comprar_boleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_comprar_boleto.setBounds(451, 377, 181, 46);
 		add(btn_comprar_boleto);
 		
 		JButton btn_cancelar = new JButton("Atr\u00E1s");
-		/*btn_cancelar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
-				if(respuesta==JOptionPane.YES_OPTION) {
-					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-					limpiarPantalla();		
-				}
+		btn_cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto, VentanaAdmin.n_pntVentaBoleto);
+				restaurarTabla();
 			}
-		});*/
+		});
+		
 		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btn_cancelar.setBounds(107, 377, 181, 46);
 		add(btn_cancelar);
 		
 		JScrollPane sp_boletos = new JScrollPane(table);
-		sp_boletos.setBounds(44, 63, 648, 296);
+		sp_boletos.setBounds(44, 102, 648, 257);
 		add(sp_boletos);
 		
+		JLabel lblNewLabel_3_1 = new JLabel("Detalles del trayecto:");
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1.setBounds(44, 74, 141, 14);
+		add(lblNewLabel_3_1);
+		
+		tf_trayecto = new JTextField();
+		tf_trayecto.setEditable(false);
+		tf_trayecto.setBounds(182, 71, 199, 20);
+		add(tf_trayecto);
+		tf_trayecto.setColumns(10);
+		
 	}
+	
+	public void cargarDatos(BoletoDTO boletoDTO) {
+		Grafo grafo= boletoDTO.getGrafo();
+		List<Vertice> camino= boletoDTO.getCaminos();
+		List<String> lineas;
+		float costo;
+		float distancia;
+		float duracion;
+		Vertice inicio;
+		Vertice fin;
+		
+		for (int i = 1; i < camino.size(); i++) {
+			inicio=camino.get(i-1);
+			fin= camino.get(i);
+			costo= grafo.findAristas(inicio.toString(), fin.toString()).getCosto();
+			distancia= grafo.findAristas(inicio.toString(), fin.toString()).getDistancia();
+			duracion=grafo.findAristas(inicio.toString(), fin.toString()).getDuracion();
+			lineas=grafo.findAristas(inicio.toString(), fin.toString()).getLineaTransp();
+			
+			Object[] rowData= {inicio, fin, costo, distancia, duracion, lineas};
+			dm.addRow(rowData);
+			
+		}
+		
+		tf_trayecto.setText(camino.toString());
+	}
+	
+	public static void restaurarTabla() {
+		 for( int i = dm.getRowCount() - 1; i >= 0; i-- ) {
+	          dm.removeRow(i);
+	      }
+		}
 }
