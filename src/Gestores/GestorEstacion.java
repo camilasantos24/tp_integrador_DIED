@@ -11,7 +11,11 @@ import DAO.EstacionDAO;
 import DTO.EstacionesDTO;
 import DTO.MantenimientoDTO;
 import Entidades.Estacion;
+import Entidades.LineaTransporte;
 import Entidades.Mantenimiento;
+import Entidades.Tramo;
+import Entidades.Trayecto;
+import Grafo.Grafo;
 
 public class GestorEstacion {
 	
@@ -217,5 +221,9 @@ public class GestorEstacion {
 		estaciones_mant.addAll(EstacionDAO.getInstance().get_estaciones_con_mantenimiento());
 		return estaciones_mant;
 	}
+	
+	
+	
+	
 
 }

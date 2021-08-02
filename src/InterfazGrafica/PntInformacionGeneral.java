@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class PntInformacionGeneral extends JPanel {
 
@@ -81,9 +83,15 @@ public class PntInformacionGeneral extends JPanel {
 		btnNewButton.setBounds(10, 386, 119, 23);
 		add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Flujo M\u00E1ximo");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton_1.setBounds(604, 387, 119, 37);
+		JButton btnNewButton_1 = new JButton("Flujo M\u00E1ximo>>");
+		btnNewButton_1.setForeground(new Color(0, 0, 102));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_flujo_max, VentanaAdmin.n_pntFlujoMax);
+			}
+		});
+		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnNewButton_1.setBounds(567, 379, 156, 30);
 		add(btnNewButton_1);
 		
 		try {

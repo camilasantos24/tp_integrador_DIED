@@ -95,7 +95,17 @@ public class Trayecto {
 	}
 	
 	
-	
+	public int get_flujo_max() throws Exception {
+		List<Tramo> tramos = this.getTramos();
+		int min = tramos.get(0).getCant_max_pasajeros();
+		for (int j=0; j<tramos.size(); j++) {
+			if(tramos.get(j).getCant_max_pasajeros()<min) {
+				min =tramos.get(j).getCant_max_pasajeros();
+			}
+		}
+		
+		return min;
+	}
 	
 
 }
