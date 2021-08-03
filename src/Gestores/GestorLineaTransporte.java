@@ -132,4 +132,11 @@ public class GestorLineaTransporte {
 	public static List<LineaTransporte> obtenerLineasPorTrayecto(int id) throws Exception{
 		return LineaTransporteDAO.getInstance().get_linea_by_trayecto(id);
 	}
+	
+	public static boolean agregar_trayecto (int id_linea, int id_trayecto) {
+		String query="UPDATE \"tpDied\".\"Linea_Transporte\" SET id_trayecto= " + id_trayecto + " WHERE id_linea="+id_linea+";";
+		LineaTransporteDAO.getInstance().updateLineaTransp(query);
+		return true;
+
+	}
 }

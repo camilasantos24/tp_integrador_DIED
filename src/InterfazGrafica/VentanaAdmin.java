@@ -47,6 +47,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntInicio pntInicio = new PntInicio();
 	public static PntInformacionGeneral pnt_info_gral = new PntInformacionGeneral();
 	public static PntFlujoMaximo pnt_flujo_max = new PntFlujoMaximo();
+	public static PntSeleccionarTrayecto pnt_seleccionarTrayecto = new PntSeleccionarTrayecto();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
@@ -62,6 +63,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntInicio = "n_pntInicio";
 	public static String n_pntInfoGral = "n_pntInfoGral";
 	public static String n_pntFlujoMax = "n_flujoMax";
+	public static String n_pntSeleccionarTrayecto = "n_seleccionarTra";
 
 
 	
@@ -111,6 +113,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntInicio, pntInicio);
 		contentPane.add(n_pntInfoGral, pnt_info_gral);
 		contentPane.add(n_pntFlujoMax, pnt_flujo_max);
+		contentPane.add(n_pntSeleccionarTrayecto, pnt_seleccionarTrayecto);
 
 		
 		//cambiarPantalla(pnt_flujo_max, n_pntFlujoMax);

@@ -13,6 +13,8 @@ public class Trayecto {
 	private int id_estacion_origen;
 	private int id_estacion_destino;
 	
+	private List<Tramo> tramos; 
+	
 	//Contructores
 	
 	public Trayecto(int id) {
@@ -50,7 +52,13 @@ public class Trayecto {
 	}
 	
 	public List<Tramo> getTramos() throws Exception {
-		return TrayectoDAO.getInstance().get_tramos_by_trayecto(id);
+		if(this.tramos != null) {
+			return this.tramos;
+		}else {
+			this.tramos=TrayectoDAO.getInstance().get_tramos_by_trayecto(id);
+			return this.tramos;
+		}
+		 
 	}
 
 
@@ -105,6 +113,42 @@ public class Trayecto {
 		}
 		
 		return min;
+	}
+	
+	public float get_costo () throws Exception {
+		float costo =0;
+		
+		List<Tramo> tramos = this.getTramos();
+		
+		for(int i=0; i<tramos.size(); i++) {
+			costo += tramos.get(i).getCosto();
+		}
+		
+		return costo;
+	}
+	
+	public int get_distancia () throws Exception {
+		int dis =0;
+		
+		List<Tramo> tramos = this.getTramos();
+		
+		for(int i=0; i<tramos.size(); i++) {
+			dis += tramos.get(i).getDistancia_km();
+		}
+		
+		return dis;
+	}
+	
+	public int get_duracion () throws Exception {
+		int dur =0;
+		
+		List<Tramo> tramos = this.getTramos();
+		
+		for(int i=0; i<tramos.size(); i++) {
+			dur += tramos.get(i).getDuracion();
+		}
+		
+		return dur;
 	}
 	
 

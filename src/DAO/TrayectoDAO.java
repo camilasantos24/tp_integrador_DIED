@@ -74,6 +74,19 @@ private static TrayectoDAO _INSTANCE;
 		
 	}
 	
+	public List<Trayecto> get_all_trayectos() throws Exception{
+		try {
+		String query="SELECT * FROM \"tpDied\".\"Trayecto\";";
+		ArrayList<Trayecto> trayecto = (ArrayList<Trayecto>)((Object)Conexion.consultar(query, Trayecto.class));
+		return trayecto;
+			
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
+		
+	}
+	
 	
 	public List<Tramo> get_all_tramos() throws Exception{
 		try {
@@ -102,10 +115,12 @@ private static TrayectoDAO _INSTANCE;
 	}
 	
 	
-	public boolean alta_trayecto (List<TramoDTO> tramos) throws SQLException {
+	public boolean alta_trayecto (List<TramoDTO> tramos, int id_linea) throws SQLException {
 		PreparedStatement query1=null ;
 		PreparedStatement query2=null ;
 		PreparedStatement query3=null ;
+		PreparedStatement query4=null ;
+
 		
 		Connection con= Conexion.conectarBD();
 		try {
@@ -139,6 +154,9 @@ private static TrayectoDAO _INSTANCE;
 				query3 = con.prepareStatement("INSERT INTO \"tpDied\".\"Tramo_Trayecto\" (id_tramo, id_trayecto) VALUES (" + tramoID + ", " + trayectoID + " );", Statement.RETURN_GENERATED_KEYS);
 				query3.execute();
 			}
+			 // agrego trayecto a la linea 
+			query4 = con.prepareStatement("UPDATE \"tpDied\".\"Linea_Transporte\" SET id_trayecto= " + trayectoID + " WHERE id_linea="+id_linea+";", Statement.RETURN_GENERATED_KEYS);
+			query4.execute();
 			
 			con.commit();
 			return true;	

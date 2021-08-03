@@ -45,6 +45,8 @@ public class PntAltaTrayecto extends JPanel {
 	private JSpinner sp_duracion = new JSpinner();
 	private	JButton btn_buscarOrigen = new JButton("");
 	
+	public int id_lina_de_transporte_actual;
+	
 
 	
 	
@@ -488,9 +490,13 @@ public class PntAltaTrayecto extends JPanel {
 			tramos.add(t);
 		}
 		
-		if(GestorTrayecto.alta_trayecto(tramos)) {
+		if(GestorTrayecto.alta_trayecto(tramos, id_lina_de_transporte_actual)) {
 			VentanaAdmin.mensajeExito("¡Trayecto Registrado!", "ÉXITO");
 			restaurar_pantalla_completa();
+			VentanaAdmin.pntBuscarLineaTransporte.limpiarPantalla();
+			VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
+			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
+		
 		}
 		
 	}

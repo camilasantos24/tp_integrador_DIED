@@ -24,8 +24,13 @@ public class GestorTrayecto {
 		return valido;
 	}
 	
-	public static boolean alta_trayecto (List<TramoDTO> tramos) throws SQLException {
-		return TrayectoDAO.getInstance().alta_trayecto(tramos);
+	public static  List<Trayecto> get_all_trayectos() throws Exception{
+		return TrayectoDAO.getInstance().get_all_trayectos();
+	}
+
+	
+	public static boolean alta_trayecto (List<TramoDTO> tramos, int id_linea) throws SQLException {
+		return TrayectoDAO.getInstance().alta_trayecto(tramos, id_linea);
 	}
 	
 	public static List<Tramo> get_all_tramos() throws Exception{

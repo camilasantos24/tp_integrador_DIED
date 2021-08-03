@@ -230,7 +230,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 		JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
 		btn_agregar_trayecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaTrayecto, VentanaAdmin.n_pntAltaTrayecto);
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_seleccionarTrayecto, VentanaAdmin.n_pntSeleccionarTrayecto);
 			}
 		});
 		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.PLAIN, 13));
