@@ -1,5 +1,6 @@
 package DTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import Grafo.Grafo;
@@ -9,9 +10,12 @@ public class BoletoDTO {
 	
 	private Grafo grafo;
 	private List<Vertice> caminos;
+	private Vertice inicio;
+	private Vertice fin;
 	private float costo;
 	private float distancia;
 	private float duracion;
+	private LocalDate fechaVenta;
 	
 	public Grafo getGrafo() {
 		return grafo;
@@ -43,5 +47,24 @@ public class BoletoDTO {
 	public void setDuracion(float duracion) {
 		this.duracion = duracion;
 	}
+	public LocalDate getFechaVenta() {
+		return fechaVenta;
+	}
+	public void setFechaVenta(LocalDate fechaVenta) {
+		this.fechaVenta = fechaVenta;
+	}
+	public Vertice getInicio() {
+		return inicio;
+	}
+	public void setInicio(Vertice inicio) {
+		this.inicio = inicio;
+	}
+	public Vertice getFin() {
+		return fin;
+	}
+	public void setFin(Vertice fin) {
+		this.fin = fin;
+	}
+	
 
 }

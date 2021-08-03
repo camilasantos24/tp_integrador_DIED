@@ -192,6 +192,15 @@ public class GestorEstacion {
 				
 		return estaciones;
 	}
+	
+	public static List<Estacion> obtenerTodasLasEstaciones() throws Exception{
+		String query= null;
+		query= "SELECT * FROM \"tpDied\".\"Estacion\" WHERE alta_baja=1;";
+		
+		List<Estacion> estaciones=EstacionDAO.getInstance().get_estacion_by_filtros(query);
+		
+		return estaciones;
+	}
 
 	/*public static List<Estacion> obtener_page_rank () throws Exception{
 		List<Estacion> estaciones = EstacionDAO.getInstance().get_estaciones_de_alta();

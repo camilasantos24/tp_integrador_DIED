@@ -43,6 +43,7 @@ public class VentanaAdmin extends JFrame {
 	public static PntAltaTrayecto pntAltaTrayecto = new PntAltaTrayecto();
 	public static PntVentaBoleto pntVentaBoleto = new PntVentaBoleto();
 	public static PntVentaBoleto2 pntVentaBoleto2 = new PntVentaBoleto2();
+	public static PntConfirmarVentaBoleto pntConfirmarVentaBoleto = new PntConfirmarVentaBoleto();
 	public static PntInicio pntInicio = new PntInicio();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
@@ -55,6 +56,7 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntAltaTrayecto = "n_AltaTrayecto";
 	public static String n_pntVentaBoleto = "n_pntVentaBoleto";
 	public static String n_pntVentaBoleto2 = "n_pntVentaBoleto2";
+	public static String n_pntConfirmarVentaBoleto="n_pntConfirmarVentaBoleto";
 	public static String n_pntInicio = "n_pntInicio";
 
 
@@ -101,6 +103,7 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntAltaTrayecto, pntAltaTrayecto);
 		contentPane.add(n_pntVentaBoleto, pntVentaBoleto);
 		contentPane.add(n_pntVentaBoleto2, pntVentaBoleto2);
+		contentPane.add(n_pntConfirmarVentaBoleto, pntConfirmarVentaBoleto);
 		contentPane.add(n_pntInicio, pntInicio);
 		
 		

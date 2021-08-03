@@ -55,6 +55,8 @@ public class PntVentaBoleto2 extends JPanel {
 	};
 	private JTextField tf_trayecto;
 	
+	public BoletoDTO boletoDTO= new BoletoDTO();
+	
 
 	public PntVentaBoleto2() {
 		setBounds(100, 100, 733, 434);
@@ -71,8 +73,9 @@ public class PntVentaBoleto2 extends JPanel {
 		JButton btn_comprar_boleto = new JButton("Comprar");
 		btn_comprar_boleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-								
+				VentanaAdmin.pntConfirmarVentaBoleto.boletoDTO=boletoDTO;
+				VentanaAdmin.pntConfirmarVentaBoleto.cargarDatos(boletoDTO);
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntConfirmarVentaBoleto, VentanaAdmin.n_pntConfirmarVentaBoleto);
 			}
 		});
 		

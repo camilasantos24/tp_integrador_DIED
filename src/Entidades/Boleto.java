@@ -1,6 +1,7 @@
 package Entidades;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Boleto {
 	
@@ -10,8 +11,13 @@ public class Boleto {
 	private Estacion estacion_origen;
 	private Estacion estacion_destino;
 	private Usuario usuario;
+	private List<Estacion> camino;
 	
-	public Boleto(int nro_boleto, LocalDate fechaVenta, float costo, Estacion estacion_origen, Estacion estacion_destino, Usuario usuario) {
+	public Boleto() {
+		
+	}
+	
+	public Boleto(int nro_boleto, LocalDate fechaVenta, float costo, Estacion estacion_origen, Estacion estacion_destino, Usuario usuario, List<Estacion> camino) {
 		super();
 		this.nro_boleto = nro_boleto;
 		this.fechaVenta = fechaVenta;
@@ -19,6 +25,7 @@ public class Boleto {
 		this.estacion_origen = estacion_origen;
 		this.estacion_destino = estacion_destino;
 		this.usuario = usuario;
+		this.camino=camino;
 	}
 
 	public int getNro_boleto() {
@@ -67,6 +74,14 @@ public class Boleto {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public List<Estacion> getCamino() {
+		return camino;
+	}
+
+	public void setCamino(List<Estacion> camino) {
+		this.camino = camino;
 	}
 	
 	

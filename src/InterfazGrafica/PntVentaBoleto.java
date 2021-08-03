@@ -40,6 +40,7 @@ import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -220,7 +221,10 @@ public class PntVentaBoleto extends JPanel {
 					
 					boletoDTO.setGrafo((Grafo)table.getValueAt(table.getSelectedRow(), 0));
 					boletoDTO.setCaminos((List<Vertice>) table.getValueAt(table.getSelectedRow(), 1));
+					boletoDTO.setCosto(Float.parseFloat(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					boletoDTO.setFechaVenta(LocalDate.now());
 					
+					VentanaAdmin.pntVentaBoleto2.boletoDTO=boletoDTO;
 					VentanaAdmin.pntVentaBoleto2.cargarDatos(boletoDTO);
 					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto2, VentanaAdmin.n_pntVentaBoleto2);
 					
@@ -298,7 +302,7 @@ public class PntVentaBoleto extends JPanel {
 	}
 	
 	public void cargarTablaFiltro(Grafo grafo, List<Vertice> camino) {
-		DecimalFormat df = new DecimalFormat("###.##");
+		DecimalFormat df = new DecimalFormat("###,##");
 		
 		List<Vertice> caminos= camino;
 		double costo;
@@ -316,7 +320,7 @@ public class PntVentaBoleto extends JPanel {
 		}
 	
 	public void cargarTablaTodos(Grafo grafo, List<List<Vertice>> caminos) {
-		DecimalFormat df = new DecimalFormat("###.##");
+		DecimalFormat df = new DecimalFormat("###,##");
 		
 		double costo;
 		double distancia;

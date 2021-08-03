@@ -1,10 +1,16 @@
 package Gestores;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import DAO.VentaDAO;
+import DTO.BoletoDTO;
+import DTO.UsuarioDTO;
+import Entidades.Boleto;
 import Entidades.Estacion;
+import Entidades.Usuario;
 import Grafo.Arista;
 import Grafo.Grafo;
 import Grafo.Vertice;
@@ -176,6 +182,108 @@ public class GestorVenta {
 		}
 
 		return peso;
+	}
+	
+	public static void cargar_compra(BoletoDTO bolDTO, UsuarioDTO usuDTO) {
+		Usuario usuario= new Usuario();
+		Boleto boleto= new Boleto();
+		
+		List<Estacion> estaciones;
+		try {
+			estaciones = GestorEstacion.obtenerTodasLasEstaciones();		//Traigo todas las estaciones para no hacer muchas conexiones
+			List<Object> listaEstaciones=obtenerEstaciones(estaciones,bolDTO);
+			
+			Estacion est_destino= (Estacion) listaEstaciones.get(1);
+			Estacion est_origen=(Estacion) listaEstaciones.get(0);
+			List<Estacion> camino=(List<Estacion>) listaEstaciones.get(2);
+			
+			usuario.setCorreo(usuDTO.getCorreo());
+			usuario.setNombre(usuDTO.getNombre());
+			boleto.setCosto(bolDTO.getCosto());
+			boleto.setEstacion_destino(est_destino);
+			boleto.setEstacion_origen(est_origen);
+			boleto.setFechaVenta(bolDTO.getFechaVenta());
+			boleto.setCamino(camino);
+			
+			VentaDAO.getInstance().createUsuario(usuario);
+			VentaDAO.getInstance().createBoleto(boleto,usuario);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+
+	}
+	
+	public static List<Object> obtenerEstaciones(List<Estacion> estaciones, BoletoDTO bolDTO) {
+		List listaEstaciones= new ArrayList();
+		
+		Estacion origen = null;
+		Estacion destino = null;
+		List<Estacion> camino = new ArrayList();
+		
+		int i=0;
+		boolean encontrado1= false;
+		boolean encontrado2= false;
+		
+		while(i<estaciones.size() && (encontrado1==false || encontrado2==false)) {
+			
+			if(estaciones.get(i).getNombre().equals(bolDTO.getInicio().toString())) {
+				origen=estaciones.get(i);
+				encontrado1=true;
+			}
+			if(estaciones.get(i).getNombre().equals(bolDTO.getFin().toString())) {
+				destino=estaciones.get(i);
+				encontrado2=true;
+			}
+			i++;
+		}
+		
+		boolean encontrado3=false;
+		int j=0;
+		int k=0;
+		
+		while(j<bolDTO.getCaminos().size()) {
+			encontrado3=false;
+			k=0;
+			while(k<estaciones.size() && encontrado3==false) {
+				if(bolDTO.getCaminos().get(j).toString().equals(estaciones.get(k).getNombre())) {
+					camino.add(estaciones.get(k));
+					encontrado3=true;
+				}
+				k++;
+			}
+			j++;
+		}
+		
+		listaEstaciones.add(0, origen);
+		listaEstaciones.add(1, destino);
+		listaEstaciones.add(2, camino);
+		
+		return listaEstaciones;
+	}
+	
+	public static int obtenerNumeroBoleto(BoletoDTO bolDTO) {
+		String query= null;
+		List<Estacion> estaciones;
+		try {
+			estaciones = GestorEstacion.obtenerTodasLasEstaciones();		//Traigo todas las estaciones para no hacer muchas conexiones
+			List<Object> listaEstaciones=obtenerEstaciones(estaciones,bolDTO);
+			
+			Estacion est_destino= (Estacion) listaEstaciones.get(1);
+			Estacion est_origen=(Estacion) listaEstaciones.get(0);
+			List<Estacion> camino=(List<Estacion>) listaEstaciones.get(2);
+			
+			query="SELECT nro_boleto FROM \"tpDied\".\"Boleto\" WHERE fecha_venta="+bolDTO.getFechaVenta()+", costo="+bolDTO.getCosto()+", id_estacion_origen="+est_origen.getId_estacion()+", id_estacion_destino="+est_destino.getId_estacion()+", camino="+camino+";";
+		
+			return VentaDAO.getInstance().getIDBoleto(query).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}		
+		return 0;
+		
+
+		
+
 	}
 
 }
