@@ -3,6 +3,8 @@ package DAO;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -16,25 +18,22 @@ public class MAIN {
 
 	public static void main(String[] args) {
 		
-	List<Integer> i = new ArrayList();
-	i.add(1);
-	i.add(2);
-	i.add(4);
-	i.add(7);
-	
-	for (int j =0; j<i.size(); j++) {
-		System.out.println(i.get(j));
+	try {
+		List<Object[]> o= EstacionDAO.getInstance().get_page_rank();
+		
+		for (int i=0; i<o.size(); i++) {
+			System.out.println(o.get(i)[1]);
+		}
+		
+		o.sort((o1, o2) -> ((Comparable<Integer>) o1[1]).compareTo((Integer) o2[1]));
+		
+		System.out.println("--------------------------------------");
+		for (int i=0; i<o.size(); i++) {
+			System.out.println(o.get(i)[1]);
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
 	}
-	System.out.println("---------------------------");
-	i.remove(2);
-	
-	for (int j =0; j<i.size(); j++) {
-		System.out.println(i.get(j));
-	}
-	
-	System.out.println("---------------------------");
-	System.out.println(i.get(2));
-
 
 	}
 

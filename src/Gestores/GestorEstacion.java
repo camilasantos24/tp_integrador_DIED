@@ -3,13 +3,19 @@ package Gestores;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import DAO.EstacionDAO;
 import DTO.EstacionesDTO;
 import DTO.MantenimientoDTO;
 import Entidades.Estacion;
+import Entidades.LineaTransporte;
 import Entidades.Mantenimiento;
+import Entidades.Tramo;
+import Entidades.Trayecto;
+import Grafo.Grafo;
 
 public class GestorEstacion {
 	
@@ -202,10 +208,31 @@ public class GestorEstacion {
 		return estaciones;
 	}
 
-	/*public static List<Estacion> obtener_page_rank () throws Exception{
-		List<Estacion> estaciones = EstacionDAO.getInstance().get_estaciones_de_alta();
-		
-	}*/
+	
 
+
+	public static List<Object[]> get_page_rank() throws Exception{
+		List<Object[]> pg = EstacionDAO.getInstance().get_page_rank();
+		
+		Collections.sort(pg, new Comparator<Object[]>() {
+			@Override
+			public int compare(Object[] p1, Object[] p2) {
+				// Aqui esta el truco, ahora comparamos p2 con p1 y no al reves como antes
+				return ((Integer)p2[1]).compareTo((Integer)p1[1]);
+			}
+		});
+		
+		return pg;
+	}
+	
+	public static List<Object[]> get_lista_proximo_mantenimiento () throws Exception{
+		List<Object[]> estaciones_mant = EstacionDAO.getInstance().get_estaciones_sin_mantenimiento();
+		estaciones_mant.addAll(EstacionDAO.getInstance().get_estaciones_con_mantenimiento());
+		return estaciones_mant;
+	}
+	
+	
+	
+	
 
 }

@@ -45,6 +45,8 @@ public class VentanaAdmin extends JFrame {
 	public static PntVentaBoleto2 pntVentaBoleto2 = new PntVentaBoleto2();
 	public static PntConfirmarVentaBoleto pntConfirmarVentaBoleto = new PntConfirmarVentaBoleto();
 	public static PntInicio pntInicio = new PntInicio();
+	public static PntInformacionGeneral pnt_info_gral = new PntInformacionGeneral();
+	public static PntFlujoMaximo pnt_flujo_max = new PntFlujoMaximo();
 	
 	public static String n_pntBuscarEstacion = "n_pntBuscarEstacion";
 	public static String n_pntAltaEstacion = "n_pntAltaEstacion";
@@ -58,6 +60,8 @@ public class VentanaAdmin extends JFrame {
 	public static String n_pntVentaBoleto2 = "n_pntVentaBoleto2";
 	public static String n_pntConfirmarVentaBoleto="n_pntConfirmarVentaBoleto";
 	public static String n_pntInicio = "n_pntInicio";
+	public static String n_pntInfoGral = "n_pntInfoGral";
+	public static String n_pntFlujoMax = "n_flujoMax";
 
 
 	
@@ -105,9 +109,13 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(n_pntVentaBoleto2, pntVentaBoleto2);
 		contentPane.add(n_pntConfirmarVentaBoleto, pntConfirmarVentaBoleto);
 		contentPane.add(n_pntInicio, pntInicio);
+		contentPane.add(n_pntInfoGral, pnt_info_gral);
+		contentPane.add(n_pntFlujoMax, pnt_flujo_max);
+
 		
-		
-		cambiarPantalla(pntInicio, n_pntInicio);
+		//cambiarPantalla(pnt_flujo_max, n_pntFlujoMax);
+		cambiarPantalla(pnt_info_gral, n_pntInfoGral);
+		//cambiarPantalla(pntInicio, n_pntInicio);
 		//cambiarPantalla(pntAltaTrayecto, n_pntAltaTrayecto);
 	
 	}

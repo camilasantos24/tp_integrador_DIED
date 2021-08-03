@@ -111,9 +111,7 @@ public class Estacion {
 		this.mantenimientos = mantenimientos;
 	}
 	
-	public int get_page_rank() {
-		return 0;
-	}
+	
 	
 	
 }
