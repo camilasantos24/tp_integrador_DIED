@@ -195,7 +195,7 @@ public class GestorVenta {
 			
 			Estacion est_destino= (Estacion) listaEstaciones.get(1);
 			Estacion est_origen=(Estacion) listaEstaciones.get(0);
-			List<Estacion> camino=(List<Estacion>) listaEstaciones.get(2);
+			List<Integer> camino=(List<Integer>) listaEstaciones.get(2);
 			
 			usuario.setCorreo(usuDTO.getCorreo());
 			usuario.setNombre(usuDTO.getNombre());
@@ -219,7 +219,7 @@ public class GestorVenta {
 		
 		Estacion origen = null;
 		Estacion destino = null;
-		List<Estacion> camino = new ArrayList();
+		List<Integer> camino = new ArrayList();
 		
 		int i=0;
 		boolean encontrado1= false;
@@ -247,7 +247,7 @@ public class GestorVenta {
 			k=0;
 			while(k<estaciones.size() && encontrado3==false) {
 				if(bolDTO.getCaminos().get(j).toString().equals(estaciones.get(k).getNombre())) {
-					camino.add(estaciones.get(k));
+					camino.add(estaciones.get(k).getId_estacion());
 					encontrado3=true;
 				}
 				k++;
@@ -262,28 +262,29 @@ public class GestorVenta {
 		return listaEstaciones;
 	}
 	
-	public static int obtenerNumeroBoleto(BoletoDTO bolDTO) {
+	public static int obtenerNumeroBoleto(BoletoDTO bolDTO) throws Exception {
 		String query= null;
 		List<Estacion> estaciones;
-		try {
+		LocalDate fecha=bolDTO.getFechaVenta();
+		float costo= bolDTO.getCosto();
+		int id_est_origen;
+		int id_est_destino;
+		int id_boleto;
+		
+
 			estaciones = GestorEstacion.obtenerTodasLasEstaciones();		//Traigo todas las estaciones para no hacer muchas conexiones
 			List<Object> listaEstaciones=obtenerEstaciones(estaciones,bolDTO);
 			
 			Estacion est_destino= (Estacion) listaEstaciones.get(1);
+			id_est_destino=est_destino.getId_estacion();
 			Estacion est_origen=(Estacion) listaEstaciones.get(0);
-			List<Estacion> camino=(List<Estacion>) listaEstaciones.get(2);
+			id_est_origen=est_origen.getId_estacion();
+			List<Integer> camino=(List<Integer>) listaEstaciones.get(2);
 			
-			query="SELECT nro_boleto FROM \"tpDied\".\"Boleto\" WHERE fecha_venta="+bolDTO.getFechaVenta()+", costo="+bolDTO.getCosto()+", id_estacion_origen="+est_origen.getId_estacion()+", id_estacion_destino="+est_destino.getId_estacion()+", camino="+camino+";";
-		
-			return VentaDAO.getInstance().getIDBoleto(query).get(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
-		return 0;
-		
-
-		
-
+			query="SELECT * FROM \"tpDied\".\"Boleto\" WHERE fecha_venta='"+fecha+"' AND costo="+costo+" AND id_estacion_origen="+id_est_origen+" AND id_estacion_destino="+id_est_destino+" AND camino='"+camino.toString()+"';";
+			id_boleto=VentaDAO.getInstance().getIDBoleto(query);
+			
+			return id_boleto;
 	}
 
 }

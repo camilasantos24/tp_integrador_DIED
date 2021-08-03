@@ -30,11 +30,11 @@ private static VentaDAO _INSTANCE;
 		int estacion_origen= boleto.getEstacion_origen().getId_estacion();
 		int estacion_destino= boleto.getEstacion_destino().getId_estacion();
 		LocalDate fecha= boleto.getFechaVenta();
-		List<Estacion> camino= boleto.getCamino();
+		List<Integer> camino= boleto.getCamino();
 		
 		String query= null;
 		
-		query= "INSERT INTO \"tpDied\".\"Boleto\" (fecha_venta, costo, id_estacion_origen, id_estacion_destino, id_usuario, camino) VALUES ('"+fecha+"', '"+costo+"', "+estacion_origen+", "+estacion_destino+", (SELECT usu.id_usuario FROM \"tpDied\".\"Usuario\" usu WHERE usu.nombre='"+nombre+"' ),'"+camino+"');";
+		query= "INSERT INTO \"tpDied\".\"Boleto\" (fecha_venta, costo, id_estacion_origen, id_estacion_destino, id_usuario, camino) VALUES ('"+fecha+"', "+costo+", "+estacion_origen+", "+estacion_destino+", (SELECT usu.id_usuario FROM \"tpDied\".\"Usuario\" usu WHERE usu.nombre='"+nombre+"' ),'"+camino+"');";
 		
 		Connection con = Conexion.conectarBD();
 
@@ -100,13 +100,28 @@ private static VentaDAO _INSTANCE;
 		}
 	}
 	
-	public List<Integer> getIDBoleto(String query)throws Exception{
+	public int getIDBoleto(String query)throws Exception{
 		try {
-			ArrayList<Integer> idBoleto= (ArrayList<Integer>)((Object)Conexion.consultar(query, Integer.class));
-				return idBoleto;
+			ArrayList<Boleto> idBoleto= (ArrayList<Boleto>)((Object)Conexion.consultar(query, Boleto.class));
+			if(idBoleto.size() !=0) {
+				return idBoleto.get(0).getNro_boleto();
+				} else {return -1;}
 			}
 			catch(Exception ex) {
 				throw ex;
 			}
+	}
+	
+	public Usuario getUsuarioByID(int id) throws Exception {
+		try {
+			String query = "SELECT * FROM \"tpDied\".\"Usuario\" WHERE id_usuario = " + id+ " ;";
+			ArrayList<Usuario> usuario = (ArrayList<Usuario>)((Object)Conexion.consultar(query, Usuario.class));
+			if(usuario.size() !=0) {
+			return usuario.get(0);
+			} else {return null;}
+		}
+		catch(Exception ex) {
+			throw ex;
+		}
 	}
 }

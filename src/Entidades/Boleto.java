@@ -1,7 +1,11 @@
 package Entidades;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+
+import DAO.EstacionDAO;
+import DAO.VentaDAO;
 
 public class Boleto {
 	
@@ -11,13 +15,13 @@ public class Boleto {
 	private Estacion estacion_origen;
 	private Estacion estacion_destino;
 	private Usuario usuario;
-	private List<Estacion> camino;
+	private List<Integer> camino;
 	
 	public Boleto() {
 		
 	}
 	
-	public Boleto(int nro_boleto, LocalDate fechaVenta, float costo, Estacion estacion_origen, Estacion estacion_destino, Usuario usuario, List<Estacion> camino) {
+	public Boleto(int nro_boleto, LocalDate fechaVenta, float costo, Estacion estacion_origen, Estacion estacion_destino, Usuario usuario, List<Integer> camino) {
 		super();
 		this.nro_boleto = nro_boleto;
 		this.fechaVenta = fechaVenta;
@@ -26,6 +30,28 @@ public class Boleto {
 		this.estacion_destino = estacion_destino;
 		this.usuario = usuario;
 		this.camino=camino;
+	}
+	
+	public Boleto(String obj) throws NumberFormatException, Exception {
+		String[] atributos= obj.split("\t");
+		
+		String[] estaciones= atributos[6].split(",|\\[|\\]|\\s+");
+		
+		List<Integer> cam= new ArrayList();
+		
+		this.nro_boleto=Integer.parseInt(atributos[0]);
+		this.fechaVenta=LocalDate.parse(atributos[1]);
+		this.costo=Float.parseFloat(atributos[2]);
+		this.estacion_origen=EstacionDAO.getInstance().get_estacion_by_id(Integer.parseInt(atributos[3]));
+		this.estacion_destino=EstacionDAO.getInstance().get_estacion_by_id(Integer.parseInt(atributos[4]));
+		this.usuario=VentaDAO.getInstance().getUsuarioByID(Integer.parseInt(atributos[5]));
+		
+		for (int i = 1; i < estaciones.length; i=i+2) {
+			cam.add(Integer.parseInt(estaciones[i]));
+		}
+
+		this.camino=cam;
+		
 	}
 
 	public int getNro_boleto() {
@@ -76,11 +102,11 @@ public class Boleto {
 		this.usuario = usuario;
 	}
 
-	public List<Estacion> getCamino() {
+	public List<Integer> getCamino() {
 		return camino;
 	}
 
-	public void setCamino(List<Estacion> camino) {
+	public void setCamino(List<Integer> camino) {
 		this.camino = camino;
 	}
 	

@@ -114,8 +114,8 @@ public class VentanaAdmin extends JFrame {
 
 		
 		//cambiarPantalla(pnt_flujo_max, n_pntFlujoMax);
-		cambiarPantalla(pnt_info_gral, n_pntInfoGral);
-		//cambiarPantalla(pntInicio, n_pntInicio);
+		//cambiarPantalla(pnt_info_gral, n_pntInfoGral);
+		cambiarPantalla(pntInicio, n_pntInicio);
 		//cambiarPantalla(pntAltaTrayecto, n_pntAltaTrayecto);
 	
 	}

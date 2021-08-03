@@ -16,6 +16,14 @@ public class Usuario {
 		this.nombre = nombre;
 		this.correo = correo;
 	}
+	
+	public Usuario(String obj) {
+		String[] atributos= obj.split("\t");
+		
+		this.id=Integer.parseInt(atributos[0]);
+		this.nombre=atributos[1];
+		this.correo=atributos[2];
+	}
 
 	public int getId() {
 		return id;

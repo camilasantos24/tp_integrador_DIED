@@ -58,8 +58,11 @@ public class PntConfirmarVentaBoleto extends JPanel {
 	private JTextField tf_nombre_cliente;
 	private JTextField tf_correo;
 	
+	JTextPane txtpnBoletos = new JTextPane();
+	
 	JButton btn_comprar_boleto = new JButton("Finalizar compra");
 	JButton btn_continuar = new JButton("Continuar");
+	JButton btn_atras = new JButton("Atr\u00E1s");
 	
 
 	public PntConfirmarVentaBoleto() {
@@ -79,7 +82,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		btn_continuar.setVisible(false);
 		add(btn_continuar);
 		
-		JTextPane txtpnBoletos = new JTextPane();
+		
 		txtpnBoletos.setFont(new Font("Arial", Font.BOLD, 18));
 		txtpnBoletos.setText("VENTA DE BOLETOS");
 		txtpnBoletos.setEditable(false);
@@ -121,7 +124,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		btn_comprar_boleto.setBounds(451, 377, 181, 46);
 		add(btn_comprar_boleto);
 		
-		JButton btn_atras = new JButton("Atr\u00E1s");
 		btn_atras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto2, VentanaAdmin.n_pntVentaBoleto2);	
@@ -139,7 +141,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1);
 		
 		tf_nro_boleto = new JTextField();
-		tf_nro_boleto.setEnabled(false);
 		tf_nro_boleto.setEditable(false);
 		tf_nro_boleto.setBounds(182, 71, 199, 20);
 		add(tf_nro_boleto);
@@ -151,7 +152,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1_1);
 		
 		tf_fecha = new JTextField();
-		tf_fecha.setEnabled(false);
 		tf_fecha.setEditable(false);
 		tf_fecha.setColumns(10);
 		tf_fecha.setBounds(182, 102, 199, 20);
@@ -163,7 +163,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1_2);
 		
 		tf_camino = new JTextField();
-		tf_camino.setEnabled(false);
 		tf_camino.setEditable(false);
 		tf_camino.setColumns(10);
 		tf_camino.setBounds(182, 130, 199, 20);
@@ -175,7 +174,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1_3);
 		
 		tf_origen = new JTextField();
-		tf_origen.setEnabled(false);
 		tf_origen.setEditable(false);
 		tf_origen.setColumns(10);
 		tf_origen.setBounds(182, 158, 199, 20);
@@ -187,7 +185,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1_4);
 		
 		tf_destino = new JTextField();
-		tf_destino.setEnabled(false);
 		tf_destino.setEditable(false);
 		tf_destino.setColumns(10);
 		tf_destino.setBounds(182, 186, 199, 20);
@@ -199,7 +196,6 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(lblNewLabel_3_1_5);
 		
 		tf_costo = new JTextField();
-		tf_costo.setEnabled(false);
 		tf_costo.setEditable(false);
 		tf_costo.setColumns(10);
 		tf_costo.setBounds(182, 214, 199, 20);
@@ -263,10 +259,13 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		tf_correo.setEditable(true);
 		btn_comprar_boleto.setEnabled(true);
 		btn_continuar.setVisible(false);
+		btn_comprar_boleto.setVisible(true);
+		btn_atras.setVisible(true);
+		txtpnBoletos.setText("VENTA DE BOLETOS");
 	}
 	
 	public boolean validarNombre() {
-		if(tf_nombre_cliente.getText()==null) {
+		if(tf_nombre_cliente.getText().isEmpty()) {
 			return false;
 		}else {
 			return true;
@@ -274,7 +273,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 	}
 	
 	public boolean validarCorreo() {
-		if(tf_correo.getText()==null) {
+		if(tf_correo.getText().isEmpty()) {
 			return false;
 		}else {
 			return true;
@@ -284,10 +283,17 @@ public class PntConfirmarVentaBoleto extends JPanel {
 	public void recargarPantalla(BoletoDTO bolDTO) {
 		int nro_boleto=0;
 		
-		nro_boleto=GestorVenta.obtenerNumeroBoleto(bolDTO);
+		try {
+			nro_boleto=GestorVenta.obtenerNumeroBoleto(bolDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		tf_nro_boleto.setText(Integer.toString(nro_boleto));
 		tf_correo.setEditable(false);
 		tf_nombre_cliente.setEditable(false);
 		btn_continuar.setVisible(true);
+		btn_comprar_boleto.setVisible(false);
+		btn_atras.setVisible(false);
+		txtpnBoletos.setText("DETALLE DE COMPRA");
 	}
 }
