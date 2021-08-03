@@ -169,7 +169,6 @@ public class PntAltaLineaTransporte extends JPanel {
 			try {
 				lineaT=GestorLineaTransporte.obtenerLineaPorNombreColor(nombre, color);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

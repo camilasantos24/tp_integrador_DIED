@@ -248,6 +248,17 @@ public class PntVentaBoleto extends JPanel {
 		lblNewLabel_3_1_2_1.setBounds(41, 254, 181, 14);
 		add(lblNewLabel_3_1_2_1);
 		
+		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);
+				limpiarPantalla();
+				restaurarTabla();
+			}
+		});
+		btnNewButton.setBounds(41, 25, 89, 23);
+		add(btnNewButton);
+		
 	}
 	
 	public void limpiarPantalla() {

@@ -138,7 +138,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 			}
 		});
 		btn_alta_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_alta_linea.setBounds(22, 349, 158, 46);
+		btn_alta_linea.setBounds(12, 349, 168, 46);
 		add(btn_alta_linea);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
@@ -179,7 +179,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 			}
 		});
 		btn_baja_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_baja_linea.setBounds(190, 349, 158, 46);
+		btn_baja_linea.setBounds(192, 349, 168, 46);
 		add(btn_baja_linea);
 		
 		JButton btn_editar_linea = new JButton("Editar l\u00EDnea");
@@ -214,7 +214,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 			}
 		});
 		btn_editar_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_editar_linea.setBounds(358, 349, 158, 46);
+		btn_editar_linea.setBounds(372, 349, 168, 46);
 		add(btn_editar_linea);
 		
 		tf_color = new JTextField();
@@ -230,11 +230,23 @@ public class PntBuscarLineaTransporte extends JPanel {
 		JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
 		btn_agregar_trayecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntAltaTrayecto, VentanaAdmin.n_pntAltaTrayecto);
 			}
 		});
 		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_agregar_trayecto.setBounds(526, 349, 158, 46);
+		btn_agregar_trayecto.setBounds(552, 349, 168, 46);
 		add(btn_agregar_trayecto);
+		
+		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);
+				restaurarTabla();
+				limpiarPantalla();
+			}
+		});
+		btnNewButton.setBounds(22, 25, 89, 23);
+		add(btnNewButton);
 		
 	}
 	

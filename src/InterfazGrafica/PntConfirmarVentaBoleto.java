@@ -73,6 +73,8 @@ public class PntConfirmarVentaBoleto extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);
 				limpiarPantalla();
+				VentanaAdmin.pntVentaBoleto.limpiarPantalla();
+				VentanaAdmin.pntVentaBoleto.restaurarTabla();
 			}
 		});
 		

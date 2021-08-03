@@ -193,7 +193,7 @@ public class PntBuscarEstacion extends JPanel {
 			}
 		});
 		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_alta_est.setBounds(47, 355, 181, 46);
+		btn_alta_est.setBounds(46, 355, 200, 46);
 		add(btn_alta_est);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
@@ -235,7 +235,7 @@ public class PntBuscarEstacion extends JPanel {
 			}
 		});
 		btn_baja_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_baja_est.setBounds(275, 355, 181, 46);
+		btn_baja_est.setBounds(256, 355, 200, 46);
 		add(btn_baja_est);
 		
 		JButton btn_editar_est = new JButton("Editar estaci\u00F3n");
@@ -271,7 +271,7 @@ public class PntBuscarEstacion extends JPanel {
 			}
 		});
 		btn_editar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_editar_est.setBounds(503, 355, 181, 46);
+		btn_editar_est.setBounds(466, 355, 200, 46);
 		add(btn_editar_est);
 		
 		tf_nombre = new JTextField();
@@ -365,6 +365,17 @@ public class PntBuscarEstacion extends JPanel {
 		tf_min_cierre.setColumns(10);
 		tf_min_cierre.setBounds(71, 213, 39, 20);
 		add(tf_min_cierre);
+		
+		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);
+				restaurarTabla();
+				limpiarPantalla();
+			}
+		});
+		btnNewButton.setBounds(22, 25, 89, 23);
+		add(btnNewButton);
 		
 	}
 	

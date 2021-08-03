@@ -307,14 +307,39 @@ public class PntEditarEstacion extends JPanel {
 	}
 	
 	public void cargarDatos(EstacionesDTO estDTO) {
+		int hs_apertura=estDTO.getHs_apertura().getHour();
+		int hs_cierre=estDTO.getHs_cierre().getHour();
+		int min_apertura=estDTO.getHs_apertura().getMinute();
+		int min_cierre=estDTO.getHs_cierre().getMinute();
 		
 		tf_id.setText(Integer.toString(estDTO.getId()));
 		tf_nombre.setText(estDTO.getNombre());
-		tf_hs_apertura.setText(Integer.toString(estDTO.getHs_apertura().getHour()));
-		tf_hs_cierre.setText(Integer.toString(estDTO.getHs_cierre().getHour()));
-		tf_min_apertura.setText(Integer.toString(estDTO.getHs_apertura().getMinute()));
-		tf_min_cierre.setText(Integer.toString(estDTO.getHs_cierre().getMinute()));
 		cb_estado.setSelectedIndex(estDTO.getEstado());
+		
+		if(hs_apertura>=0 && hs_apertura<=9) {
+		tf_hs_apertura.setText("0"+Integer.toString(hs_apertura));
+		}else {
+			tf_hs_apertura.setText(Integer.toString(hs_apertura));
+		}
+		
+		if(hs_cierre>=0 && hs_cierre<=9) {
+		tf_hs_cierre.setText("0"+Integer.toString(hs_cierre));
+		}else {
+			tf_hs_cierre.setText(Integer.toString(hs_cierre));
+		}
+		
+		if(min_apertura>=0 && min_apertura<=9) {
+		tf_min_apertura.setText("0"+Integer.toString(min_apertura));
+		}else {
+			tf_min_apertura.setText(Integer.toString(min_apertura));
+		}
+		
+		if(min_cierre>=0 && min_cierre<=9) {
+		tf_min_cierre.setText("0"+Integer.toString(min_cierre));
+		}else {
+			tf_min_cierre.setText(Integer.toString(min_cierre));
+		}
+		
 		
 	}
 	

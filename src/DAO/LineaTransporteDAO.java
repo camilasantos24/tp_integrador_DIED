@@ -104,7 +104,7 @@ public class LineaTransporteDAO {
 	
 	public LineaTransporte get_LineaTransporte_by_nombre_color(String nombre, String color) throws Exception {
 		try {
-		String query= "SELECT * FROM \"tpDied\".\"Linea_Transporte\" WHERE nombre = " + nombre + " AND color= "+color+" ;";
+		String query= "SELECT * FROM \"tpDied\".\"Linea_Transporte\" WHERE nombre = '"+nombre+"' AND color= '"+color+"' AND alta_baja=1 ;";
 		ArrayList<LineaTransporte> lineaTransporte = (ArrayList<LineaTransporte>)((Object)Conexion.consultar(query, LineaTransporte.class));
 		if(lineaTransporte.size() !=0) {
 		return lineaTransporte.get(0);

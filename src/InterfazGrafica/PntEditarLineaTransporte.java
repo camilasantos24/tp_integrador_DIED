@@ -135,7 +135,6 @@ public class PntEditarLineaTransporte extends JPanel {
 		add(btn_cancelar);
 		
 		tf_id = new JTextField();
-		tf_id.setEnabled(false);
 		tf_id.setEditable(false);
 		tf_id.setBounds(55, 118, 46, 20);
 		add(tf_id);
