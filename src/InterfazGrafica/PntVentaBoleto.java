@@ -93,6 +93,8 @@ public class PntVentaBoleto extends JPanel {
 				
 				try {
 					trayectos=GestorTrayecto.obtener_trayectos_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
+					
+					if(!trayectos.isEmpty()) {
 
 						for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
 							
@@ -135,6 +137,9 @@ public class PntVentaBoleto extends JPanel {
 							cargarTablaTodos(grafo, caminos);
 							System.out.println(caminos);
 						}
+					}else {
+						VentanaAdmin.mensajeError("No existen trayectos para las estaciones seleccionadas.\nPor favor selecciones nuevas.", "ERROR");
+					}
 						
 						
 				} catch (Exception e) {
