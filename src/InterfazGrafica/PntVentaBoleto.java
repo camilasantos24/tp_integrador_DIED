@@ -105,7 +105,7 @@ public class PntVentaBoleto extends JPanel {
 							
 							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
 							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
-							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
+							
 							}else {
 								for(int j=0; j<listaTramos.size(); j++) {
 									
