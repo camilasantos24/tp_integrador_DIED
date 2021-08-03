@@ -30,15 +30,6 @@ public class Trayecto {
 		this.id= Integer.parseInt(atributos[0]);
 		this.id_estacion_origen= Integer.parseInt(atributos[1]);
 		this.id_estacion_destino= Integer.parseInt(atributos[2]);
-		/*try {
-			this.estaciones = getEstaciones(EstacionDAO.getInstance().get_estacion_by_id(Long.parseLong(atributos[1])));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
-		
-		
 	}
 	
 	//Getters y Setters

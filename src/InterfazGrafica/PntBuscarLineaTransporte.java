@@ -230,7 +230,14 @@ public class PntBuscarLineaTransporte extends JPanel {
 		JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
 		btn_agregar_trayecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_seleccionarTrayecto, VentanaAdmin.n_pntSeleccionarTrayecto);
+				if(table.getSelectedRow() != -1) {
+					VentanaAdmin.pnt_seleccionarTrayecto.id_linea_transporte_actual=(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_seleccionarTrayecto, VentanaAdmin.n_pntSeleccionarTrayecto);
+				}
+				else {
+					VentanaAdmin.mensajeError("Seleccione una línea de transporte de la tabla", "ERROR");
+				}
+				
 			}
 		});
 		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.PLAIN, 13));

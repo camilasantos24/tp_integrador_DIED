@@ -23,7 +23,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 
 	
 	public  JTable table = new JTable();
-	public  DefaultTableModel dm = new DefaultTableModel(){
+	public static  DefaultTableModel dm = new DefaultTableModel(){
 		public boolean isCellEditable(int rowIndex, int columnIndex ) {
 			return false;
 		}
@@ -108,6 +108,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 			VentanaAdmin.pntBuscarLineaTransporte.limpiarPantalla();
 			VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
 			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
+			restaurarTabla();
 		}
 	} 
 	
@@ -172,4 +173,10 @@ public class PntSeleccionarTrayecto extends JPanel {
 		
 			}
 	}
+	
+	public static void restaurarTabla() {
+		 for( int i = dm.getRowCount() - 1; i >= 0; i-- ) {
+	          dm.removeRow(i);
+	      }
+		}
 }
