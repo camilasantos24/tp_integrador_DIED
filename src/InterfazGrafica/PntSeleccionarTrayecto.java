@@ -38,9 +38,9 @@ public class PntSeleccionarTrayecto extends JPanel {
 		
 		dm.addColumn("idTrayecto");
 		dm.addColumn("Camino");
-		dm.addColumn("Duracion");
+		dm.addColumn("Duracion (min)");
 		dm.addColumn("Costo");
-		dm.addColumn("Distancia");
+		dm.addColumn("Distancia (km)");
 		
 		table.setModel(dm);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -74,7 +74,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 					int id_t = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 					seleccionar_trayecto(id_t);
 				}else {
-					VentanaAdmin.mensajeError("Seleccione un Trayecto en la tabla", "Error");
+					VentanaAdmin.mensajeError("Seleccione una línea de transporte en la tabla", "Error");
 				}
 			}
 		});

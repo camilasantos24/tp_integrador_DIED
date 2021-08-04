@@ -39,10 +39,6 @@ public class Conexion {
  
     }
  
-   
-	
-	
-	
 	public static Connection conectarBD () {
 		 try {
 			try {
