@@ -53,12 +53,12 @@ public class PntFlujoMaximo extends JPanel {
 		add(cb_origen);
 		
 		JLabel lblNewLabel_1 = new JLabel("Estaci\u00F3n Origen");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(20, 39, 201, 23);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Estaci\u00F3n Destino");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_2.setBounds(301, 39, 236, 23);
 		add(lblNewLabel_2);
 		
@@ -119,7 +119,7 @@ public class PntFlujoMaximo extends JPanel {
 		add(scp_tramos_1);
 		
 		JLabel lblNewLabel_3 = new JLabel("Detalle");
-		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_3.setBounds(20, 239, 703, 23);
 		add(lblNewLabel_3);
@@ -133,6 +133,7 @@ public class PntFlujoMaximo extends JPanel {
 		add(separator_1);
 		
 		JButton btn_detalle = new JButton("Ver Detalle");
+		btn_detalle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_detalle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table1.getSelectedRow() != -1) {
@@ -152,7 +153,8 @@ public class PntFlujoMaximo extends JPanel {
 		btn_detalle.setBounds(607, 224, 116, 23);
 		add(btn_detalle);
 		
-		JButton btn_volver = new JButton("<<Volver");
+		JButton btn_volver = new JButton("\u2190 Volver");
+		btn_volver.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_volver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);

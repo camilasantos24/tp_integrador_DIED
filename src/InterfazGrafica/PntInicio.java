@@ -98,8 +98,8 @@ public class PntInicio extends JPanel {
 
 			}
 		});
-		btn_info_general.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_info_general.setBounds(103, 319, 545, 46);
+		btn_info_general.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_info_general.setBounds(216, 319, 289, 46);
 		add(btn_info_general);
 		
 	}
