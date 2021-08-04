@@ -105,7 +105,7 @@ public class PntVentaBoleto extends JPanel {
 							
 							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
 							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
-							//System.out.println((grafo.getNodo("B").getValue()).equals(listaTramos.get(1).getEstacion_destino().getNombre()));
+							
 							}else {
 								for(int j=0; j<listaTramos.size(); j++) {
 									
@@ -163,12 +163,12 @@ public class PntVentaBoleto extends JPanel {
 		table.getColumnModel().getColumn(1).setPreferredWidth(160);
         table.doLayout();
 		
-		btn_ver_caminos.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_ver_caminos.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_ver_caminos.setBounds(501, 103, 181, 46);
 		add(btn_ver_caminos);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estaci\u00F3n origen");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_3_1.setBounds(78, 76, 120, 14);
 		add(lblNewLabel_3_1);
 		
@@ -189,12 +189,12 @@ public class PntVentaBoleto extends JPanel {
 				}
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(501, 168, 181, 46);
 		add(btn_cancelar);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Estaci\u00F3n destino");
-		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_3_1_1.setBounds(78, 136, 120, 14);
 		add(lblNewLabel_3_1_1);
 		
@@ -203,7 +203,7 @@ public class PntVentaBoleto extends JPanel {
 		add(cb_est_destino);
 		
 		JLabel lblNewLabel_3_1_2 = new JLabel("Filtrar por:");
-		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_3_1_2.setBounds(78, 194, 120, 14);
 		add(lblNewLabel_3_1_2);
 		
@@ -217,6 +217,7 @@ public class PntVentaBoleto extends JPanel {
 		add(sp_caminos);
 		
 		JButton btn_mas_detalles = new JButton("M\u00E1s detalles");
+		btn_mas_detalles.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_mas_detalles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -244,11 +245,12 @@ public class PntVentaBoleto extends JPanel {
 		add(btn_mas_detalles);
 		
 		JLabel lblNewLabel_3_1_2_1 = new JLabel("Seleccione un trayecto:");
-		lblNewLabel_3_1_2_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_2_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_3_1_2_1.setBounds(41, 254, 181, 14);
 		add(lblNewLabel_3_1_2_1);
 		
 		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);

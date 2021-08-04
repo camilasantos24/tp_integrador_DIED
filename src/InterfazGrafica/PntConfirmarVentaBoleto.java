@@ -79,7 +79,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		});
 		
 		
-		btn_continuar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_continuar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_continuar.setBounds(107, 377, 525, 46);
 		btn_continuar.setVisible(false);
 		add(btn_continuar);
@@ -122,7 +122,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 			}
 		});
 		
-		btn_comprar_boleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_comprar_boleto.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_comprar_boleto.setBounds(451, 377, 181, 46);
 		add(btn_comprar_boleto);
 		
@@ -133,12 +133,12 @@ public class PntConfirmarVentaBoleto extends JPanel {
 			}
 		});
 		
-		btn_atras.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_atras.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_atras.setBounds(107, 377, 181, 46);
 		add(btn_atras);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("N\u00FAmero de boleto");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1.setBounds(44, 74, 127, 14);
 		add(lblNewLabel_3_1);
 		
@@ -149,7 +149,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		tf_nro_boleto.setColumns(10);
 		
 		JLabel lblNewLabel_3_1_1 = new JLabel("Fecha");
-		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_1.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_1.setBounds(44, 105, 127, 14);
 		add(lblNewLabel_3_1_1);
 		
@@ -160,7 +160,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(tf_fecha);
 		
 		JLabel lblNewLabel_3_1_2 = new JLabel("Camino");
-		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_2.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_2.setBounds(44, 133, 127, 14);
 		add(lblNewLabel_3_1_2);
 		
@@ -171,7 +171,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(tf_camino);
 		
 		JLabel lblNewLabel_3_1_3 = new JLabel("Estacion origen");
-		lblNewLabel_3_1_3.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_3.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_3.setBounds(44, 161, 127, 14);
 		add(lblNewLabel_3_1_3);
 		
@@ -182,7 +182,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(tf_origen);
 		
 		JLabel lblNewLabel_3_1_4 = new JLabel("Estacion destino");
-		lblNewLabel_3_1_4.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_4.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_4.setBounds(44, 189, 127, 14);
 		add(lblNewLabel_3_1_4);
 		
@@ -193,7 +193,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(tf_destino);
 		
 		JLabel lblNewLabel_3_1_5 = new JLabel("Costo total");
-		lblNewLabel_3_1_5.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_5.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_5.setBounds(44, 217, 127, 14);
 		add(lblNewLabel_3_1_5);
 		
@@ -204,12 +204,12 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		add(tf_costo);
 		
 		JLabel lblNewLabel_3_1_6 = new JLabel("Nombre");
-		lblNewLabel_3_1_6.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_6.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_6.setBounds(44, 307, 127, 14);
 		add(lblNewLabel_3_1_6);
 		
 		JLabel lblNewLabel_3_1_7 = new JLabel("Correo electr\u00F3nico");
-		lblNewLabel_3_1_7.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1_7.setFont(new Font("Calibri", Font.BOLD, 15));
 		lblNewLabel_3_1_7.setBounds(44, 333, 127, 14);
 		add(lblNewLabel_3_1_7);
 		

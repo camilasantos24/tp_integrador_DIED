@@ -88,7 +88,7 @@ public class PntVentaBoleto2 extends JPanel {
 		
 		table.setModel(dm);
 		
-		btn_comprar_boleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_comprar_boleto.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_comprar_boleto.setBounds(451, 377, 181, 46);
 		add(btn_comprar_boleto);
 		
@@ -100,7 +100,7 @@ public class PntVentaBoleto2 extends JPanel {
 			}
 		});
 		
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(107, 377, 181, 46);
 		add(btn_cancelar);
 		
@@ -109,7 +109,7 @@ public class PntVentaBoleto2 extends JPanel {
 		add(sp_boletos);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Detalles del trayecto:");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 15));
 		lblNewLabel_3_1.setBounds(44, 74, 141, 14);
 		add(lblNewLabel_3_1);
 		

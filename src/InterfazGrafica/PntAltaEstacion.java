@@ -53,7 +53,7 @@ public class PntAltaEstacion extends JPanel {
 		add(txtpnEstaciones);
 		
 		JLabel lblIdDeLa = new JLabel("ID");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblIdDeLa.setBounds(54, 101, 176, 14);
 		add(lblIdDeLa);
 		
@@ -72,18 +72,18 @@ public class PntAltaEstacion extends JPanel {
 		add(tf_id);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(54, 145, 64, 14);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Horario de apertura");
-		lblNewLabel_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(54, 190, 133, 14);
+		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_2.setBounds(54, 190, 165, 14);
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Horario de cierre");
-		lblNewLabel_3.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(54, 236, 113, 14);
+		lblNewLabel_3.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3.setBounds(54, 236, 143, 14);
 		add(lblNewLabel_3);
 		
 		JButton btn_alta = new JButton("Dar de alta");
@@ -125,13 +125,13 @@ public class PntAltaEstacion extends JPanel {
 			}
 		});
 		
-		btn_alta.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_alta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_alta.setBounds(502, 159, 181, 46);
 		add(btn_alta);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(54, 281, 46, 14);
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3_1.setBounds(54, 281, 74, 14);
 		add(lblNewLabel_3_1);
 		
 		
@@ -156,7 +156,7 @@ public class PntAltaEstacion extends JPanel {
 				}
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
 		

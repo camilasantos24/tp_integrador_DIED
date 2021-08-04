@@ -102,10 +102,7 @@ public class GestorVenta {
 		for (int i = 0; i < pesoMin.size(); i++) {
 			System.out.println("Estacion:" + pesoMin.get(i)[0] + " Peso: " + pesoMin.get(i)[1]  + "\n");
 		}
-		//System.out.println("Nombre: "+destino.getNombre());
 		int indice3= buscar_indice(pesoMin, destino.getNombre());
-		//System.out.println("Indice Peso minimo: "+indice3);
-		//System.out.println(Float.parseFloat(pesoMin.get(indice3)[1].toString()));
 		return Float.parseFloat(pesoMin.get(indice3)[1].toString());
 	} 
 	

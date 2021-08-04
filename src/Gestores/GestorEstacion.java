@@ -217,7 +217,7 @@ public class GestorEstacion {
 		Collections.sort(pg, new Comparator<Object[]>() {
 			@Override
 			public int compare(Object[] p1, Object[] p2) {
-				// Aqui esta el truco, ahora comparamos p2 con p1 y no al reves como antes
+				// Comparamos p2 con p1 y no al reves como antes
 				return ((Integer)p2[1]).compareTo((Integer)p1[1]);
 			}
 		});

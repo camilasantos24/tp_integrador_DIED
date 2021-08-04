@@ -64,8 +64,8 @@ public class PntBuscarEstacion extends JPanel {
 		add(txtpnEstaciones);
 		
 		JLabel lblIdDeLa = new JLabel("ID");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblIdDeLa.setBounds(22, 64, 176, 14);
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblIdDeLa.setBounds(22, 64, 168, 14);
 		add(lblIdDeLa);
 		
 		tf_id = new JTextField();
@@ -83,21 +83,22 @@ public class PntBuscarEstacion extends JPanel {
 		add(tf_id);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(22, 108, 64, 14);
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(22, 108, 168, 14);
 		add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Horario de apertura");
-		lblNewLabel_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(22, 153, 133, 14);
+		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_2.setBounds(22, 153, 168, 14);
 		add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Horario de cierre");
-		lblNewLabel_3.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(22, 199, 113, 14);
+		lblNewLabel_3.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3.setBounds(22, 199, 168, 14);
 		add(lblNewLabel_3);
 		
 		JButton btn_buscar = new JButton("Buscar");
+		btn_buscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -192,18 +193,18 @@ public class PntBuscarEstacion extends JPanel {
 				restaurarTabla();
 			}
 		});
-		btn_alta_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_alta_est.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_alta_est.setBounds(46, 355, 200, 46);
 		add(btn_alta_est);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(22, 244, 46, 14);
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3_1.setBounds(22, 244, 168, 14);
 		add(lblNewLabel_3_1);
 		
 		
 		cb_estado.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_estado.setBounds(22, 256, 168, 20);
+		cb_estado.setBounds(22, 257, 168, 20);
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"En mantenimiento", "Operativa"}));
 		add(cb_estado);
 		
@@ -234,7 +235,7 @@ public class PntBuscarEstacion extends JPanel {
 				}
 			}
 		});
-		btn_baja_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_baja_est.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_baja_est.setBounds(256, 355, 200, 46);
 		add(btn_baja_est);
 		
@@ -270,7 +271,7 @@ public class PntBuscarEstacion extends JPanel {
 				
 			}
 		});
-		btn_editar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_editar_est.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_editar_est.setBounds(466, 355, 200, 46);
 		add(btn_editar_est);
 		
@@ -367,6 +368,7 @@ public class PntBuscarEstacion extends JPanel {
 		add(tf_min_cierre);
 		
 		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);

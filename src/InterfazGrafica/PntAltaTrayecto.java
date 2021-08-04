@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,7 +39,7 @@ public class PntAltaTrayecto extends JPanel {
 	private JTextField tf_distancia;
 	private JTextField tf_costo;
 	private JTextField tf_codigoOrigen;
-	private  DefaultTableModel dm = new DefaultTableModel();
+	private static  DefaultTableModel dm = new DefaultTableModel();
 	private  JTable table = new JTable();
 	
 	private JSpinner sp_cantPasajeros = new JSpinner();
@@ -47,7 +48,7 @@ public class PntAltaTrayecto extends JPanel {
 	
 	public int id_lina_de_transporte_actual;
 	
-
+	public TramoDTO tramoDTO;
 	
 	
 	public PntAltaTrayecto() {
@@ -329,6 +330,8 @@ public class PntAltaTrayecto extends JPanel {
 				if(table.getRowCount() >0) {
 					try {
 						registrar_trayecto();
+						restaurar_pantalla_completa();
+						FrameSeleccionarTramo.getInstance().setVisible(false);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -343,6 +346,16 @@ public class PntAltaTrayecto extends JPanel {
 		add(btn_guardar);
 		
 		JButton btn_cancelar = new JButton("Cancelar");
+		btn_cancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
+				if(respuesta==JOptionPane.YES_OPTION) {
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_seleccionarTrayecto,VentanaAdmin.n_pntSeleccionarTrayecto);
+					restaurar_pantalla_completa();		
+					FrameSeleccionarTramo.getInstance().setVisible(false);
+				}
+			}
+		});
 		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_cancelar.setBounds(289, 382, 109, 31);
 		add(btn_cancelar);
@@ -397,16 +410,22 @@ public class PntAltaTrayecto extends JPanel {
 		tf_costo.setText("");
 		tf_distancia.setText("");
 		tf_codigoOrigen.setText("");
+		sp_duracion.setValue(0);
+		sp_cantPasajeros.setValue(0);
 		
 		if(table.getRowCount()>0) {
 			table.removeRowSelectionInterval(0, table.getRowCount()-1);
 		}
+		for( int i = dm.getRowCount() - 1; i >= 0; i-- ) {
+	          dm.removeRow(i);
+	      }
 	}
 	
 	public void restaurar_ingreso_tramo() {
 		tf_codigoDestino.setText("");
 		tf_costo.setText("");
 		tf_distancia.setText("");
+		sp_duracion.setValue(0);
 		
 	}
 	
@@ -467,16 +486,6 @@ public class PntAltaTrayecto extends JPanel {
 	public void registrar_trayecto() throws SQLException {
 		List<TramoDTO>tramos= new ArrayList();
 		
-
-		/*
-		 * dm.addColumn("id_Origen");
-		dm.addColumn("id_Destino");
-		dm.addColumn("Origen");
-		dm.addColumn("Destino");
-		dm.addColumn("Distancia");
-		dm.addColumn("Duracion");
-		dm.addColumn("CantidadPasajeros");
-		dm.addColumn("Costo");*/
 		for(int i=0; i<table.getRowCount(); i++) {
 			TramoDTO t = new TramoDTO();
 			
@@ -508,5 +517,32 @@ public class PntAltaTrayecto extends JPanel {
 	public void insertar_destino_seleccionado(int id) {
 		tf_codigoDestino.setText(id + "");
 	}
+	
+	public void cargarDatosSinOrigen(TramoDTO tramoDTO) {
+		tf_codigoDestino.setText(Integer.toString(tramoDTO.getCod_destino()));
+		tf_distancia.setText(Float.toString(tramoDTO.getDistancia()));
+		tf_costo.setText(Float.toString(tramoDTO.getCosto()));
+		sp_cantPasajeros.setValue(tramoDTO.getCant_pas());
+		sp_duracion.setValue(tramoDTO.getDuracion());
+	}
+	
+	public void cargarDatosConOrigen(TramoDTO tramoDTO) {
+		tf_codigoOrigen.setText(Integer.toString(tramoDTO.getCod_origen()));
+		tf_codigoDestino.setText(Integer.toString(tramoDTO.getCod_destino()));
+		tf_distancia.setText(Float.toString(tramoDTO.getDistancia()));
+		tf_costo.setText(Float.toString(tramoDTO.getCosto()));
+		sp_cantPasajeros.setValue(tramoDTO.getCant_pas());
+		sp_duracion.setValue(tramoDTO.getDuracion());
+	}
+	
+	public void cargarDatos(TramoDTO tramoDTO) {
+		if(table.getRowCount()>0 && tf_codigoOrigen.getText().length()>0) {
+				cargarDatosSinOrigen(tramoDTO);
+		}else {
+				cargarDatosConOrigen(tramoDTO);
+		}
+		FrameSeleccionarTramo.getInstance().setVisible(false);
+	}
+	
 	
 }

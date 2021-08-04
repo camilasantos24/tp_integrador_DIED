@@ -54,8 +54,8 @@ public class PntEditarEstacion extends JPanel {
 		add(txtpnEstaciones);
 		
 		JLabel lblIdDeLa = new JLabel("ID");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblIdDeLa.setBounds(54, 101, 176, 14);
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblIdDeLa.setBounds(54, 101, 194, 14);
 		add(lblIdDeLa);
 		
 		tf_id = new JTextField();
@@ -74,8 +74,8 @@ public class PntEditarEstacion extends JPanel {
 		add(tf_id);
 		
 		JLabel lblNewLabel_1 = new JLabel("Nombre");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(54, 145, 64, 14);
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(54, 145, 194, 14);
 		add(lblNewLabel_1);
 		
 		JButton btn_guardar = new JButton("Guardar cambios");
@@ -126,17 +126,17 @@ public class PntEditarEstacion extends JPanel {
 				}
 				
 		});
-		btn_guardar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_guardar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_guardar.setBounds(502, 159, 181, 46);
 		add(btn_guardar);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(54, 281, 46, 14);
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3_1.setBounds(54, 281, 194, 14);
 		add(lblNewLabel_3_1);
 		
 		cb_estado.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_estado.setBounds(54, 293, 353, 20);
+		cb_estado.setBounds(54, 294, 353, 20);
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"En mantenimiento", "Operativa"}));
 		add(cb_estado);
 		
@@ -157,13 +157,13 @@ public class PntEditarEstacion extends JPanel {
 				
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
 		
 		JLabel lblNewLabel_2 = new JLabel("Horario de apertura");
-		lblNewLabel_2.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_2.setBounds(54, 190, 133, 14);
+		lblNewLabel_2.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_2.setBounds(54, 190, 194, 14);
 		add(lblNewLabel_2);
 		
 		tf_hs_apertura = new JTextField();
@@ -226,8 +226,8 @@ public class PntEditarEstacion extends JPanel {
 		add(tf_min_cierre);
 		
 		JLabel lblNewLabel_3 = new JLabel("Horario de cierre");
-		lblNewLabel_3.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3.setBounds(54, 236, 113, 14);
+		lblNewLabel_3.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3.setBounds(54, 236, 194, 14);
 		add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_2_1_1 = new JLabel(" :");

@@ -23,7 +23,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 
 	
 	public  JTable table = new JTable();
-	public  DefaultTableModel dm = new DefaultTableModel(){
+	public static  DefaultTableModel dm = new DefaultTableModel(){
 		public boolean isCellEditable(int rowIndex, int columnIndex ) {
 			return false;
 		}
@@ -38,9 +38,9 @@ public class PntSeleccionarTrayecto extends JPanel {
 		
 		dm.addColumn("idTrayecto");
 		dm.addColumn("Camino");
-		dm.addColumn("Duracion");
+		dm.addColumn("Duracion (min)");
 		dm.addColumn("Costo");
-		dm.addColumn("Distancia");
+		dm.addColumn("Distancia (km)");
 		
 		table.setModel(dm);
 		table.getColumnModel().getColumn(0).setMaxWidth(0);
@@ -53,7 +53,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 		add(sp_listar_lt);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione un trayecto:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(10, 11, 713, 27);
 		add(lblNewLabel);
 		
@@ -63,7 +63,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.setBounds(222, 338, 141, 33);
 		add(btnNewButton);
 		
@@ -74,7 +74,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 					int id_t = Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString());
 					seleccionar_trayecto(id_t);
 				}else {
-					VentanaAdmin.mensajeError("Seleccione un Trayecto en la tabla", "Error");
+					VentanaAdmin.mensajeError("Seleccione una línea de transporte en la tabla", "Error");
 				}
 			}
 		});
@@ -90,7 +90,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 			}
 		});
 		btnTrayecto.setForeground(new Color(0, 100, 0));
-		btnTrayecto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnTrayecto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnTrayecto.setBounds(611, 293, 112, 27);
 		add(btnTrayecto);
 		
@@ -108,6 +108,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 			VentanaAdmin.pntBuscarLineaTransporte.limpiarPantalla();
 			VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
 			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
+			restaurarTabla();
 		}
 	} 
 	
@@ -172,4 +173,10 @@ public class PntSeleccionarTrayecto extends JPanel {
 		
 			}
 	}
+	
+	public static void restaurarTabla() {
+		 for( int i = dm.getRowCount() - 1; i >= 0; i-- ) {
+	          dm.removeRow(i);
+	      }
+		}
 }

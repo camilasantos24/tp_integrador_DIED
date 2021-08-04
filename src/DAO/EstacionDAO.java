@@ -110,7 +110,6 @@ public class EstacionDAO {
 	}
 
 	public void updateEstacion(String query) {
-		//	String query3="SELECT est.* FROM  \"tpDied\".\"Estacion\" est ORDER BY id_estacion;";	ORDENA LA TABLA PERO NO LO PUEDO INCLUIR
 		Connection con = Conexion.conectarBD();
 
 		try {
@@ -135,7 +134,6 @@ public class EstacionDAO {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -177,7 +175,6 @@ public class EstacionDAO {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -215,7 +212,6 @@ public class EstacionDAO {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import DAO.TrayectoDAO;
+import DTO.TramoDTO;
 import Entidades.Tramo;
 import Gestores.GestorEstacion;
 import Gestores.GestorTrayecto;
@@ -105,6 +106,21 @@ public class FrameSeleccionarTramo extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnNewButton_1 = new JButton("Seleccionar");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TramoDTO tramoDTO= new TramoDTO();
+				
+				tramoDTO.setCod_origen(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 1).toString()));
+				tramoDTO.setCod_destino(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 2).toString()));
+				tramoDTO.setCosto(Float.parseFloat(table.getValueAt(table.getSelectedRow(), 8).toString()));
+				tramoDTO.setDistancia(Float.parseFloat(table.getValueAt(table.getSelectedRow(), 5).toString()));
+				tramoDTO.setDuracion(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 6).toString()));
+				tramoDTO.setCant_pas(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 7).toString()));
+				
+				VentanaAdmin.pntAltaTrayecto.tramoDTO=tramoDTO;
+				VentanaAdmin.pntAltaTrayecto.cargarDatos(tramoDTO);
+			}
+		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnNewButton_1.setBounds(317, 288, 136, 26);
 		contentPane.add(btnNewButton_1);

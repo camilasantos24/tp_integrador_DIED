@@ -60,7 +60,7 @@ public class PntMantenimiento extends JPanel {
 		add(txtTituloMant);
 		
 		JLabel lblFechaMant = new JLabel("Fecha");
-		lblFechaMant.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblFechaMant.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblFechaMant.setBounds(54, 126, 176, 14);
 		add(lblFechaMant);
 		
@@ -72,7 +72,7 @@ public class PntMantenimiento extends JPanel {
 		add(tf_fechaMant);
 		
 		JLabel lblNewLabel_1 = new JLabel("Observaciones");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(54, 224, 130, 14);
 		add(lblNewLabel_1);
 		
@@ -108,7 +108,7 @@ public class PntMantenimiento extends JPanel {
 				}
 				
 		});
-		btn_guardar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_guardar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_guardar.setBounds(502, 159, 181, 46);
 		add(btn_guardar);
 		
@@ -124,16 +124,17 @@ public class PntMantenimiento extends JPanel {
 				
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
+		txtArea_obs.setFont(new Font("Monospaced", Font.ITALIC, 13));
 		
 		
 		txtArea_obs.setBounds(54, 238, 353, 112);
 		add(txtArea_obs);
 		
 		JLabel lblIdEstacion = new JLabel("ID Estacion");
-		lblIdEstacion.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblIdEstacion.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblIdEstacion.setBounds(54, 170, 176, 14);
 		add(lblIdEstacion);
 		
