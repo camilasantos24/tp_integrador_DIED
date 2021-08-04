@@ -53,7 +53,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 		add(sp_listar_lt);
 		
 		JLabel lblNewLabel = new JLabel("Seleccione un trayecto:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblNewLabel.setBounds(10, 11, 713, 27);
 		add(lblNewLabel);
 		
@@ -63,7 +63,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.setBounds(222, 338, 141, 33);
 		add(btnNewButton);
 		
@@ -90,7 +90,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 			}
 		});
 		btnTrayecto.setForeground(new Color(0, 100, 0));
-		btnTrayecto.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btnTrayecto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnTrayecto.setBounds(611, 293, 112, 27);
 		add(btnTrayecto);
 		

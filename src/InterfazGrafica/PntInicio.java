@@ -37,7 +37,7 @@ public class PntInicio extends JPanel {
 		setLayout(null);
 		
 		JTextPane txtpnBoletos = new JTextPane();
-		txtpnBoletos.setFont(new Font("Arial", Font.BOLD, 18));
+		txtpnBoletos.setFont(new Font("Arial", Font.BOLD, 20));
 		txtpnBoletos.setText("INICIO");
 		txtpnBoletos.setEditable(false);
 		txtpnBoletos.setBackground(SystemColor.menu);
@@ -53,8 +53,8 @@ public class PntInicio extends JPanel {
 			}
 		});
 		
-		btn_buscar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_buscar_est.setBounds(228, 82, 261, 46);
+		btn_buscar_est.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_buscar_est.setBounds(216, 83, 289, 46);
 		add(btn_buscar_est);
 		
 		JButton btn_buscar_lt = new JButton("BUSCAR L\u00CDNEA DE TRANSPORTE");
@@ -65,8 +65,8 @@ public class PntInicio extends JPanel {
 
 				}
 		});
-		btn_buscar_lt.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_buscar_lt.setBounds(228, 157, 261, 46);
+		btn_buscar_lt.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_buscar_lt.setBounds(216, 158, 289, 46);
 		add(btn_buscar_lt);
 		
 		JButton btn_comprar_boleto = new JButton("COMPRAR BOLETO");
@@ -78,8 +78,8 @@ public class PntInicio extends JPanel {
 	
 			}
 		});
-		btn_comprar_boleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_comprar_boleto.setBounds(228, 238, 261, 46);
+		btn_comprar_boleto.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btn_comprar_boleto.setBounds(216, 239, 289, 46);
 		add(btn_comprar_boleto);
 		
 	}

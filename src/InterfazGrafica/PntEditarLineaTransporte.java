@@ -53,7 +53,7 @@ public class PntEditarLineaTransporte extends JPanel {
 		add(txtpnEstaciones);
 		
 		JLabel lblIdDeLa = new JLabel("Nombre");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblIdDeLa.setBounds(55, 149, 176, 14);
 		add(lblIdDeLa);
 		
@@ -65,7 +65,7 @@ public class PntEditarLineaTransporte extends JPanel {
 		add(tf_color);
 		
 		JLabel lblNewLabel_1 = new JLabel("Color");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(55, 193, 64, 14);
 		add(lblNewLabel_1);
 		
@@ -99,17 +99,17 @@ public class PntEditarLineaTransporte extends JPanel {
 							}
 						}
 			});
-		btn_guardar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_guardar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_guardar.setBounds(502, 159, 181, 46);
 		add(btn_guardar);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_3_1.setBounds(55, 238, 46, 14);
 		add(lblNewLabel_3_1);
 		
 		cb_estado.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_estado.setBounds(55, 250, 353, 20);
+		cb_estado.setBounds(55, 251, 353, 20);
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"No activa", "Activa"}));
 		add(cb_estado);
 		
@@ -130,7 +130,7 @@ public class PntEditarLineaTransporte extends JPanel {
 				
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
 		
@@ -141,7 +141,7 @@ public class PntEditarLineaTransporte extends JPanel {
 		tf_id.setColumns(10);
 		
 		JLabel lblId = new JLabel("ID ");
-		lblId.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblId.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblId.setBounds(55, 103, 176, 14);
 		add(lblId);
 	}

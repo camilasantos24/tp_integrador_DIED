@@ -60,16 +60,17 @@ public class PntBuscarLineaTransporte extends JPanel {
 		add(txtpnLineas);
 		
 		JLabel lblIdDeLa = new JLabel("Nombre");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblIdDeLa.setBounds(22, 111, 176, 14);
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblIdDeLa.setBounds(22, 110, 167, 14);
 		add(lblIdDeLa);
 		
 		JLabel lblNewLabel_1 = new JLabel("Color");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(22, 155, 64, 14);
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_1.setBounds(22, 155, 167, 14);
 		add(lblNewLabel_1);
 		
 		JButton btn_buscar = new JButton("Buscar");
+		btn_buscar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -137,18 +138,18 @@ public class PntBuscarLineaTransporte extends JPanel {
 				restaurarTabla();
 			}
 		});
-		btn_alta_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_alta_linea.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_alta_linea.setBounds(12, 349, 168, 46);
 		add(btn_alta_linea);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(22, 200, 46, 14);
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3_1.setBounds(22, 200, 167, 14);
 		add(lblNewLabel_3_1);
 		
 		
 		cb_estado.setFont(new Font("Calibri", Font.PLAIN, 15));
-		cb_estado.setBounds(22, 212, 168, 20);
+		cb_estado.setBounds(22, 213, 168, 20);
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"No activa", "Activa"}));
 		add(cb_estado);
 		
@@ -178,7 +179,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 				}
 			}
 		});
-		btn_baja_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_baja_linea.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_baja_linea.setBounds(192, 349, 168, 46);
 		add(btn_baja_linea);
 		
@@ -213,7 +214,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 				
 			}
 		});
-		btn_editar_linea.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_editar_linea.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_editar_linea.setBounds(372, 349, 168, 46);
 		add(btn_editar_linea);
 		
@@ -240,11 +241,12 @@ public class PntBuscarLineaTransporte extends JPanel {
 				
 			}
 		});
-		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_agregar_trayecto.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_agregar_trayecto.setBounds(552, 349, 168, 46);
 		add(btn_agregar_trayecto);
 		
 		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);

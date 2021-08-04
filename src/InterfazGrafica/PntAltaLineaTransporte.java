@@ -52,7 +52,7 @@ public class PntAltaLineaTransporte extends JPanel {
 		add(txtpnEstaciones);
 		
 		JLabel lblIdDeLa = new JLabel("Nombre");
-		lblIdDeLa.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblIdDeLa.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblIdDeLa.setBounds(54, 152, 176, 14);
 		add(lblIdDeLa);
 		
@@ -62,7 +62,7 @@ public class PntAltaLineaTransporte extends JPanel {
 		add(tf_nombre);
 		
 		JLabel lblNewLabel_1 = new JLabel("Color");
-		lblNewLabel_1.setFont(new Font("Calibri", Font.PLAIN, 15));
+		lblNewLabel_1.setFont(new Font("Calibri", Font.BOLD, 16));
 		lblNewLabel_1.setBounds(54, 196, 64, 14);
 		add(lblNewLabel_1);
 		
@@ -96,13 +96,13 @@ public class PntAltaLineaTransporte extends JPanel {
 			}
 		});
 		
-		btn_alta.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_alta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_alta.setBounds(502, 159, 181, 46);
 		add(btn_alta);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Estado");
-		lblNewLabel_3_1.setFont(new Font("Calibri", Font.PLAIN, 15));
-		lblNewLabel_3_1.setBounds(54, 241, 46, 14);
+		lblNewLabel_3_1.setFont(new Font("Calibri", Font.BOLD, 16));
+		lblNewLabel_3_1.setBounds(54, 241, 64, 14);
 		add(lblNewLabel_3_1);
 		
 		
@@ -127,7 +127,7 @@ public class PntAltaLineaTransporte extends JPanel {
 				}
 			}
 		});
-		btn_cancelar.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_cancelar.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btn_cancelar.setBounds(502, 224, 181, 46);
 		add(btn_cancelar);
 		
