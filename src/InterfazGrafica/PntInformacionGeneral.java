@@ -79,6 +79,11 @@ public class PntInformacionGeneral extends JPanel {
 		add(scp_proxMant);
 		
 		JButton btnNewButton = new JButton("<< Volver");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntInicio, VentanaAdmin.n_pntInicio);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton.setBounds(10, 386, 119, 23);
 		add(btnNewButton);

@@ -54,7 +54,7 @@ public class PntInicio extends JPanel {
 		});
 		
 		btn_buscar_est.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_buscar_est.setBounds(228, 82, 261, 46);
+		btn_buscar_est.setBounds(103, 82, 545, 46);
 		add(btn_buscar_est);
 		
 		JButton btn_buscar_lt = new JButton("BUSCAR L\u00CDNEA DE TRANSPORTE");
@@ -66,7 +66,7 @@ public class PntInicio extends JPanel {
 				}
 		});
 		btn_buscar_lt.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_buscar_lt.setBounds(228, 157, 261, 46);
+		btn_buscar_lt.setBounds(103, 157, 545, 46);
 		add(btn_buscar_lt);
 		
 		JButton btn_comprar_boleto = new JButton("COMPRAR BOLETO");
@@ -79,8 +79,19 @@ public class PntInicio extends JPanel {
 			}
 		});
 		btn_comprar_boleto.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btn_comprar_boleto.setBounds(228, 238, 261, 46);
+		btn_comprar_boleto.setBounds(103, 238, 545, 46);
 		add(btn_comprar_boleto);
+		
+		JButton btn_info_general = new JButton("INFORMACI\u00D3N GENERAL");
+		btn_info_general.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
+
+			}
+		});
+		btn_info_general.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btn_info_general.setBounds(103, 319, 545, 46);
+		add(btn_info_general);
 		
 	}
 }
