@@ -94,7 +94,14 @@ public class PntInicio extends JPanel {
 		JButton btn_info_general = new JButton("INFORMACI\u00D3N GENERAL");
 		btn_info_general.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
+				try {
+					VentanaAdmin.pnt_info_gral.cargar_page_rank();
+					VentanaAdmin.pnt_info_gral.cargar_proximos_mantenimientos();
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+
 
 			}
 		});

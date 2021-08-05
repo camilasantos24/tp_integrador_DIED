@@ -31,9 +31,9 @@ public class PntFlujoMaximo extends JPanel {
 	private JComboBox cb_origen = new JComboBox();
 	private List<Estacion> estaciones_actuales = new ArrayList();
 	
-	private  DefaultTableModel dm1 = new DefaultTableModel();
+	private static  DefaultTableModel dm1 = new DefaultTableModel();
 	private  JTable table1 = new JTable();
-	private  DefaultTableModel dm2 = new DefaultTableModel();
+	private static  DefaultTableModel dm2 = new DefaultTableModel();
 	private  JTable table2 = new JTable();
 
 
@@ -158,16 +158,13 @@ public class PntFlujoMaximo extends JPanel {
 		btn_volver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
+				restaurarTablas();
+				limpiarPantalla();
 			}
 		});
 		btn_volver.setBounds(20, 391, 89, 23);
 		add(btn_volver);
 
-		try {
-			cargar_estaciones();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	
 	
@@ -304,6 +301,19 @@ public class PntFlujoMaximo extends JPanel {
 			table2.doLayout();
 			}
 	
+	}
+	
+	public static void restaurarTablas() {
+		 for( int i = dm1.getRowCount() - 1; i >= 0; i-- ) {
+	          dm1.removeRow(i);
+	      }
+		 for( int i = dm2.getRowCount() - 1; i >= 0; i-- ) {
+	          dm2.removeRow(i);
+	      }
+		}
+	public void limpiarPantalla() {
+		cb_origen.setSelectedIndex(0);
+		cb_destino.setSelectedIndex(0);
 	}
 	
 }

@@ -92,19 +92,17 @@ public class PntInformacionGeneral extends JPanel {
 		btnNewButton_1.setForeground(new Color(0, 0, 102));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					VentanaAdmin.pnt_flujo_max.cargar_estaciones();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_flujo_max, VentanaAdmin.n_pntFlujoMax);
 			}
 		});
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnNewButton_1.setBounds(567, 379, 156, 30);
 		add(btnNewButton_1);
-		
-		try {
-			cargar_page_rank();
-			cargar_proximos_mantenimientos();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 	}
 	

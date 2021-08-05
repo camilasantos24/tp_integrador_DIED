@@ -93,12 +93,6 @@ public class PntSeleccionarTrayecto extends JPanel {
 		btnTrayecto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnTrayecto.setBounds(611, 293, 112, 27);
 		add(btnTrayecto);
-		
-		try {
-			cargarTrayectos();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
 	}
 	
