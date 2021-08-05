@@ -227,8 +227,6 @@ public class PntInformacionGeneral extends JPanel {
 				}
 				
 				
-				
-				
 				i++;
 				
 			}
