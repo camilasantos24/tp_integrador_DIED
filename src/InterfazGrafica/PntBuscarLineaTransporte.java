@@ -42,7 +42,12 @@ public class PntBuscarLineaTransporte extends JPanel {
 	private JTextField tf_color;
 	
 	JComboBox cb_estado = new JComboBox();
+	
 	JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
+	JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+	JButton btn_alta_linea = new JButton("Dar de alta una l\u00EDnea");
+	JButton btn_baja_linea = new JButton("Dar de baja l\u00EDnea");
+	JButton btn_editar_linea = new JButton("Editar l\u00EDnea");
 	
 	public static JTable table = new JTable();
 	public static DefaultTableModel dm = new DefaultTableModel(){
@@ -85,6 +90,11 @@ public class PntBuscarLineaTransporte extends JPanel {
 				try {
 					
 				btn_buscar.setEnabled(false);
+				btn_agregar_trayecto.setEnabled(false);
+				btn_alta_linea.setEnabled(false);
+				btn_baja_linea.setEnabled(false);
+				btn_editar_linea.setEnabled(false);
+				btnNewButton.setEnabled(false);
 				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 				
 						
@@ -121,6 +131,11 @@ public class PntBuscarLineaTransporte extends JPanel {
 						}
 						
 						btn_buscar.setEnabled(true);
+						btn_agregar_trayecto.setEnabled(true);
+						btn_alta_linea.setEnabled(true);
+						btn_baja_linea.setEnabled(true);
+						btn_editar_linea.setEnabled(true);
+						btnNewButton.setEnabled(true);
 						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 						
 					} catch (Exception e2) {
@@ -156,7 +171,6 @@ public class PntBuscarLineaTransporte extends JPanel {
 		sp_listar_lt.setBounds(214, 83, 492, 212);
 		add(sp_listar_lt);
 		
-		JButton btn_alta_linea = new JButton("Dar de alta una l\u00EDnea");
 		btn_alta_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -180,7 +194,6 @@ public class PntBuscarLineaTransporte extends JPanel {
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"No activa", "Activa"}));
 		add(cb_estado);
 		
-		JButton btn_baja_linea = new JButton("Dar de baja l\u00EDnea");
 		btn_baja_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1) {
@@ -210,7 +223,6 @@ public class PntBuscarLineaTransporte extends JPanel {
 		btn_baja_linea.setBounds(192, 349, 168, 46);
 		add(btn_baja_linea);
 		
-		JButton btn_editar_linea = new JButton("Editar l\u00EDnea");
 		btn_editar_linea.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -277,7 +289,6 @@ public class PntBuscarLineaTransporte extends JPanel {
 		btn_agregar_trayecto.setBounds(552, 349, 168, 46);
 		add(btn_agregar_trayecto);
 		
-		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

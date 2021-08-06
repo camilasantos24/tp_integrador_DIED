@@ -43,6 +43,11 @@ public class PntBuscarEstacion extends JPanel {
 	private JTextField tf_hs_apertura;
 	
 	JComboBox cb_estado = new JComboBox();
+
+	JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
+	JButton btn_alta_est = new JButton("Dar de alta una estaci\u00F3n");
+	JButton btn_baja_est = new JButton("Dar de baja estaci\u00F3n");
+	JButton btn_editar_est = new JButton("Editar estaci\u00F3n");
 	
 	public static JTable table = new JTable();
 	public static DefaultTableModel dm = new DefaultTableModel(){
@@ -110,6 +115,10 @@ public class PntBuscarEstacion extends JPanel {
 				try {	
 					
 				btn_buscar.setEnabled(false);
+				btn_alta_est.setEnabled(false);
+				btn_baja_est.setEnabled(false);
+				btn_editar_est.setEnabled(false);
+				btnNewButton.setEnabled(false);
 				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 				
 				
@@ -178,6 +187,10 @@ public class PntBuscarEstacion extends JPanel {
 					}
 					
 					btn_buscar.setEnabled(true);
+					btn_alta_est.setEnabled(true);
+					btn_baja_est.setEnabled(true);
+					btn_editar_est.setEnabled(true);
+					btnNewButton.setEnabled(true);
 					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 					
 				} catch (Exception e2) {
@@ -209,7 +222,6 @@ public class PntBuscarEstacion extends JPanel {
 		sp_listar_est.setBounds(215, 64, 492, 212);
 		add(sp_listar_est);
 		
-		JButton btn_alta_est = new JButton("Dar de alta una estaci\u00F3n");
 		btn_alta_est.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -233,7 +245,6 @@ public class PntBuscarEstacion extends JPanel {
 		cb_estado.setModel(new DefaultComboBoxModel(new String[] {"En mantenimiento", "Operativa"}));
 		add(cb_estado);
 		
-		JButton btn_baja_est = new JButton("Dar de baja estaci\u00F3n");
 		btn_baja_est.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1) {
@@ -264,7 +275,6 @@ public class PntBuscarEstacion extends JPanel {
 		btn_baja_est.setBounds(256, 355, 200, 46);
 		add(btn_baja_est);
 		
-		JButton btn_editar_est = new JButton("Editar estaci\u00F3n");
 		btn_editar_est.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -392,7 +402,6 @@ public class PntBuscarEstacion extends JPanel {
 		tf_min_cierre.setBounds(71, 213, 39, 20);
 		add(tf_min_cierre);
 		
-		JButton btnNewButton = new JButton("\u2190 Atr\u00E1s");
 		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

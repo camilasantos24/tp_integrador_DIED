@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -26,6 +28,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,8 @@ public class PntAltaEstacion extends JPanel {
 	private JTextField tf_min_cierre;
 	
 	JComboBox cb_estado = new JComboBox();
+	
+	JButton btn_cancelar = new JButton("Cancelar");
 
 	public PntAltaEstacion() {
 		setBounds(100, 100, 733, 434);
@@ -90,38 +95,57 @@ public class PntAltaEstacion extends JPanel {
 		btn_alta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				EstacionesDTO estDTO= new EstacionesDTO();
-				
-				LocalTime hsApertura=null;
-				LocalTime hsCierre=null;
-				
-				if (validarID()) {
-					estDTO.setId(Integer.parseInt(tf_id.getText()));
+				Runnable r =()->{ 
 					
-					if (validarNombre()) {
-						estDTO.setNombre(tf_nombre.getText());
+					try {
 						
-						if (validarHoraApertura()) {
-							hsApertura= LocalTime.parse(tf_hs_apertura.getText()+":"+tf_min_apertura.getText()+":00");
-							estDTO.setHs_apertura(hsApertura);
+					btn_alta.setEnabled(false);
+					btn_cancelar.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
+				
+						EstacionesDTO estDTO= new EstacionesDTO();
+						
+						LocalTime hsApertura=null;
+						LocalTime hsCierre=null;
+						
+						if (validarID()) {
+							estDTO.setId(Integer.parseInt(tf_id.getText()));
 							
-							if(validarHoraCierre()) {
-								hsCierre= LocalTime.parse(tf_hs_cierre.getText()+":"+tf_min_cierre.getText()+":00");
-								estDTO.setHs_cierre(hsCierre);
+							if (validarNombre()) {
+								estDTO.setNombre(tf_nombre.getText());
 								
-								estDTO.setAlta_baja(1);
-								estDTO.setEstado(cb_estado.getSelectedIndex());
-								
-								GestorEstacion.crearEstacion(estDTO);
-								
-								VentanaAdmin.mensajeExito("Estacion agregada correctamente.", "EXITO");
-								
-								VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-								limpiarPantalla();
+								if (validarHoraApertura()) {
+									hsApertura= LocalTime.parse(tf_hs_apertura.getText()+":"+tf_min_apertura.getText()+":00");
+									estDTO.setHs_apertura(hsApertura);
+									
+									if(validarHoraCierre()) {
+										hsCierre= LocalTime.parse(tf_hs_cierre.getText()+":"+tf_min_cierre.getText()+":00");
+										estDTO.setHs_cierre(hsCierre);
+										
+										estDTO.setAlta_baja(1);
+										estDTO.setEstado(cb_estado.getSelectedIndex());
+										
+										GestorEstacion.crearEstacion(estDTO);
+										
+										VentanaAdmin.mensajeExito("Estacion agregada correctamente.", "EXITO");
+										
+										VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
+										limpiarPantalla();
+									}
+								}
 							}
 						}
+						btn_alta.setEnabled(true);
+						btn_cancelar.setEnabled(true);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+						
+					} catch (InvocationTargetException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
-				}				
+						
+					};
+
+					new Thread(r).start();
 			}
 		});
 		
@@ -145,7 +169,6 @@ public class PntAltaEstacion extends JPanel {
 		tf_nombre.setBounds(54, 159, 353, 20);
 		add(tf_nombre);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -29,6 +31,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +42,7 @@ public class PntEditarLineaTransporte extends JPanel {
 
 	JComboBox cb_estado = new JComboBox();
 	private JTextField tf_id;
+	JButton btn_cancelar = new JButton("Cancelar");
 	
 	public PntEditarLineaTransporte() {
 		setBounds(100, 100, 733, 434);
@@ -85,14 +89,34 @@ public class PntEditarLineaTransporte extends JPanel {
 							lTranspDTO.setEstado(cb_estado.getSelectedIndex());
 							lTranspDTO.setId(Integer.parseInt(tf_id.getText()));
 							
+							Runnable r =()->{ 
+								
+								try {
 									
-							GestorLineaTransporte.actualizarLineaTransp(lTranspDTO);
+									btn_guardar.setEnabled(false);
+									btn_cancelar.setEnabled(false);
+									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
 									
-									VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
+											GestorLineaTransporte.actualizarLineaTransp(lTranspDTO);
+											
+											VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
+											
+											VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
+											
+											VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte,VentanaAdmin.n_pntBuscarLineaTransporte);
+
+									btn_guardar.setEnabled(true);
+									btn_cancelar.setEnabled(true);
+									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+											
+								} catch (InvocationTargetException | InterruptedException e1) {
+									e1.printStackTrace();
+								}
 									
-									VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
-									
-									VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte,VentanaAdmin.n_pntBuscarLineaTransporte);
+								};
+
+								new Thread(r).start();
+								
 								}
 								
 								limpiarPantalla();
@@ -118,7 +142,6 @@ public class PntEditarLineaTransporte extends JPanel {
 		tf_nombre.setBounds(55, 162, 353, 20);
 		add(tf_nombre);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

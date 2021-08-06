@@ -49,6 +49,8 @@ public class PntAltaTrayecto extends JPanel {
 	private	JButton btn_buscarOrigen = new JButton("");
 
 	JButton btnNewButton = new JButton("+ Tramo Existente");
+	JButton btn_cancelar = new JButton("Cancelar");
+	JButton btn_guardar = new JButton("Guardar");
 	
 	public int id_lina_de_transporte_actual;
 	
@@ -328,7 +330,6 @@ public class PntAltaTrayecto extends JPanel {
 		btn_quitarTramo.setBounds(355, 327, 52, 31);
 		add(btn_quitarTramo);
 		
-		JButton btn_guardar = new JButton("Guardar");
 		btn_guardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getRowCount() >0) {
@@ -349,7 +350,6 @@ public class PntAltaTrayecto extends JPanel {
 		btn_guardar.setBounds(469, 382, 109, 31);
 		add(btn_guardar);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
@@ -383,6 +383,8 @@ public class PntAltaTrayecto extends JPanel {
 					try {
 						
 					btnNewButton.setEnabled(false);
+					btn_cancelar.setEnabled(false);
+					btn_guardar.setEnabled(false);
 					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 				
 						if(table.getRowCount()>0 && tf_codigoOrigen.getText().length()>0) {
@@ -405,6 +407,8 @@ public class PntAltaTrayecto extends JPanel {
 						
 						FrameSeleccionarTramo.getInstance().setVisible(true);
 						btnNewButton.setEnabled(true);
+						btn_cancelar.setEnabled(true);
+						btn_guardar.setEnabled(true);
 						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 					} catch (InvocationTargetException | InterruptedException e1) {
 						e1.printStackTrace();

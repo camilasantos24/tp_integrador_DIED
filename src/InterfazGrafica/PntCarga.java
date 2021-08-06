@@ -25,8 +25,10 @@ public class PntCarga extends JFrame {
 	JLabel lbl_Carga = new JLabel("CARGANDO");
 	JLabel lbl_img1 = new JLabel("");
 	JLabel lbl_img_2 = new JLabel("");
+	JLabel lbl_img3 = new JLabel("");
 	
 	private static PntCarga _INSTANCE;	
+	
 	
 	public static PntCarga getInstance() {
 		if(_INSTANCE == null) {
@@ -85,13 +87,19 @@ public class PntCarga extends JFrame {
 		lbl_img_2.setBounds(22, 21, 227, 269);
 		contentPane.add(lbl_img_2);
 		
+		lbl_img3.setIcon(new ImageIcon(PntCarga.class.getResource("/recursos/hombre_reloj_3.png")));
+		lbl_img3.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_img3.setVisible(false);
+		lbl_img3.setBounds(22, 21, 227, 269);
+		contentPane.add(lbl_img3);
+		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setIcon(new ImageIcon(PntCarga.class.getResource("/recursos/loading-11.gif")));
 		lblNewLabel.setBounds(301, 74, 180, 139);
 		contentPane.add(lblNewLabel);
+		
 		this.setLocationRelativeTo(null);
-
 		
 	}
 	
@@ -100,6 +108,7 @@ public class PntCarga extends JFrame {
 		this.setVisible(true);
 		lbl_img1.setVisible(true);
 		lbl_img_2.setVisible(false);
+		lbl_img3.setVisible(false);
 	}
 	
 	public void finalizarPantalla() {
@@ -112,12 +121,23 @@ public class PntCarga extends JFrame {
 		lbl_Carga.setText("CARGANDO DATOS: "+valor);
 		lbl_img_2.setVisible(true);
 		lbl_img1.setVisible(false);
+		lbl_img3.setVisible(false);
 	}
 	
 	public void cargaDatosSinValor() {
 		lbl_Carga.setText("CARGANDO DATOS...");
 		lbl_img_2.setVisible(true);
 		lbl_img1.setVisible(false);
+		lbl_img3.setVisible(false);
+		this.repaint();
+	}
+	
+	public void guardadoDeDatos() {
+		lbl_Carga.setText("GUARDANDO INFORMACIÓN...");
+		this.setVisible(true);
+		lbl_img_2.setVisible(false);
+		lbl_img1.setVisible(false);
+		lbl_img3.setVisible(true);
 		this.repaint();
 	}
 	

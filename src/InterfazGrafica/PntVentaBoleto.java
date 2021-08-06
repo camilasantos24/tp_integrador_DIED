@@ -54,6 +54,8 @@ public class PntVentaBoleto extends JPanel {
 	public static JComboBox cb_est_destino = new JComboBox();
 	public static JComboBox cb_filtro = new JComboBox();
 	
+	JButton btn_cancelar = new JButton("Cancelar");
+	
 	public static List<Integer> idEstacion= new ArrayList();
 	
 	public static JTable table = new JTable();
@@ -85,6 +87,7 @@ public class PntVentaBoleto extends JPanel {
 					try {
 						
 					btn_ver_caminos.setEnabled(false);
+					btn_cancelar.setEnabled(false);
 					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 					
 				
@@ -156,6 +159,7 @@ public class PntVentaBoleto extends JPanel {
 							}
 							
 							btn_ver_caminos.setEnabled(true);
+							btn_cancelar.setEnabled(true);
 							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 								
 								
@@ -202,7 +206,6 @@ public class PntVentaBoleto extends JPanel {
 		cb_est_origen.setBounds(78, 92, 353, 20);
 		add(cb_est_origen);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

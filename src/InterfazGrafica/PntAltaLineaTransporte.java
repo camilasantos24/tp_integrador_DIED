@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -29,6 +31,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,8 @@ public class PntAltaLineaTransporte extends JPanel {
 	private JTextField tf_color;
 	
 	JComboBox cb_estado = new JComboBox();
+
+	JButton btn_cancelar = new JButton("Cancelar");
 
 	public PntAltaLineaTransporte() {
 		setBounds(100, 100, 733, 435);
@@ -70,29 +75,47 @@ public class PntAltaLineaTransporte extends JPanel {
 		btn_alta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				LineaTransporteDTO lTranspDTO = new LineaTransporteDTO();
+				Runnable r =()->{ 
 					
-					if (validarNombre()) {
+					try {
 						
-						if (validarColor()) {
+					btn_alta.setEnabled(false);
+					btn_cancelar.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
+				
+						LineaTransporteDTO lTranspDTO = new LineaTransporteDTO();
 							
-							if(validarNombreColor()) {
-								lTranspDTO.setNombre(tf_nombre.getText());
-								lTranspDTO.setColor(tf_color.getText());
+							if (validarNombre()) {
 								
-								
-							lTranspDTO.setAlta_baja(1);
-							lTranspDTO.setEstado(cb_estado.getSelectedIndex());
-								
-							GestorLineaTransporte.crearLineaTransp(lTranspDTO);
-								
-								VentanaAdmin.mensajeExito("Linea de transporte agregada correctamente.", "EXITO");
-								
-								VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte,VentanaAdmin.n_pntBuscarLineaTransporte);
-								limpiarPantalla();
+								if (validarColor()) {
+									
+									if(validarNombreColor()) {
+										lTranspDTO.setNombre(tf_nombre.getText());
+										lTranspDTO.setColor(tf_color.getText());
+										
+										
+									lTranspDTO.setAlta_baja(1);
+									lTranspDTO.setEstado(cb_estado.getSelectedIndex());
+										
+									GestorLineaTransporte.crearLineaTransp(lTranspDTO);
+										
+										VentanaAdmin.mensajeExito("Linea de transporte agregada correctamente.", "EXITO");
+										
+										VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte,VentanaAdmin.n_pntBuscarLineaTransporte);
+										limpiarPantalla();
+									}
+								}
 							}
-						}
+							btn_alta.setEnabled(true);
+							btn_cancelar.setEnabled(true);
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+					} catch (InvocationTargetException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
+						
+					};
+
+					new Thread(r).start();
 			}
 		});
 		
@@ -116,7 +139,6 @@ public class PntAltaLineaTransporte extends JPanel {
 		tf_color.setBounds(54, 210, 353, 20);
 		add(tf_color);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

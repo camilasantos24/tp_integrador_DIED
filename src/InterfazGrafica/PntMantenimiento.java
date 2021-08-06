@@ -43,6 +43,8 @@ public class PntMantenimiento extends JPanel {
 	
 	JTextPane txtTituloMant = new JTextPane();
 	
+	JButton btn_cancelar = new JButton("Cancelar");
+	
 	LocalDate fecha = LocalDate.now();
 	private JTextField tf_id_estacion;
 	
@@ -88,7 +90,8 @@ public class PntMantenimiento extends JPanel {
 					try {
 						
 					btn_guardar.setEnabled(false);
-					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+					btn_cancelar.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
 				
 						cargarMantDTO();
 						if(estDTO.getEstado()==0) {
@@ -116,6 +119,7 @@ public class PntMantenimiento extends JPanel {
 						VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
 						
 					btn_guardar.setEnabled(true);
+					btn_cancelar.setEnabled(true);
 					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 					
 					
@@ -133,13 +137,12 @@ public class PntMantenimiento extends JPanel {
 		btn_guardar.setBounds(502, 159, 181, 46);
 		add(btn_guardar);
 		
-		JButton btn_cancelar = new JButton("Cancelar");
 		btn_cancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				int respuesta = VentanaAdmin.mensajeConsulta(null, "ATENCION!", "¿Desea cancelar la carga de datos?\nSe perderá toda la información cargada.");
 				if(respuesta==JOptionPane.YES_OPTION) {
-					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntEditarEstacion,VentanaAdmin.n_pntEditarEstacion);
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
 					limpiarPantalla();		
 				}
 				

@@ -24,6 +24,10 @@ import java.awt.event.ActionEvent;
 public class PntSeleccionarTrayecto extends JPanel {
 
 	
+	JButton btnNewButton = new JButton("Cancelar");
+	JButton btnSeleccionar = new JButton("Seleccionar");
+	JButton btnTrayecto = new JButton("+ Trayecto");
+	
 	public  JTable table = new JTable();
 	public static  DefaultTableModel dm = new DefaultTableModel(){
 		public boolean isCellEditable(int rowIndex, int columnIndex ) {
@@ -59,7 +63,6 @@ public class PntSeleccionarTrayecto extends JPanel {
 		lblNewLabel.setBounds(10, 11, 713, 27);
 		add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Cancelar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
@@ -114,7 +117,9 @@ public class PntSeleccionarTrayecto extends JPanel {
 			
 			try {
 				
-			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(false);
+			btnNewButton.setEnabled(false);
+			btnSeleccionar.setEnabled(false);
+			btnTrayecto.setEnabled(false);
 			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 		
 				List<Trayecto> t = GestorTrayecto.get_all_trayectos();
@@ -179,7 +184,10 @@ public class PntSeleccionarTrayecto extends JPanel {
 				
 					}
 					
-			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(true);
+			btnNewButton.setEnabled(true);
+			btnSeleccionar.setEnabled(true);
+			btnTrayecto.setEnabled(true);
+					
 			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 		} catch (Exception e1) {
 			e1.printStackTrace();

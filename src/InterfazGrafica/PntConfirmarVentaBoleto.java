@@ -104,7 +104,8 @@ public class PntConfirmarVentaBoleto extends JPanel {
 					try {
 						
 					btn_comprar_boleto.setEnabled(false);
-					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+					btn_atras.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
 				
 							if(validarNombre()) {
 								if(validarCorreo()) {
@@ -130,6 +131,7 @@ public class PntConfirmarVentaBoleto extends JPanel {
 							}
 							
 						btn_comprar_boleto.setEnabled(true);
+						btn_atras.setEnabled(true);
 						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 							
 				} catch (InvocationTargetException | InterruptedException e1) {

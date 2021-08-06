@@ -43,6 +43,8 @@ public class PntEditarEstacion extends JPanel {
 	private JTextField tf_hs_cierre;
 
 	JComboBox cb_estado = new JComboBox();
+
+	JButton btn_cancelar = new JButton("Cancelar");
 	
 	public PntEditarEstacion() {
 		setBounds(100, 100, 733, 434);
@@ -110,7 +112,7 @@ public class PntEditarEstacion extends JPanel {
 									try {
 										
 									btn_guardar.setEnabled(false);
-									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+									btn_cancelar.setEnabled(false);
 								
 										if(cambioEstado(estDTO.getEstado())) {
 											
@@ -119,6 +121,8 @@ public class PntEditarEstacion extends JPanel {
 											VentanaAdmin.cambiarPantalla(VentanaAdmin.pntMantenimiento, VentanaAdmin.n_pntMantenimiento);
 																			
 										}else {
+											
+											SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
 											
 											GestorEstacion.actualizarEstacion(estDTO);
 											
@@ -129,7 +133,10 @@ public class PntEditarEstacion extends JPanel {
 											VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
 										}
 									btn_guardar.setEnabled(true);
+									btn_cancelar.setEnabled(true);
 									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+									
+									limpiarPantalla();
 									} catch (InvocationTargetException | InterruptedException e1) {
 										e1.printStackTrace();
 									}
@@ -138,7 +145,6 @@ public class PntEditarEstacion extends JPanel {
 
 									new Thread(r).start();
 								
-								limpiarPantalla();
 							}
 						}
 					}
