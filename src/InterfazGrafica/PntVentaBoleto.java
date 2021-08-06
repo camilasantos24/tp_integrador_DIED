@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -39,6 +41,7 @@ import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -76,76 +79,98 @@ public class PntVentaBoleto extends JPanel {
 		JButton btn_ver_caminos = new JButton("Ver caminos");
 		btn_ver_caminos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				restaurarTabla();
 				
-				int id_o;
-				int id_d;
-				int filtro=cb_filtro.getSelectedIndex();
-				List<Trayecto> trayectos;
-				List<Tramo> listaTramos= new ArrayList();
-				List<Estacion> listaEstaciones= new ArrayList();
-				List<LineaTransporte> listaLineas= new ArrayList();
-				List<String>listaLineas_nombres= new ArrayList();
-				Grafo grafo=null;
-				
-				id_o= idEstacion.get(cb_est_origen.getSelectedIndex());
-				id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
-				
-				try {
-					trayectos=GestorTrayecto.obtener_trayectos_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
+				Runnable r =()->{ 
 					
-					if(!trayectos.isEmpty()) {
-
-						for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
+					try {
+						
+					btn_ver_caminos.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+					
+				
+						restaurarTabla();
+						
+						int id_o;
+						int id_d;
+						int filtro=cb_filtro.getSelectedIndex();
+						List<Trayecto> trayectos;
+						List<Tramo> listaTramos= new ArrayList();
+						List<Estacion> listaEstaciones= new ArrayList();
+						List<LineaTransporte> listaLineas= new ArrayList();
+						List<String>listaLineas_nombres= new ArrayList();
+						Grafo grafo=null;
+						
+						id_o= idEstacion.get(cb_est_origen.getSelectedIndex());
+						id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
+						
+						try {
+							trayectos=GestorTrayecto.obtener_trayectos_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
 							
-							listaTramos=trayectos.get(i).getTramos();
-							listaEstaciones=trayectos.get(i).getEstaciones();
-							listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
-							listaLineas_nombres= obtenerNombres(listaLineas);
-							
-							if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
-							grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
-							
-							}else {
-								for(int j=0; j<listaTramos.size(); j++) {
+							if(!trayectos.isEmpty()) {
+		
+								for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
 									
-									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen().getNombre())) {	
-										grafo.addNodo(listaTramos.get(j).getEstacion_origen().getNombre());
-									}
-									if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
-										grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
-									}
+									listaTramos=trayectos.get(i).getTramos();
+									listaEstaciones=trayectos.get(i).getEstaciones();
+									listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
+									listaLineas_nombres= obtenerNombres(listaLineas);
 									
-									if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
-									grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
-									}
+									if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
+									grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
 									
+									}else {
+										for(int j=0; j<listaTramos.size(); j++) {
+											
+											if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen().getNombre())) {	
+												grafo.addNodo(listaTramos.get(j).getEstacion_origen().getNombre());
+											}
+											if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
+												grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
+											}
+											
+											if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
+											grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
+											}
+											
+										}
+									}
 								}
+								
+								Estacion origen = EstacionDAO.getInstance().get_estacion_by_id(id_o);
+								Estacion destino =EstacionDAO.getInstance().get_estacion_by_id(id_d);
+								
+
+								SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatosSinValor());
+								
+								if(cb_filtro.getSelectedIndex()!=0) {	
+									List<Vertice> caminosMenorPeso=GestorVenta.get_camino_de_menor_peso(grafo, cb_filtro.getSelectedIndex(), origen, destino);
+									cargarTablaFiltro(grafo,caminosMenorPeso);
+									System.out.println(caminosMenorPeso);
+								}else {
+									List<List<Vertice>> caminos=grafo.paths(origen.getNombre(), destino.getNombre());
+									cargarTablaTodos(grafo, caminos);
+									System.out.println(caminos);
+								}
+							}else {
+								VentanaAdmin.mensajeError("No existen trayectos para las estaciones seleccionadas.\nPor favor selecciones nuevas.", "ERROR");
 							}
+							
+							btn_ver_caminos.setEnabled(true);
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+								
+								
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 						
-						Estacion origen = EstacionDAO.getInstance().get_estacion_by_id(id_o);
-						Estacion destino =EstacionDAO.getInstance().get_estacion_by_id(id_d);
-						
-						
-						if(cb_filtro.getSelectedIndex()!=0) {	
-							List<Vertice> caminosMenorPeso=GestorVenta.get_camino_de_menor_peso(grafo, cb_filtro.getSelectedIndex(), origen, destino);
-							cargarTablaFiltro(grafo,caminosMenorPeso);
-							System.out.println(caminosMenorPeso);
-						}else {
-							List<List<Vertice>> caminos=grafo.paths(origen.getNombre(), destino.getNombre());
-							cargarTablaTodos(grafo, caminos);
-							System.out.println(caminos);
-						}
-					}else {
-						VentanaAdmin.mensajeError("No existen trayectos para las estaciones seleccionadas.\nPor favor selecciones nuevas.", "ERROR");
+					} catch (InvocationTargetException | InterruptedException e1) {
+						e1.printStackTrace();
 					}
-						
-						
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
+				};
+				
+				new Thread(r).start();
 			}
+					
 		});
 		
 		dm.addColumn("Grafo");

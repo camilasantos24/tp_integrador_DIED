@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.util.List;
@@ -32,6 +34,7 @@ import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalTime;
 
 public class PntBuscarEstacion extends JPanel {
@@ -102,6 +105,14 @@ public class PntBuscarEstacion extends JPanel {
 		btn_buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				Runnable r=() -> {
+					
+				try {	
+					
+				btn_buscar.setEnabled(false);
+				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+				
+				
 				EstacionesDTO obtEstDTO= new EstacionesDTO();
 								
 				// Si se ingresa hora y minuto se tiene en cuenta, si se ingresa uno de los 2 valores
@@ -161,11 +172,25 @@ public class PntBuscarEstacion extends JPanel {
 						
 						Object[] rowData= {idEst, nombre, hsApert, hsCie, estado};
 						dm.addRow(rowData);
+						
+						final int x=i;
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x+1));
 					}
+					
+					btn_buscar.setEnabled(true);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 					
 				} catch (Exception e2) {
 					e2.printStackTrace();
+					}
+				
+				} catch (InvocationTargetException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
+				
+				};
+				
+				new Thread(r).start();
 				
 			}
 		});

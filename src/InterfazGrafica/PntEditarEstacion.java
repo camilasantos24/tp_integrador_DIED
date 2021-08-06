@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -27,6 +29,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -102,22 +105,38 @@ public class PntEditarEstacion extends JPanel {
 								estDTO.setAlta_baja(1);
 								estDTO.setEstado(cb_estado.getSelectedIndex());
 								
-								if(cambioEstado(estDTO.getEstado())) {
+								Runnable r =()->{ 
 									
-									PntMantenimiento.estDTO=estDTO;
-									VentanaAdmin.pntMantenimiento.cargarDatos();
-									VentanaAdmin.cambiarPantalla(VentanaAdmin.pntMantenimiento, VentanaAdmin.n_pntMantenimiento);
-																	
-								}else {
-									
-									GestorEstacion.actualizarEstacion(estDTO);
-									
-									VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
-									
-									VentanaAdmin.pntBuscarEstacion.restaurarTabla();
-									
-									VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
-								}
+									try {
+										
+									btn_guardar.setEnabled(false);
+									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+								
+										if(cambioEstado(estDTO.getEstado())) {
+											
+											PntMantenimiento.estDTO=estDTO;
+											VentanaAdmin.pntMantenimiento.cargarDatos();
+											VentanaAdmin.cambiarPantalla(VentanaAdmin.pntMantenimiento, VentanaAdmin.n_pntMantenimiento);
+																			
+										}else {
+											
+											GestorEstacion.actualizarEstacion(estDTO);
+											
+											VentanaAdmin.mensajeExito("Estacion actualizada correctamente.", "EXITO");
+											
+											VentanaAdmin.pntBuscarEstacion.restaurarTabla();
+											
+											VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarEstacion,VentanaAdmin.n_pntBuscarEstacion);
+										}
+									btn_guardar.setEnabled(true);
+									SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+									} catch (InvocationTargetException | InterruptedException e1) {
+										e1.printStackTrace();
+									}
+										
+									};
+
+									new Thread(r).start();
 								
 								limpiarPantalla();
 							}

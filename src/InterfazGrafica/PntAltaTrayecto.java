@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import DTO.EstacionesDTO;
@@ -28,6 +29,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class PntAltaTrayecto extends JPanel {
 	private JSpinner sp_cantPasajeros = new JSpinner();
 	private JSpinner sp_duracion = new JSpinner();
 	private	JButton btn_buscarOrigen = new JButton("");
+
+	JButton btnNewButton = new JButton("+ Tramo Existente");
 	
 	public int id_lina_de_transporte_actual;
 	
@@ -371,26 +375,46 @@ public class PntAltaTrayecto extends JPanel {
 		lblNewLabel_6.setBounds(20, 11, 241, 21);
 		add(lblNewLabel_6);
 		
-		JButton btnNewButton = new JButton("+ Tramo Existente");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table.getRowCount()>0 && tf_codigoOrigen.getText().length()>0) {
+				
+				Runnable r =()->{ 
+					
 					try {
-						FrameSeleccionarTramo.getInstance().cargar_tramos(GestorTrayecto.get_tramos_by_origen(Integer.parseInt(tf_codigoOrigen.getText())));
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
+						
+					btnNewButton.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+				
+						if(table.getRowCount()>0 && tf_codigoOrigen.getText().length()>0) {
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatosSinValor());
+							try {
+								FrameSeleccionarTramo.getInstance().cargar_tramos(GestorTrayecto.get_tramos_by_origen(Integer.parseInt(tf_codigoOrigen.getText())));
+							} catch (NumberFormatException e1) {
+								e1.printStackTrace();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}else {
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatosSinValor());
+								try {
+								FrameSeleccionarTramo.getInstance().cargar_tramos(GestorTrayecto.get_all_tramos());
+								} catch (Exception e1) {
+									e1.printStackTrace();
+								}
+						}
+						
+						FrameSeleccionarTramo.getInstance().setVisible(true);
+						btnNewButton.setEnabled(true);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+					} catch (InvocationTargetException | InterruptedException e1) {
 						e1.printStackTrace();
 					}
-				}else {
-						try {
-						FrameSeleccionarTramo.getInstance().cargar_tramos(GestorTrayecto.get_all_tramos());
-						} catch (Exception e1) {
-							e1.printStackTrace();
-						}
-				}
+						
+					};
+					
+					new Thread(r).start();
+					
 				
-				FrameSeleccionarTramo.getInstance().setVisible(true);
 			}
 		});
 		btnNewButton.setForeground(new Color(255, 255, 255));

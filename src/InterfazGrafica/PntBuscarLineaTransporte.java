@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import java.util.List;
@@ -32,12 +34,15 @@ import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
+import java.time.Instant;
 import java.time.LocalTime;
 
 public class PntBuscarLineaTransporte extends JPanel {
 	private JTextField tf_color;
 	
 	JComboBox cb_estado = new JComboBox();
+	JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
 	
 	public static JTable table = new JTable();
 	public static DefaultTableModel dm = new DefaultTableModel(){
@@ -74,39 +79,61 @@ public class PntBuscarLineaTransporte extends JPanel {
 		btn_buscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				LineaTransporteDTO lTransp = new LineaTransporteDTO();
 				
-				lTransp.setNombre(tf_nombre.getText());
-				lTransp.setColor(tf_color.getText());
-				lTransp.setEstado(cb_estado.getSelectedIndex());
+				Runnable r =()->{ 
 				
 				try {
 					
-					restaurarTabla();
+				btn_buscar.setEnabled(false);
+				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+				
+						
+					LineaTransporteDTO lTransp = new LineaTransporteDTO();
 					
-					List<LineaTransporte> lineasT=GestorLineaTransporte.obtenerLineas(lTransp);
+					lTransp.setNombre(tf_nombre.getText());
+					lTransp.setColor(tf_color.getText());
+					lTransp.setEstado(cb_estado.getSelectedIndex());
 					
-					int id;
-					String nombre;
-					String color;
-					String estado;
-					String trayecto;
-					
-					for (int i = 0; i < lineasT.size(); i++) {
-						id=lineasT.get(i).getId();
-						nombre=lineasT.get(i).getNombre();
-						color=lineasT.get(i).getColor();
-						estado=GestorLineaTransporte.obtenerEstadoTxt(lineasT.get(i).getEstado());
-						trayecto=GestorLineaTransporte.obtenerTrayectoTxt(lineasT.get(i).getTrayecto());
-												
-						Object[] rowData= {id, nombre, color, estado,trayecto};
-						dm.addRow(rowData);
+					try {
+						
+						restaurarTabla();
+						
+						List<LineaTransporte> lineasT=GestorLineaTransporte.obtenerLineas(lTransp);
+						
+						int id;
+						String nombre;
+						String color;
+						String estado;
+						String trayecto;
+						
+						for (int i = 0; i < lineasT.size(); i++) {
+							id=lineasT.get(i).getId();
+							nombre=lineasT.get(i).getNombre();
+							color=lineasT.get(i).getColor();
+							estado=GestorLineaTransporte.obtenerEstadoTxt(lineasT.get(i).getEstado());
+							trayecto=GestorLineaTransporte.obtenerTrayectoTxt(lineasT.get(i).getTrayecto());
+													
+							Object[] rowData= {id, nombre, color, estado,trayecto};
+							dm.addRow(rowData);
+							
+							final int x=i;
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x+1));
+						}
+						
+						btn_buscar.setEnabled(true);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+						
+					} catch (Exception e2) {
+						e2.printStackTrace();
 					}
 					
-				} catch (Exception e2) {
-					e2.printStackTrace();
+				} catch (InvocationTargetException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
-				
+					
+				};
+
+				new Thread(r).start();
 			}
 		});
 		btn_buscar.setBounds(58, 256, 77, 23);
@@ -228,7 +255,7 @@ public class PntBuscarLineaTransporte extends JPanel {
 		tf_nombre.setBounds(22, 123, 168, 20);
 		add(tf_nombre);
 		
-		JButton btn_agregar_trayecto = new JButton("Agregar trayecto");
+		
 		btn_agregar_trayecto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1) {

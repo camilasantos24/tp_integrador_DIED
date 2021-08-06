@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -40,6 +42,7 @@ import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -96,28 +99,46 @@ public class PntConfirmarVentaBoleto extends JPanel {
 		btn_comprar_boleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(validarNombre()) {
-					if(validarCorreo()) {
-						UsuarioDTO usuDTO= new UsuarioDTO();
-						Vertice inicio= boletoDTO.getCaminos().get(0);
-						Vertice fin = boletoDTO.getCaminos().get(boletoDTO.getCaminos().size()-1);
+				Runnable r =()->{ 
+					
+					try {
 						
-						boletoDTO.setInicio(inicio);
-						boletoDTO.setFin(fin);
-						
-						usuDTO.setCorreo(tf_correo.getText());
-						usuDTO.setNombre(tf_nombre_cliente.getText());
-						
-						GestorVenta.cargar_compra(boletoDTO, usuDTO);
-						VentanaAdmin.mensajeExito("Boleto adquirido correctamente", "ÉXITO");
-						recargarPantalla(boletoDTO);
-						
-					}else {
-						VentanaAdmin.mensajeError("Por favor ingrese un correo electrónico.", "ERROR");
-					}
-				}else {
-					VentanaAdmin.mensajeError("Por favor ingrese un nombre.", "ERROR");
+					btn_comprar_boleto.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+				
+							if(validarNombre()) {
+								if(validarCorreo()) {
+									UsuarioDTO usuDTO= new UsuarioDTO();
+									Vertice inicio= boletoDTO.getCaminos().get(0);
+									Vertice fin = boletoDTO.getCaminos().get(boletoDTO.getCaminos().size()-1);
+									
+									boletoDTO.setInicio(inicio);
+									boletoDTO.setFin(fin);
+									
+									usuDTO.setCorreo(tf_correo.getText());
+									usuDTO.setNombre(tf_nombre_cliente.getText());
+									
+									GestorVenta.cargar_compra(boletoDTO, usuDTO);
+									VentanaAdmin.mensajeExito("Boleto adquirido correctamente", "ÉXITO");
+									recargarPantalla(boletoDTO);
+									
+								}else {
+									VentanaAdmin.mensajeError("Por favor ingrese un correo electrónico.", "ERROR");
+								}
+							}else {
+								VentanaAdmin.mensajeError("Por favor ingrese un nombre.", "ERROR");
+							}
+							
+						btn_comprar_boleto.setEnabled(true);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+							
+				} catch (InvocationTargetException | InterruptedException e1) {
+					e1.printStackTrace();
 				}
+						
+				};
+
+				new Thread(r).start();
 				
 			}
 		});

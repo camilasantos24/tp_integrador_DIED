@@ -3,6 +3,8 @@ package InterfazGrafica;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.SystemColor;
 import java.awt.Font;
 import javax.swing.border.EtchedBorder;
@@ -26,6 +28,7 @@ import javax.swing.JScrollPane;
 import java.awt.Component;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +85,25 @@ public class PntInicio extends JPanel {
 		btn_comprar_boleto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				PntVentaBoleto.llenarCBEstaciones();
-				VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto, VentanaAdmin.n_pntVentaBoleto);
+				Runnable r = () -> {
+					
+					try {
+						btn_comprar_boleto.setEnabled(false);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+				
+							PntVentaBoleto.llenarCBEstaciones();
+							VentanaAdmin.cambiarPantalla(VentanaAdmin.pntVentaBoleto, VentanaAdmin.n_pntVentaBoleto);
+							
+						btn_comprar_boleto.setEnabled(true);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+							
+						} catch (InvocationTargetException | InterruptedException e1) {
+							e1.printStackTrace();
+						}
+						
+					};
+					
+					new Thread(r).start();
 	
 			}
 		});
@@ -94,15 +114,31 @@ public class PntInicio extends JPanel {
 		JButton btn_info_general = new JButton("INFORMACI\u00D3N GENERAL");
 		btn_info_general.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					VentanaAdmin.pnt_info_gral.cargar_page_rank();
-					VentanaAdmin.pnt_info_gral.cargar_proximos_mantenimientos();
-					VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-
-
+				
+				Runnable r = () -> {
+					
+					try {
+						btn_info_general.setEnabled(false);
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+					
+							try {
+								VentanaAdmin.pnt_info_gral.cargar_page_rank();
+								VentanaAdmin.pnt_info_gral.cargar_proximos_mantenimientos();
+								VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_info_gral, VentanaAdmin.n_pntInfoGral);
+							} catch (Exception ex) {
+								ex.printStackTrace();
+							}
+					
+					btn_info_general.setEnabled(true);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+					
+					} catch (InvocationTargetException | InterruptedException e1) {
+						e1.printStackTrace();
+					}
+				
+				};
+				
+				new Thread(r).start();
 			}
 		});
 		btn_info_general.setFont(new Font("Tahoma", Font.BOLD, 14));

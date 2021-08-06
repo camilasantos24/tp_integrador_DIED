@@ -3,6 +3,7 @@ package InterfazGrafica;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import Entidades.Estacion;
@@ -17,6 +18,7 @@ import java.awt.Font;
 import java.util.List;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.event.ActionEvent;
 
 public class PntSeleccionarTrayecto extends JPanel {
@@ -107,65 +109,85 @@ public class PntSeleccionarTrayecto extends JPanel {
 	} 
 	
 	public void cargarTrayectos() throws Exception {
-		List<Trayecto> t = GestorTrayecto.get_all_trayectos();
 		
+		Runnable r =()->{ 
+			
+			try {
+				
+			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(false);
+			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 		
-		if (table.getRowCount() >0) {
-			table.removeRowSelectionInterval(0, table.getRowCount()-1);
-			}
-			
-			int tam = t.size();
-			int cantidad_columnas= table.getColumnCount();
-			
-			if(cantidad_columnas !=0) {
-				dm= new DefaultTableModel();
-				table.setModel(dm);
-		
-			}
-			
-			if(tam !=0) {
+				List<Trayecto> t = GestorTrayecto.get_all_trayectos();
 				
-			int i=0;
-			
-			int id;
-			String camino=null;
-			float costo; 
-			float distancia; 
-			int duracion;
-			
-			
-			Object[]col0 = new Object[tam];
-			Object[]col1= new Object[tam];
-			Object[]col2 = new Object[tam];
-			Object[]col3 = new Object[tam];
-			Object[]col4 = new Object[tam];
-			
-						while(i<tam) {
-				id= t.get(i).getId();
-				duracion = t.get(i).get_duracion();
-				distancia = t.get(i).get_distancia();
-				costo = t.get(i).get_costo();
 				
-				for(int j=0; j<t.get(i).getEstaciones().size(); j++) {
-					camino +=  t.get(i).getEstaciones().get(j).getNombre() + ", ";
-				}
+				if (table.getRowCount() >0) {
+					table.removeRowSelectionInterval(0, table.getRowCount()-1);
+					}
+					
+					int tam = t.size();
+					int cantidad_columnas= table.getColumnCount();
+					
+					if(cantidad_columnas !=0) {
+						dm= new DefaultTableModel();
+						table.setModel(dm);
 				
-				col0[i]= id;
-				col1[i]= camino;
-				col2[i]= duracion;
-				col3[i]= costo;
-				col4[i]= distancia;
+					}
+					
+					if(tam !=0) {
+						
+					int i=0;
+					
+					int id;
+					String camino=null;
+					float costo; 
+					float distancia; 
+					int duracion;
+					
+					
+					Object[]col0 = new Object[tam];
+					Object[]col1= new Object[tam];
+					Object[]col2 = new Object[tam];
+					Object[]col3 = new Object[tam];
+					Object[]col4 = new Object[tam];
+					
+					while(i<tam) {
+						id= t.get(i).getId();
+						duracion = t.get(i).get_duracion();
+						distancia = t.get(i).get_distancia();
+						costo = t.get(i).get_costo();
+						
+						for(int j=0; j<t.get(i).getEstaciones().size(); j++) {
+							camino +=  t.get(i).getEstaciones().get(j).getNombre() + ", ";
+						}
+						
+						col0[i]= id;
+						col1[i]= camino;
+						col2[i]= duracion;
+						col3[i]= costo;
+						col4[i]= distancia;
+						
+						i++;
+						int x=i;
+						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x));
+						
+					}
+							dm.addColumn("idTrayecto", col0);
+							dm.addColumn("Camino", col1);
+							dm.addColumn("Duracion", col2);
+							dm.addColumn("Costo", col3);
+							dm.addColumn("Distancia", col4);
 				
-				i++;
+					}
+					
+			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(true);
+			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 				
-			}
-					dm.addColumn("idTrayecto", col0);
-					dm.addColumn("Camino", col1);
-					dm.addColumn("Duracion", col2);
-					dm.addColumn("Costo", col3);
-					dm.addColumn("Distancia", col4);
-		
-			}
+		};
+
+		new Thread(r).start();
 	}
 	
 	public static void restaurarTabla() {

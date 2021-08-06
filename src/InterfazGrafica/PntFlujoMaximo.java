@@ -3,6 +3,7 @@ package InterfazGrafica;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import Entidades.Estacion;
@@ -22,6 +23,7 @@ import java.awt.Component;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -30,6 +32,8 @@ public class PntFlujoMaximo extends JPanel {
 	private JComboBox cb_destino = new JComboBox();
 	private JComboBox cb_origen = new JComboBox();
 	private List<Estacion> estaciones_actuales = new ArrayList();
+	JButton btn_flujoMax = new JButton("Flujo M\u00E1ximo");
+	JButton btn_detalle = new JButton("Ver Detalle");
 	
 	private static  DefaultTableModel dm1 = new DefaultTableModel();
 	private  JTable table1 = new JTable();
@@ -65,7 +69,7 @@ public class PntFlujoMaximo extends JPanel {
 		cb_destino.setBounds(301, 66, 240, 28);
 		add(cb_destino);
 		
-		JButton btn_flujoMax = new JButton("Flujo M\u00E1ximo");
+		
 		btn_flujoMax.setForeground(new Color(0, 0, 128));
 		btn_flujoMax.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,22 +136,39 @@ public class PntFlujoMaximo extends JPanel {
 		separator_1.setBounds(410, 251, 313, 2);
 		add(separator_1);
 		
-		JButton btn_detalle = new JButton("Ver Detalle");
+		
 		btn_detalle.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btn_detalle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(table1.getSelectedRow() != -1) {
+				
+				Runnable r =()->{ 
+					
 					try {
-						Trayecto t= GestorTrayecto.get_trayecto_by_id(Integer.parseInt(table1.getValueAt(table1.getSelectedRow(), 0).toString()));
-						cargar_detalle(t);
-					} catch (NumberFormatException e1) {
-						e1.printStackTrace();
-					} catch (Exception e1) {
+						
+					btn_detalle.setEnabled(false);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());	
+					
+						if(table1.getSelectedRow() != -1) {
+							try {
+								Trayecto t= GestorTrayecto.get_trayecto_by_id(Integer.parseInt(table1.getValueAt(table1.getSelectedRow(), 0).toString()));
+								cargar_detalle(t);
+							} catch (NumberFormatException e1) {
+								e1.printStackTrace();
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}else {
+							VentanaAdmin.mensajeError("Seleccione un Trayecto de la tabla", "Error");
+						}
+					btn_detalle.setEnabled(true);
+					SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+					} catch (InvocationTargetException | InterruptedException e1) {
 						e1.printStackTrace();
 					}
-				}else {
-					VentanaAdmin.mensajeError("Seleccione un Trayecto de la tabla", "Error");
-				}
+						
+					};
+
+					new Thread(r).start();
 			}
 		});
 		btn_detalle.setBounds(607, 224, 116, 23);
@@ -182,64 +203,87 @@ public class PntFlujoMaximo extends JPanel {
 	}
 	
 	public void mostrar_flujo_maximo () throws Exception {
-		if(table1.getRowCount() !=0) {
-		table1.removeRowSelectionInterval(0, table1.getRowCount()-1);
-		}
-		int index_origen = cb_origen.getSelectedIndex();
-		int index_destino = cb_destino.getSelectedIndex();
 		
-		Estacion origen = estaciones_actuales.get(index_origen);
-		Estacion destino = estaciones_actuales.get(index_destino);
+		Runnable r =()->{ 
+			
+			try {
+				
+			btn_flujoMax.setEnabled(false);
+			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 		
-		List<Trayecto> trayectos = GestorTrayecto.obtener_trayectos_origen_destino(origen.getId_estacion(), destino.getId_estacion());	//Obtiene trayectos que coincian con el origen y el destino
+					if(table1.getRowCount() !=0) {
+					table1.removeRowSelectionInterval(0, table1.getRowCount()-1);
+					}
+					int index_origen = cb_origen.getSelectedIndex();
+					int index_destino = cb_destino.getSelectedIndex();
+					
+					Estacion origen = estaciones_actuales.get(index_origen);
+					Estacion destino = estaciones_actuales.get(index_destino);
+					
+					List<Trayecto> trayectos = GestorTrayecto.obtener_trayectos_origen_destino(origen.getId_estacion(), destino.getId_estacion());	//Obtiene trayectos que coincian con el origen y el destino
+						
+					if (table1.getRowCount() >0) {
+						table1.removeRowSelectionInterval(0, table1.getRowCount()-1);
+						}
+						
+						int tam = trayectos.size();
+						int cantidad_columnas= table1.getColumnCount();
+						
+						if(cantidad_columnas !=0) {
+							dm1= new DefaultTableModel();
+							table1.setModel(dm1);
+					
+						}
+						
+						if(tam !=0) {
+							
+						int i=0;
+						
+						Object[]col0 = new Object[tam];
+						Object[]col1= new Object[tam];
+						Object[]col2 = new Object[tam];
+						
+						
+						while(i<tam) {
+						
+							Trayecto t = trayectos.get(i);
+							List<Estacion> estaciones = t.getEstaciones();
+							String nombre = "";
+							for (int j=0; j<estaciones.size(); j++) {
+								nombre = nombre + estaciones.get(j).getNombre() + ", ";
+							}
+							col0[i]= t.getId();
+							col1[i]= nombre;
+							col2[i]= t.get_flujo_max();
+							
+							i++;
+							
+							int x=i;
+							SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x));
+							
+						}
+						
+						dm1.addColumn("id_trayecto", col0);
+						dm1.addColumn("Camino", col1);
+						dm1.addColumn("Flujo Máximo", col2);
+						
+						table1.getColumnModel().getColumn(0).setMaxWidth(0);
+						table1.getColumnModel().getColumn(0).setMinWidth(0);
+						table1.getColumnModel().getColumn(0).setPreferredWidth(0);
+						table1.doLayout();
+						}
+						
+			btn_flujoMax.setEnabled(true);
+			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 			
-		if (table1.getRowCount() >0) {
-			table1.removeRowSelectionInterval(0, table1.getRowCount()-1);
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
-			
-			int tam = trayectos.size();
-			int cantidad_columnas= table1.getColumnCount();
-			
-			if(cantidad_columnas !=0) {
-				dm1= new DefaultTableModel();
-				table1.setModel(dm1);
-		
-			}
-			
-			if(tam !=0) {
 				
-			int i=0;
+			};
+
+			new Thread(r).start();
 			
-			Object[]col0 = new Object[tam];
-			Object[]col1= new Object[tam];
-			Object[]col2 = new Object[tam];
-			
-			
-			while(i<tam) {
-			
-				Trayecto t = trayectos.get(i);
-				List<Estacion> estaciones = t.getEstaciones();
-				String nombre = "";
-				for (int j=0; j<estaciones.size(); j++) {
-					nombre = nombre + estaciones.get(j).getNombre() + ", ";
-				}
-				col0[i]= t.getId();
-				col1[i]= nombre;
-				col2[i]= t.get_flujo_max();
-				
-				i++;
-				
-			}
-			
-			dm1.addColumn("id_trayecto", col0);
-			dm1.addColumn("Camino", col1);
-			dm1.addColumn("Flujo Máximo", col2);
-			
-			table1.getColumnModel().getColumn(0).setMaxWidth(0);
-			table1.getColumnModel().getColumn(0).setMinWidth(0);
-			table1.getColumnModel().getColumn(0).setPreferredWidth(0);
-			table1.doLayout();
-			}
 	}
 	
 	
