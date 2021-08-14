@@ -206,6 +206,7 @@ public class PntFlujoMaximo extends JPanel {
 		
 		Runnable r =()->{ 
 			
+			
 			try {
 				
 			btn_flujoMax.setEnabled(false);
