@@ -43,7 +43,7 @@ public class LineaTransporteDAO {
 		
 		query= "INSERT INTO \"tpDied\".\"Linea_Transporte\" (nombre, color, estado, alta_baja) VALUES ('"+nombre+"', '"+color+"', "+estado+", "+alta_baja+");";
 		
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -61,18 +61,10 @@ public class LineaTransporteDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public void updateLineaTransp(String query) {
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -92,15 +84,7 @@ public class LineaTransporteDAO {
 					}
 			} 
 		
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
-	}
 	
 	public LineaTransporte get_LineaTransporte_by_nombre_color(String nombre, String color) throws Exception {
 		try {

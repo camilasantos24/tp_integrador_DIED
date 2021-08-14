@@ -121,8 +121,7 @@ private static TrayectoDAO _INSTANCE;
 		PreparedStatement query3=null ;
 		PreparedStatement query4=null ;
 
-		
-		Connection con= Conexion.conectarBD();
+		Connection con = Conexion.connection;
 		try {
 			con.setAutoCommit(false);
 			

@@ -107,37 +107,11 @@ public class PntVentaBoleto extends JPanel {
 						id_d= idEstacion.get(cb_est_destino.getSelectedIndex());
 						
 						try {
-							trayectos=GestorTrayecto.obtener_trayectos_origen_destino(id_o, id_d);	//Obtiene trayectos que coincian con el origen y el destino
+							trayectos=GestorTrayecto.get_all_trayectos();	
 							
 							if(!trayectos.isEmpty()) {
 		
-								for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
-									
-									listaTramos=trayectos.get(i).getTramos();
-									listaEstaciones=trayectos.get(i).getEstaciones();
-									listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
-									listaLineas_nombres= obtenerNombres(listaLineas);
-									
-									if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
-									grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
-									
-									}else {
-										for(int j=0; j<listaTramos.size(); j++) {
-											
-											if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen().getNombre())) {	
-												grafo.addNodo(listaTramos.get(j).getEstacion_origen().getNombre());
-											}
-											if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
-												grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
-											}
-											
-											if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
-											grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
-											}
-											
-										}
-									}
-								}
+								grafo= armarGrafo(trayectos, listaTramos, listaEstaciones, listaLineas, listaLineas_nombres, grafo);
 								
 								Estacion origen = EstacionDAO.getInstance().get_estacion_by_id(id_o);
 								Estacion destino =EstacionDAO.getInstance().get_estacion_by_id(id_d);
@@ -255,7 +229,7 @@ public class PntVentaBoleto extends JPanel {
 					
 					boletoDTO.setGrafo((Grafo)table.getValueAt(table.getSelectedRow(), 0));
 					boletoDTO.setCaminos((List<Vertice>) table.getValueAt(table.getSelectedRow(), 1));
-					boletoDTO.setCosto(Float.parseFloat(table.getValueAt(table.getSelectedRow(), 2).toString()));
+					boletoDTO.setCosto(Float.parseFloat(table.getValueAt(table.getSelectedRow(), 2).toString().replace(",", ".")));
 					boletoDTO.setFechaVenta(LocalDate.now());
 					
 					VentanaAdmin.pntVentaBoleto2.boletoDTO=boletoDTO;
@@ -348,7 +322,7 @@ public class PntVentaBoleto extends JPanel {
 	}
 	
 	public void cargarTablaFiltro(Grafo grafo, List<Vertice> camino) {
-		DecimalFormat df = new DecimalFormat("###,##");
+		DecimalFormat df = new DecimalFormat("###.##");
 		
 		List<Vertice> caminos= camino;
 		double costo;
@@ -366,7 +340,7 @@ public class PntVentaBoleto extends JPanel {
 		}
 	
 	public void cargarTablaTodos(Grafo grafo, List<List<Vertice>> caminos) {
-		DecimalFormat df = new DecimalFormat("###,##");
+		DecimalFormat df = new DecimalFormat("###.##");
 		
 		double costo;
 		double distancia;
@@ -397,5 +371,40 @@ public class PntVentaBoleto extends JPanel {
 		}
 		
 		return nombresLineas;
+	}
+	
+	public Grafo armarGrafo(List<Trayecto> trayectos,List<Tramo> listaTramos, List<Estacion> listaEstaciones, List<LineaTransporte> listaLineas, List<String> listaLineas_nombres, Grafo grafo) {
+	try {	
+		for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
+			
+			listaTramos=trayectos.get(i).getTramos();
+			listaEstaciones=trayectos.get(i).getEstaciones();
+			listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
+			listaLineas_nombres= obtenerNombres(listaLineas);
+			
+			if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
+			grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
+			
+			}else {
+				for(int j=0; j<listaTramos.size(); j++) {
+					
+					if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen().getNombre())) {	
+						grafo.addNodo(listaTramos.get(j).getEstacion_origen().getNombre());
+					}
+					if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino().getNombre())) {
+						grafo.addNodo(listaTramos.get(j).getEstacion_destino().getNombre());
+					}
+					
+					if(!grafo.validar_conexion_vertices(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre())) {
+					grafo.conectar(listaTramos.get(j).getEstacion_origen().getNombre(), listaTramos.get(j).getEstacion_destino().getNombre(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
+					}
+					
+				}
+			}
+		}
+	}catch (Exception e) {
+		e.printStackTrace();
+	}
+		return grafo;
 	}
 }

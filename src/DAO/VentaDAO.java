@@ -36,7 +36,7 @@ private static VentaDAO _INSTANCE;
 		
 		query= "INSERT INTO \"tpDied\".\"Boleto\" (fecha_venta, costo, id_estacion_origen, id_estacion_destino, id_usuario, camino) VALUES ('"+fecha+"', "+costo+", "+estacion_origen+", "+estacion_destino+", (SELECT usu.id_usuario FROM \"tpDied\".\"Usuario\" usu WHERE usu.nombre='"+nombre+"' ),'"+camino+"');";
 		
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -54,14 +54,7 @@ private static VentaDAO _INSTANCE;
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		
 	}
 	
 	public void createUsuario(Usuario usuario) {
@@ -72,7 +65,7 @@ private static VentaDAO _INSTANCE;
 		
 		query= "INSERT INTO \"tpDied\".\"Usuario\" (nombre, correo) VALUES ('"+nombre+"', '"+correo+"');";
 		
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -89,15 +82,7 @@ private static VentaDAO _INSTANCE;
 				} catch (SQLException ex1) {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
-			} 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
 	}
 	
 	public int getIDBoleto(String query)throws Exception{

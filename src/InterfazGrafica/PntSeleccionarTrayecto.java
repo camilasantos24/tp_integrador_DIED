@@ -19,6 +19,7 @@ import java.util.List;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 
 public class PntSeleccionarTrayecto extends JPanel {
@@ -113,6 +114,8 @@ public class PntSeleccionarTrayecto extends JPanel {
 	
 	public void cargarTrayectos() throws Exception {
 		
+		DecimalFormat df = new DecimalFormat("###.##");
+		
 		Runnable r =()->{ 
 			
 			try {
@@ -143,10 +146,11 @@ public class PntSeleccionarTrayecto extends JPanel {
 					int i=0;
 					
 					int id;
-					String camino=null;
+					String camino="";
 					float costo; 
 					float distancia; 
 					int duracion;
+					List<Estacion> estaciones;
 					
 					
 					Object[]col0 = new Object[tam];
@@ -160,16 +164,17 @@ public class PntSeleccionarTrayecto extends JPanel {
 						duracion = t.get(i).get_duracion();
 						distancia = t.get(i).get_distancia();
 						costo = t.get(i).get_costo();
+						estaciones=t.get(i).getEstaciones();
 						
-						for(int j=0; j<t.get(i).getEstaciones().size(); j++) {
-							camino +=  t.get(i).getEstaciones().get(j).getNombre() + ", ";
+						for(int j=0; j<estaciones.size(); j++) {
+							camino +=  estaciones.get(j).getNombre() + ", ";
 						}
 						
 						col0[i]= id;
 						col1[i]= camino;
-						col2[i]= duracion;
-						col3[i]= costo;
-						col4[i]= distancia;
+						col2[i]= df.format(duracion);
+						col3[i]= df.format(costo);
+						col4[i]= df.format(distancia);
 						
 						i++;
 						int x=i;

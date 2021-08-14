@@ -110,8 +110,8 @@ public class EstacionDAO {
 	}
 
 	public void updateEstacion(String query) {
-		Connection con = Conexion.conectarBD();
-
+		Connection con = Conexion.connection;
+		
 		try {
 			con.setAutoCommit(false);
 			
@@ -129,14 +129,6 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
-		
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 
 	}
 	
@@ -153,7 +145,7 @@ public class EstacionDAO {
 		query="INSERT INTO \"tpDied\".\"Estacion\" (id_estacion, nombre, hs_apertura, hs_cierre, estado, alta_baja) VALUES ("+id+", '"+nombre+"', '"+hs_apertura+"', '"+hs_cierre+"', "+estado+", "+alta_baja+");";
 		
 		
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -171,13 +163,7 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		
 	}
 	
 	public void createMantenimiento(Mantenimiento mant) {
@@ -190,7 +176,7 @@ public class EstacionDAO {
 		
 		query = "INSERT INTO \"tpDied\".\"Mantenimiento\" (id_estacion, fecha_inicio, fecha_fin, observaciones) VALUES ("+id_est+", '"+fecha_ini+"', "+fecha_fin+", '"+obs+"');";
 		
-		Connection con = Conexion.conectarBD();
+		Connection con = Conexion.connection;
 
 		try {
 			con.setAutoCommit(false);
@@ -208,13 +194,6 @@ public class EstacionDAO {
 					System.err.println( "No se pudo deshacer" + ex1.getMessage() );    
 					}
 			} 
-		finally {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public void finalizeMantenimiento(String query) throws SQLException {

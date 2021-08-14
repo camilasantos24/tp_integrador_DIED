@@ -24,6 +24,7 @@ public class Conexion {
 	
 	private  static String connectionUrl= "jdbc:postgresql://" + server + ":" + port + "/" + BDD;
 		
+	public static Connection connection;
 	
 	private static BasicDataSource dataSource = null;
 	 
@@ -36,6 +37,8 @@ public class Conexion {
         dataSource.setMinIdle(5);
         dataSource.setMaxIdle(10);
         dataSource.setMaxTotal(25);
+        
+        connection= conectarBD();
  
     }
  
@@ -67,7 +70,7 @@ public class Conexion {
 			ArrayList<Object> result = new ArrayList<Object>();
 		    Statement statement = null;
 	        ResultSet rs = null; 
-	        Connection connection = conectarBD();
+	        
 	        statement = connection.createStatement();
 	        connection.setAutoCommit(false);
 	        statement.setFetchSize(100000);
@@ -101,7 +104,7 @@ public class Conexion {
 	            	 
 	                rs.close();
 	                statement.close();
-	                connection.close();
+	              
 	            }
 			return result;
 	    }
@@ -109,18 +112,13 @@ public class Conexion {
 		// Método que ejecuta una acción en la BDD (insertar, eliminar etc.)
 		
 		public static void ejecutar(String query) throws SQLException{
-			  Connection con = null;
+			 
 		        try {
-		            con = Conexion.conectarBD();
-		            con.createStatement().executeUpdate(query);
+		            connection.createStatement().executeUpdate(query);
 		        } catch (Exception ex) {
 		            throw ex;
 		        }
-		        finally{
-		            if(con != null){
-		                con.close();
-		            }
-		        }
+		      
 	    }
 		
 
