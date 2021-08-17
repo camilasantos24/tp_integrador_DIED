@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import Entidades.Estacion;
 import Entidades.LineaTransporte;
 
 public class Grafo<T> {
@@ -56,11 +57,17 @@ public class Grafo<T> {
 		return this;
 	}
 	
+	public Grafo<T> conectar_estacion(T n1,T n2, int distancia, int duracion, float costo, List<String> lineaTransp){
+		this.conectar(getNodo_estacion(n1), getNodo_estacion(n2), distancia, duracion, costo, lineaTransp);
+		return this;
+	}
+	
 	private void conectar(Vertice<T> nodo1,Vertice<T> nodo2,int distancia, int duracion, float costo, List<String> lineaTransp){
 		this.aristas.add(new Arista<T>(nodo1,nodo2, distancia, duracion, costo, lineaTransp));
 	}
 	
 	public Vertice<T> getNodo(T valor){
+		
 		
 		if(this.vertices.indexOf(new Vertice<T>(valor)) != -1) {
 		Vertice<T> v = this.vertices.get(this.vertices.indexOf(new Vertice<T>(valor)));
@@ -69,6 +76,36 @@ public class Grafo<T> {
 			return null;
 		}
 		
+		
+	}
+	
+	public Vertice<T> getNodo_estacion(T valor){
+		
+		
+		if(get_indice(valor) != -1) {
+		Vertice<T> v = this.vertices.get(get_indice(valor));
+		return v;
+		}else {
+			return null;
+		}
+	}
+	
+	public int get_indice(T valor) {
+		int i=0;
+		boolean b = false;
+		while(i<this.vertices.size() && b==false) {
+			if(((Estacion)valor).equals((Estacion)this.vertices.get(i).getValue())){
+				b=true;
+			}else {
+				i++;
+			}
+		}
+		
+		if(b==false) {
+			return -1;
+		}else {
+		return i;
+		}
 	}
 	
 	public void printAristas(){
@@ -86,6 +123,15 @@ public class Grafo<T> {
     	}
     	return null;
     }
+    
+    protected Arista<T> findAristas_estacion(Estacion v1, Estacion v2){
+    	for(Arista<T> unaArista : this.aristas) {
+    		
+    		if(((Estacion)unaArista.getOrigin().getValue()).equals(v1) && ((Estacion)unaArista.getEnd().getValue()).equals(v2)) return unaArista;
+    	}
+    	return null;
+    }
+    
     
     public List<List<Vertice<T>>> paths(T v1,T v2){
     	return this.paths(new Vertice(v1), new Vertice(v2));
@@ -146,5 +192,101 @@ public class Grafo<T> {
 		}else {return false;}
 			
 	}
+	
+	public boolean validar_conexion_estaciones(T nodo_origen, T nodo_destino) {
+		
+		if(this.findAristas_estacion((Estacion)nodo_origen, (Estacion)nodo_destino) != null) {
+			return true;
+		}else {return false;}
+			
+	}
+	
+	
+	
+	public List<Estacion> get_page_rank () {
+		
+		
+		List<Estacion> nodos = new ArrayList();
+		
+		for (int i =0; i<this.getVertices().size(); i++) {
+			Estacion n = new Estacion(); 
+			n=(Estacion) this.getVertices().get(i).getValue();
+			float pr = this.calcular_page_rank(n);
+			n.setPage_rank(pr);
+			nodos.add(n);
+		}
+		
+		return nodos;
+		
+	}
+	
+	public float calcular_page_rank (Estacion n) {
+		List<Estacion> nodos_entrantes = new ArrayList();
+		
+		nodos_entrantes = this.get_nodos_entrantes(n);
+		
+		float p_r = (float) 0.5;
+		float suma =0 ;
+		
+		if(nodos_entrantes.size()>0) {
+		for (int i=0; i<nodos_entrantes.size(); i++) {
+			int cant_ady =this.getNeighbourhood((T) nodos_entrantes.get(i)).size();
+			
+			if(cant_ady>0) {
+				suma += nodos_entrantes.get(i).getPage_rank()/cant_ady;
+	
+			}else {
+				suma += nodos_entrantes.get(i).getPage_rank();
+			}
+		}
+		
+		p_r = (float) (0.5 + (0.5 * suma));
+		}
+		return p_r;
+		
+		
+	}
+	
+	public List<Estacion> get_nodos_entrantes (Estacion n) {
+		Vertice<T> v = this.getNodo((T) n);
+		List<Estacion> nodos = new ArrayList();
+		
+		for (int i=0; i<this.getAristas().size(); i++) {
+			Arista<T> a = this.getAristas().get(i); 
+			if (a.getEnd().equals(v)) {
+				Estacion n2 = (Estacion) this.getAristas().get(i).getOrigin().getValue();
+				nodos.add(n2);
+			}
+		}
+		
+		return nodos;
+	}
+	
+	public void inicializar_page_rank () {
+		List<Vertice<T>> vertices = new ArrayList();
+		for (int i=0; i<this.vertices.size(); i++) {
+			Estacion n = (Estacion) this.getVertices().get(i).getValue();
+			n.setPage_rank(1);
+			
+			Vertice v = new Vertice (n); 
+			vertices.add(v);
+		}
+		
+		this.vertices.clear();
+		this.setVertices(vertices);
+	}
+	
+	public void setear_page_rank (List<Estacion> nodos) {
+		List<Vertice<T>> vertices = new ArrayList();
+		for (int i=0; i<this.vertices.size(); i++) {
+			
+			Vertice v = new Vertice (nodos.get(i)); 
+			vertices.add(v);
+		}
+		
+		this.vertices.clear();
+		this.setVertices(vertices);
+	}
+
 
 }

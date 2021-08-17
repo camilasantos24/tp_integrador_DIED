@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import DAO.EstacionDAO;
@@ -15,7 +16,9 @@ import Entidades.LineaTransporte;
 import Entidades.Mantenimiento;
 import Entidades.Tramo;
 import Entidades.Trayecto;
+import Grafo.Arista;
 import Grafo.Grafo;
+import Grafo.Vertice;
 
 public class GestorEstacion {
 	
@@ -232,6 +235,118 @@ public class GestorEstacion {
 	}
 	
 	
+	public static Grafo armarGrafo() throws Exception {
+		List<Trayecto>trayectos=GestorTrayecto.get_all_trayectos();	
+		Grafo grafo=null;
+
+		try {	
+			for (int i = 0; i < trayectos.size(); i++) {	// Por cada trayecto buscamos sus tramos, estaciones activas y lineas tambien activas.
+				
+				List<Tramo>listaTramos=trayectos.get(i).getTramos();
+				List<Estacion>listaEstaciones=trayectos.get(i).getEstaciones();
+				List<LineaTransporte>listaLineas=GestorLineaTransporte.obtenerLineasPorTrayecto(trayectos.get(i).getId());
+				List<String>listaLineas_nombres= obtenerNombres(listaLineas);
+				
+				if (grafo==null) {					// Si no existe grafo lo crea. Si existe compara si los nodos existen, si no existen tampoco los agrega y conecta.
+				grafo=generarGrafo(listaTramos, listaEstaciones, listaLineas_nombres);
+				
+				}else {
+					for(int j=0; j<listaTramos.size(); j++) {
+						
+						if(!existeNodo(grafo, listaTramos.get(j).getEstacion_origen())) {	
+							grafo.addNodo(listaTramos.get(j).getEstacion_origen());
+						}
+						if(!existeNodo(grafo, listaTramos.get(j).getEstacion_destino())) {
+							grafo.addNodo(listaTramos.get(j).getEstacion_destino());
+						}
+						
+						if(!grafo.validar_conexion_estaciones(listaTramos.get(j).getEstacion_origen(), listaTramos.get(j).getEstacion_destino())) {
+						grafo.conectar_estacion(listaTramos.get(j).getEstacion_origen(), listaTramos.get(j).getEstacion_destino(), listaTramos.get(j).getDistancia_km(), listaTramos.get(j).getDuracion(), listaTramos.get(j).getCosto(), listaLineas_nombres);
+						}
+						
+					}
+				}
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+			return grafo;
+		}	
+	
+	public static boolean existeNodo(Grafo grafo, Estacion e) {
+		if(grafo.getNodo_estacion(e) != null) {
+		if((((Estacion)grafo.getNodo_estacion(e).getValue())).equals(e)) {
+			return true;
+			}else {
+				return false;
+			}
+		}else {return false;}
+	}
+	
+	public static Grafo generarGrafo(List<Tramo> tramos, List<Estacion> estaciones, List<String> lineas) {
+		List<Tramo> tramos2=tramos;
+		Grafo<Estacion> grafo1 = new Grafo<Estacion>();
+		
+		for (int i = 0; i < estaciones.size(); i++) {
+			grafo1.addNodo(estaciones.get(i));
+		}
+		
+		for (int i = 0; i < tramos2.size(); i++) {
+			grafo1.conectar_estacion(tramos2.get(i).getEstacion_origen(), tramos2.get(i).getEstacion_destino(),tramos2.get(i).getDistancia_km(), tramos2.get(i).getDuracion(), tramos2.get(i).getCosto(), lineas);
+		}
+		
+		return grafo1;
+	}
+	
+	public static List<String> obtenerNombres(List<LineaTransporte> lineas){
+		List<String> nombresLineas= new ArrayList();;
+		
+		for (int i=0; i<lineas.size(); i++) {
+			nombresLineas.add(lineas.get(i).getNombre());
+		}
+		
+		return nombresLineas;
+	}
+	
+	public static List<Estacion> calcular_page_rank_error(Grafo g, float error) {
+		g.inicializar_page_rank();
+		boolean diferencia_error;
+		int iteracion = 1;
+		HashMap< String, Float> hm = new HashMap<String, Float>();
+		List<Estacion> nodos_pr= new ArrayList();
+		do {
+			diferencia_error = false;
+			for (int j = 0; j < g.getVertices().size(); j++) {
+				Estacion n = (Estacion) ((Vertice) g.getVertices().get(j)).getValue();
+				hm.put(n.getNombre(), n.getPage_rank());
+			}
+			
+			 nodos_pr = g.get_page_rank();
+			// Setear pagerank a nodos
+
+			for (int i = 0; i < nodos_pr.size(); i++) {
+				float pr_it_anterior= hm.get(nodos_pr.get(i).getNombre());
+				
+				
+					if ((nodos_pr.get(i).getPage_rank() - pr_it_anterior) >= error) {
+						diferencia_error = true;
+						
+					}
+				
+				
+				}
+			
+			System.out.println("ITERACION: "+ iteracion);
+			for (int i = 0; i < nodos_pr.size(); i++) {
+				System.out.println(nodos_pr.get(i).getNombre() + " : " + nodos_pr.get(i).getPage_rank());
+			}
+			g.setear_page_rank(nodos_pr);
+			iteracion ++;
+
+		} while (diferencia_error);
+		
+		return nodos_pr;
+	}
 	
 	
 

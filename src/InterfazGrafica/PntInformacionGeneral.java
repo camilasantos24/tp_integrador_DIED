@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Entidades.Estacion;
 import Gestores.GestorEstacion;
+import Grafo.Grafo;
 
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -107,7 +108,10 @@ public class PntInformacionGeneral extends JPanel {
 	}
 	
 	public void cargar_page_rank () throws Exception {
-		List<Object[]> pg = GestorEstacion.get_page_rank();
+		
+		Grafo g = GestorEstacion.armarGrafo();
+		List<Estacion> pg = GestorEstacion.calcular_page_rank_error(g,  (float) 0.00000002);
+		
 		if (tablePG.getRowCount() >0) {
 			tablePG.removeRowSelectionInterval(0, tablePG.getRowCount()-1);
 			}
@@ -125,34 +129,29 @@ public class PntInformacionGeneral extends JPanel {
 				
 			int i=0;
 			
-			int codigo_estacion;
 			String nombre_estacion;
-			int page_rank;
+			float page_rank;
 			
 			
 			Object[]col0 = new Object[tam];
 			Object[]col1= new Object[tam];
-			Object[]col2 = new Object[tam];
 			
 			
 			while(i<tam) {
-				Estacion e = (Estacion) pg.get(i)[0];
-				codigo_estacion = e.getId_estacion();
+				Estacion e = (Estacion) pg.get(i);
 				nombre_estacion = e.getNombre();
-				page_rank = Integer.parseInt(pg.get(i)[1].toString());
+				page_rank = pg.get(i).getPage_rank();
 				
-				col0[i]= codigo_estacion;
-				col1[i]= nombre_estacion;
-				col2[i]= page_rank;
+				col0[i]= nombre_estacion;
+				col1[i]= page_rank;
 				
 				i++;
 				
 			}
 			
 			
-			dmPG.addColumn("Código Estacion", col0);
-			dmPG.addColumn("Nombre", col1);
-			dmPG.addColumn("Page Rank", col2);
+			dmPG.addColumn("Nombre", col0);
+			dmPG.addColumn("Page Rank", col1);
 		
 			
 			}

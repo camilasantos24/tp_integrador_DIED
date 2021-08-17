@@ -14,7 +14,7 @@ public class Estacion {
 	private int estado; //1- Activa ; 0-Mantenimiento
 	private int alta_baja; // 1-Dada de alta ; 0-Dada de baja
 	private List<Mantenimiento> mantenimientos;
-	
+	private float page_rank;
 	public Estacion() {
 	}
 	
@@ -47,6 +47,18 @@ public class Estacion {
 	public int getId_estacion() {
 		return id_estacion;
 	}
+
+	public float getPage_rank() {
+		return page_rank;
+	}
+
+
+
+	public void setPage_rank(float page_rank) {
+		this.page_rank = page_rank;
+	}
+
+
 
 	public void setId_estacion(int id_estacion) {
 		this.id_estacion = id_estacion;
@@ -109,6 +121,12 @@ public class Estacion {
 
 	public void setMantenimientos(List<Mantenimiento> mantenimientos) {
 		this.mantenimientos = mantenimientos;
+	}
+	
+	public boolean equals(Estacion e) {
+		if (this.getNombre().equals(e.getNombre()) && this.id_estacion == e.getId_estacion() && this.getEstado() == e.getEstado()) {
+			return true;
+		}else {return false;}
 	}
 	
 	
