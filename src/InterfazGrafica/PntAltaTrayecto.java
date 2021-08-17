@@ -336,8 +336,8 @@ public class PntAltaTrayecto extends JPanel {
 					try {
 						registrar_trayecto();
 						restaurar_pantalla_completa();
-						FrameSeleccionarTramo.getInstance().setVisible(false);
-					} catch (SQLException e1) {
+					//	FrameSeleccionarTramo.getInstance().setVisible(false);
+					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
 				}else {
@@ -511,7 +511,7 @@ public class PntAltaTrayecto extends JPanel {
 	
 	}
 	
-	public void registrar_trayecto() throws SQLException {
+	public void registrar_trayecto() throws SQLException, InvocationTargetException, InterruptedException {
 		List<TramoDTO>tramos= new ArrayList();
 		
 		for(int i=0; i<table.getRowCount(); i++) {
@@ -527,15 +527,35 @@ public class PntAltaTrayecto extends JPanel {
 			tramos.add(t);
 		}
 		
-		if(GestorTrayecto.alta_trayecto(tramos, id_lina_de_transporte_actual)) {
-			VentanaAdmin.mensajeExito("¡Trayecto Registrado!", "ÉXITO");
-			restaurar_pantalla_completa();
-			VentanaAdmin.pntBuscarLineaTransporte.limpiarPantalla();
-			VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
-			VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
-		
-		}
-		
+		Runnable r =()->{ 
+			
+			try {
+				
+				btn_guardar.setEnabled(false);
+				
+				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().guardadoDeDatos());
+				
+				if(GestorTrayecto.alta_trayecto(tramos, id_lina_de_transporte_actual)) {
+					VentanaAdmin.pnt_seleccionarTrayecto.restaurarTabla();
+					VentanaAdmin.pnt_seleccionarTrayecto.cargarTrayectos();
+					VentanaAdmin.pntBuscarLineaTransporte.limpiarPantalla();
+					VentanaAdmin.pntBuscarLineaTransporte.restaurarTabla();
+					VentanaAdmin.mensajeExito("¡Trayecto Registrado!", "ÉXITO");
+					restaurar_pantalla_completa();
+					VentanaAdmin.cambiarPantalla(VentanaAdmin.pntBuscarLineaTransporte, VentanaAdmin.n_pntBuscarLineaTransporte);
+				
+				}
+				
+				btn_guardar.setEnabled(true);
+				SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+				
+			} catch ( Exception e1) {
+				e1.printStackTrace();
+			}
+				
+			};
+			
+			new Thread(r).start();
 	}
 	
 	public void insertar_origen_seleccionado(int id) {

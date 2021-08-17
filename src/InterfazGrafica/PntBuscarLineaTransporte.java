@@ -272,11 +272,6 @@ public class PntBuscarLineaTransporte extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow() != -1) {
 					VentanaAdmin.pnt_seleccionarTrayecto.id_linea_transporte_actual=(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString()));
-					try {
-						VentanaAdmin.pnt_seleccionarTrayecto.cargarTrayectos();
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
 					VentanaAdmin.cambiarPantalla(VentanaAdmin.pnt_seleccionarTrayecto, VentanaAdmin.n_pntSeleccionarTrayecto);
 				}
 				else {

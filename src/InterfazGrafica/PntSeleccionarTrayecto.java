@@ -99,6 +99,13 @@ public class PntSeleccionarTrayecto extends JPanel {
 		btnTrayecto.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnTrayecto.setBounds(611, 293, 112, 27);
 		add(btnTrayecto);
+		
+		
+		try {
+			cargarTrayectos();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 
 	}
 	
@@ -123,7 +130,8 @@ public class PntSeleccionarTrayecto extends JPanel {
 			btnNewButton.setEnabled(false);
 			btnSeleccionar.setEnabled(false);
 			btnTrayecto.setEnabled(false);
-			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
+			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(false);
+		//	SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().iniciarPantalla());
 		
 				List<Trayecto> t = GestorTrayecto.get_all_trayectos();
 				
@@ -146,7 +154,6 @@ public class PntSeleccionarTrayecto extends JPanel {
 					int i=0;
 					
 					int id;
-					String camino="";
 					float costo; 
 					float distancia; 
 					int duracion;
@@ -160,15 +167,18 @@ public class PntSeleccionarTrayecto extends JPanel {
 					Object[]col4 = new Object[tam];
 					
 					while(i<tam) {
+						String camino="";
 						id= t.get(i).getId();
 						duracion = t.get(i).get_duracion();
 						distancia = t.get(i).get_distancia();
 						costo = t.get(i).get_costo();
 						estaciones=t.get(i).getEstaciones();
 						
-						for(int j=0; j<estaciones.size(); j++) {
+						for(int j=0; j<estaciones.size()-1; j++) {
 							camino +=  estaciones.get(j).getNombre() + ", ";
 						}
+						
+						camino +=  estaciones.get(estaciones.size()-1).getNombre();
 						
 						col0[i]= id;
 						col1[i]= camino;
@@ -178,7 +188,7 @@ public class PntSeleccionarTrayecto extends JPanel {
 						
 						i++;
 						int x=i;
-						SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x));
+					//	SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().cargaDatos(x));
 						
 					}
 							dm.addColumn("idTrayecto", col0);
@@ -192,8 +202,9 @@ public class PntSeleccionarTrayecto extends JPanel {
 			btnNewButton.setEnabled(true);
 			btnSeleccionar.setEnabled(true);
 			btnTrayecto.setEnabled(true);
+			VentanaAdmin.pntBuscarLineaTransporte.btn_agregar_trayecto.setEnabled(true);
 					
-			SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
+		//	SwingUtilities.invokeAndWait(() ->PntCarga.getInstance().finalizarPantalla());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -20,6 +20,7 @@ import java.awt.Component;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.awt.event.ActionEvent;
 
 public class PntInformacionGeneral extends JPanel {
@@ -109,6 +110,8 @@ public class PntInformacionGeneral extends JPanel {
 	
 	public void cargar_page_rank () throws Exception {
 		
+		DecimalFormat df = new DecimalFormat("###.##");
+		
 		Grafo g = GestorEstacion.armarGrafo();
 		List<Estacion> pg = GestorEstacion.calcular_page_rank_error(g,  (float) 0.00000002);
 		
@@ -143,7 +146,7 @@ public class PntInformacionGeneral extends JPanel {
 				page_rank = pg.get(i).getPage_rank();
 				
 				col0[i]= nombre_estacion;
-				col1[i]= page_rank;
+				col1[i]= df.format(page_rank);
 				
 				i++;
 				
