@@ -275,6 +275,8 @@ public class PntVentaBoleto extends JPanel {
 	public static void llenarCBEstaciones() {
 		
 		List<Estacion> listaEstaciones;
+		cb_est_origen.removeAllItems();
+		cb_est_destino.removeAllItems();
 		try {
 			
 			listaEstaciones = GestorEstacion.obtenerEstacionesBoleto();
